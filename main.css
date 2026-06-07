@@ -26,6 +26,22 @@
     --transition: 0.18s ease;
 }
 
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('/assets/Inter-VariableFont_opsz,wght.woff2') format('woff2-variations');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('/assets/Inter-Italic-VariableFont_opsz,wght.woff2') format('woff2-variations');
+}
+
 html {
     scroll-behavior: smooth;
 }
