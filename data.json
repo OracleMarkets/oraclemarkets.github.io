@@ -1,0 +1,33 @@
+{
+  "site": {
+    "name": "Oracle",
+    "tagline": "A prediction market for the Crestconomy civilisation event.",
+    "defaultBetUrl": "https://crestconomy.com/guild/oracle/store",
+    "discordUrl": "https://discord.gg/QzbU77kCcv",
+    "eventUrl": "https://crestconomy.com/guild/oracle"
+  },
+  "navTags": [
+    "Politics",
+    "RDM",
+    "Economy",
+    "Nations",
+    "War",
+    "Femboys",
+    "Drama",
+    "Sports",
+    "Metagaming",
+    "Culture",
+    "Deaths"
+  ],
+  "gridTags": [
+    "All",
+    "Lucrum Federation",
+    "SevCorp",
+    "Bedrock Corp",
+    "Plinth"
+  ],
+  "highlightOverrides": [
+    "crit-comeback",
+    "elanuelo-maid"
+  ]
+}
