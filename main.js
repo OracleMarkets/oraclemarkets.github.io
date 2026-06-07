@@ -74,10 +74,10 @@ async function fetchJson(path) {
 
 async function loadAllData() {
     const [site, news, marketDefs, marketPools] = await Promise.all([
-        fetchJson("data.json"),
-        fetchJson("news.json"),
-        fetchJson("markets.json"),
-        fetchJson("market-pools.json")
+        fetchJson("data/data.json"),
+        fetchJson("data/news.json"),
+        fetchJson("data/markets.json"),
+        fetchJson("data/market-pools.json")
     ]);
 
     if (!site || !news || !marketDefs || !marketPools) {

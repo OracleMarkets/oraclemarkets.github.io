@@ -50,7 +50,6 @@ button {
     cursor: pointer;
 }
 
-/* Header */
 .site-header {
     position: sticky;
     top: 0;
@@ -174,7 +173,6 @@ button {
     border-radius: 1px;
 }
 
-/* Tabs */
 .tabs {
     display: flex;
     gap: 2px;
@@ -220,7 +218,6 @@ button {
     font-weight: 500;
 }
 
-/* Main */
 main {
     max-width: 1350px;
     margin: 0 auto;
@@ -234,7 +231,6 @@ main {
     align-items: start;
 }
 
-/* Cards */
 .card {
     background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
@@ -568,7 +564,6 @@ main {
     color: var(--text-muted);
 }
 
-/* Sidebar */
 .sidebar-stack {
     display: flex;
     flex-direction: column;
@@ -689,7 +684,6 @@ main {
     color: var(--text);
 }
 
-/* Markets section */
 .markets-section {
     margin-top: 28px;
 }
@@ -806,7 +800,6 @@ main {
     line-height: 1.35;
 }
 
-/* Arc gauge — compact, top-right */
 .chance-arc {
     position: relative;
     width: 75px;
@@ -859,7 +852,6 @@ main {
     letter-spacing: 0.02em;
 }
 
-/* Multi outcome */
 .outcomes-list {
     display: flex;
     flex-direction: column;
@@ -924,7 +916,6 @@ main {
     font-size: 0.875rem;
 }
 
-/* Footer */
 .site-footer {
     margin-top: 56px;
     border-top: 1px solid var(--border-subtle);
@@ -1012,7 +1003,6 @@ main {
     color: var(--text-dim);
 }
 
-/* Animations */
 @keyframes fadeSlideUp {
     from {
         opacity: 0;
@@ -1037,7 +1027,6 @@ main {
     animation: fadeSlideUp 0.5s ease both;
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
     .event-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
