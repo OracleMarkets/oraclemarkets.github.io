@@ -11,13 +11,32 @@ let featuredChart = null;
 let activeNavTag = "Trending";
 let activeGridTag = "All";
 let searchQuery = "";
+let chartJsPromise = null;
+
+const dataPromise = loadAllData();
+loadChartJs();
 
 document.addEventListener("DOMContentLoaded", init);
+
+function loadChartJs() {
+    if (window.Chart) return Promise.resolve(window.Chart);
+    if (!chartJsPromise) {
+        chartJsPromise = new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
+            script.async = true;
+            script.onload = () => resolve(window.Chart);
+            script.onerror = () => reject(new Error("Failed to load Chart.js"));
+            document.head.appendChild(script);
+        });
+    }
+    return chartJsPromise;
+}
 
 async function init() {
     let loaded;
     try {
-        loaded = await loadAllData();
+        loaded = await dataPromise;
     } catch (err) {
         console.error(err);
         document.body.innerHTML = "<p style=\"padding:2rem;font-family:Inter,sans-serif\">Failed to load site data. Serve this site over HTTP so JSON files can be fetched.</p>";
@@ -30,10 +49,10 @@ async function init() {
     activeNavTag = "Trending";
 
     renderNavTabs();
-    renderFeatured();
     renderSidebars();
     renderGridTags();
     renderMarkets();
+    renderFeatured();
 
     bindGlobalEvents();
     document.getElementById("footer-tagline").textContent = siteData.site.tagline;
@@ -546,10 +565,11 @@ function sparseLabelIndices(count) {
     return [0, mid, count - 1];
 }
 
-function renderFeaturedChart(market) {
+async function renderFeaturedChart(market) {
     const canvas = document.getElementById("marketChart");
     if (!canvas || !market.history.values.length) return;
 
+    const Chart = await loadChartJs();
     const ctx = canvas.getContext("2d");
     const values = market.history.values;
     const labels = market.history.labels;
