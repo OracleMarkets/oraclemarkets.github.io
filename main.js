@@ -39,7 +39,7 @@ async function init() {
         loaded = await dataPromise;
     } catch (err) {
         console.error(err);
-        document.body.innerHTML = "<p style=\"padding:2rem;font-family:Inter,sans-serif\">Failed to load site data. Serve this site over HTTP so JSON files can be fetched.</p>";
+        document.body.innerHTML = "<p style=\"padding:2rem;font-family:Inter,sans-serif\">Failed to load site data.</p>";
         return;
     }
     siteData = loaded.site;
@@ -83,27 +83,14 @@ function renderFooterLinks() {
     container.innerHTML = links.join("");
 }
 
-async function fetchJson(path) {
-    try {
-        let res = await fetch(path);
-        if (res.ok) return await res.json();
-    } catch (_) { }
-    return null;
-}
-
-async function loadAllData() {
-    const [site, news, marketDefs, marketPools] = await Promise.all([
-        fetchJson("data/data.json"),
-        fetchJson("data/news.json"),
-        fetchJson("data/markets.json"),
-        fetchJson("data/market-pools.json")
-    ]);
+function loadAllData() {
+    const { site, news, marketDefs, marketPools } = window.ORACLE_DATA ?? {};
 
     if (!site || !news || !marketDefs || !marketPools) {
-        throw new Error("Failed to load site data");
+        return Promise.reject(new Error("Failed to load site data"));
     }
 
-    return { site, news, marketDefs, marketPools };
+    return Promise.resolve({ site, news, marketDefs, marketPools });
 }
 
 function mergeMarkets(marketDefs, marketPools, site) {
