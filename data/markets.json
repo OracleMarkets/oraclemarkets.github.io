@@ -1,107 +1,31 @@
 {
   "markets": [
     {
-      "id": "crit-comeback",
-      "title": "Will C.R.I.T. make a comeback?",
-      "short_title": "C.R.I.T. Comeback?",
+      "id": "leader-assassination-day1",
+      "title": "Will any nation leaders be assassinated on Day 1?",
+      "short_title": "Leader Assassination?",
       "icon": "",
-      "ends": "2026-06-14",
-      "added_at": 1745798400,
-      "tags": ["Politics", "Nations"],
+      "ends": 1781305200,
+      "added_at": 1780920000,
+      "tags": ["Politics", "Nations", "Deaths", "RDM"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "colour": "#ea3943" }
       ]
     },
     {
-      "id": "king-crestconomy",
-      "title": "Who will be the King of the Crestconomy?",
-      "short_title": "Crestconomy King",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1745884800,
-      "tags": ["Politics", "Nations", "Lucrum Federation"],
-      "outcomes": [
-        { "id": "rosual", "title": "Rosual", "colour": "#3b82f6" },
-        { "id": "philipkar", "title": "PhilipKar", "colour": "#16c784" }
-      ]
-    },
-    {
-      "id": "elanuelo-maid",
-      "title": "Will Elanuelo wear a maid dress?",
-      "short_title": "Maid Dress",
-      "icon": "",
-      "ends": "2026-06-12",
-      "added_at": 1745971200,
-      "tags": ["Femboys", "Culture", "Drama"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "day1-deaths",
-      "title": "How many people will die by the end of Day 1?",
+      "id": "day1-player-deaths",
+      "title": "How many player deaths will occur by the end of Day 1?",
       "short_title": "Day 1 Deaths",
       "icon": "",
-      "ends": "2026-06-02",
-      "added_at": 1746057600,
-      "tags": ["Deaths", "War"],
+      "ends": 1781305200,
+      "added_at": 1780920001,
+      "tags": ["Deaths", "War", "RDM"],
       "outcomes": [
-        { "id": "under5", "title": "<5", "colour": "#16c784" },
-        { "id": "five_plus", "title": "5+", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "hardwood-profit",
-      "title": "Will the Hardwood Company finally turn a profit?",
-      "short_title": "Hardwood Profit",
-      "icon": "",
-      "ends": "2026-06-18",
-      "added_at": 1746144000,
-      "tags": ["Economy", "Bedrock Corp"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "lucrum-collapse",
-      "title": "Will the Lucrum Federation hold together?",
-      "short_title": "Lucrum Federation",
-      "icon": "",
-      "ends": "2026-06-11",
-      "added_at": 1746230400,
-      "tags": ["Lucrum Federation", "Nations", "Politics"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "anything-happen",
-      "title": "Will anything actually happen?",
-      "short_title": "Anything Happen?",
-      "icon": "",
-      "ends": "2026-06-03",
-      "added_at": 1746316800,
-      "tags": ["Drama"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "bedrock-tower-deaths",
-      "title": "How many people will die to fall damage building the Bedrock Corp tower?",
-      "short_title": "Tower Fall Damage",
-      "icon": "",
-      "ends": "2026-06-08",
-      "added_at": 1746403200,
-      "tags": ["Deaths", "Bedrock Corp"],
-      "outcomes": [
-        { "id": "under5", "title": "<5", "colour": "#16c784" },
-        { "id": "five_plus", "title": "5+", "colour": "#ea3943" }
+        { "id": "zero", "title": "0", "colour": "#16c784" },
+        { "id": "one_two", "title": "1-2", "colour": "#3b82f6" },
+        { "id": "three_five", "title": "3-5", "colour": "#f59e0b" },
+        { "id": "six_plus", "title": "6+", "colour": "#ea3943" }
       ]
     },
     {
@@ -109,143 +33,51 @@
       "title": "What will be the leading cause of death on Day 1?",
       "short_title": "Day 1 Cause",
       "icon": "",
-      "ends": "2026-06-02",
-      "added_at": 1746489600,
-      "tags": ["Deaths", "War"],
+      "ends": 1781305200,
+      "added_at": 1780920002,
+      "tags": ["Deaths", "RDM"],
       "outcomes": [
-        { "id": "falling", "title": "Falling", "colour": "#3b82f6" },
-        { "id": "mobs", "title": "Mobs", "colour": "#16c784" },
-        { "id": "players", "title": "Players", "colour": "#ea3943" },
-        { "id": "lava", "title": "Lava", "colour": "#f59e0b" }
+        { "id": "fall_damage", "title": "Fall Damage", "colour": "#3b82f6" },
+        { "id": "hostile_mobs", "title": "Hostile Mobs", "colour": "#16c784" },
+        { "id": "player_kills", "title": "Player Kills", "colour": "#ea3943" },
+        { "id": "lava", "title": "Lava", "colour": "#f59e0b" },
+        { "id": "drowning", "title": "Drowning", "colour": "#8b5cf6" }
       ]
     },
     {
-      "id": "tung-sahur",
-      "title": "Will the world accept Tung Tung Tung Sahur as their saviour?",
-      "short_title": "Tung Sahur",
+      "id": "death-first-30min",
+      "title": "Will a player die within the first 30 minutes?",
+      "short_title": "Death in 30 Min?",
       "icon": "",
-      "ends": "2026-06-15",
-      "added_at": 1746576000,
-      "tags": ["Culture", "Drama"],
+      "ends": 1781305200,
+      "added_at": 1780920003,
+      "tags": ["Deaths", "RDM"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "colour": "#ea3943" }
       ]
     },
     {
-      "id": "oracle-flop",
-      "title": "Will Oracle be a flop and I end up homeless?",
-      "short_title": "Oracle Flop",
+      "id": "server-lag-day1",
+      "title": "Will there be major server lag or a crash on Day 1?",
+      "short_title": "Server Lag?",
       "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1746662400,
+      "ends": 1781305200,
+      "added_at": 1780920004,
+      "tags": ["Drama", "Metagaming"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "crestconomy-failure-day1",
+      "title": "Will the Crestconomy plugin experience a game-breaking failure on Day 1?",
+      "short_title": "Plugin Failure?",
+      "icon": "",
+      "ends": 1781305200,
+      "added_at": 1780920005,
       "tags": ["Economy", "Drama"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "leader-deaths-day3",
-      "title": "How many leader deaths by Day 3?",
-      "short_title": "Leader Deaths",
-      "icon": "",
-      "ends": "2026-06-05",
-      "added_at": 1746748800,
-      "tags": ["Deaths", "Politics", "Nations"],
-      "outcomes": [
-        { "id": "zero", "title": "0", "colour": "#16c784" },
-        { "id": "one_two", "title": "1-2", "colour": "#3b82f6" },
-        { "id": "two_three", "title": "2-3", "colour": "#f59e0b" },
-        { "id": "four_plus", "title": "4+", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "kapooklynn-survival",
-      "title": "Will KapookLynn last longer than 3 days?",
-      "short_title": "KapookLynn",
-      "icon": "",
-      "ends": "2026-06-06",
-      "added_at": 1746835200,
-      "tags": ["Nations", "Drama"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "economy-crash-day5",
-      "title": "Will the global economy crash by Day 5?",
-      "short_title": "Economy Crash",
-      "icon": "",
-      "ends": "2026-06-07",
-      "added_at": 1746921600,
-      "tags": ["Economy", "Nations"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "generic-rdm",
-      "title": "Will a major RDM incident occur this season?",
-      "short_title": "RDM Incident",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1747008000,
-      "tags": ["RDM"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "generic-sports",
-      "title": "Will Purgesketball become the dominant sport in the event?",
-      "short_title": "Sports Meta",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1747008001,
-      "tags": ["Sports"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "generic-metagaming",
-      "title": "Will players RDM, metagame, and bring out-of-event drama into this event?",
-      "short_title": "Metagaming",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1747008002,
-      "tags": ["Metagaming"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "generic-sevcorp",
-      "title": "Will SevCorp make a major move this week?",
-      "short_title": "SevCorp Move",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1747008003,
-      "tags": ["SevCorp"],
-      "outcomes": [
-        { "id": "yes", "title": "Yes", "colour": "#16c784" },
-        { "id": "no", "title": "No", "colour": "#ea3943" }
-      ]
-    },
-    {
-      "id": "generic-plinth",
-      "title": "Will Plinth be a major political player?",
-      "short_title": "Plinth Politics",
-      "icon": "",
-      "ends": "2026-06-20",
-      "added_at": 1747008004,
-      "tags": ["Plinth"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "colour": "#ea3943" }

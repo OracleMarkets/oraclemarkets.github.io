@@ -1,238 +1,57 @@
 {
   "pools": [
     {
-      "market_id": "crit-comeback",
+      "market_id": "leader-assassination-day1",
       "outcomes": [
-        { "outcome": "yes", "pool_size": 104640 },
-        { "outcome": "no", "pool_size": 549360 }
+        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "no", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1746057600, "pool_sizes": [{ "outcome": "yes", "size": 183000 }, { "outcome": "no", "size": 471000 }] },
-        { "date_time": 1746316800, "pool_sizes": [{ "outcome": "yes", "size": 156000 }, { "outcome": "no", "size": 498000 }] },
-        { "date_time": 1746576000, "pool_sizes": [{ "outcome": "yes", "size": 176000 }, { "outcome": "no", "size": 478000 }] },
-        { "date_time": 1746835200, "pool_sizes": [{ "outcome": "yes", "size": 143000 }, { "outcome": "no", "size": 511000 }] },
-        { "date_time": 1747094400, "pool_sizes": [{ "outcome": "yes", "size": 163000 }, { "outcome": "no", "size": 491000 }] },
-        { "date_time": 1747353600, "pool_sizes": [{ "outcome": "yes", "size": 124000 }, { "outcome": "no", "size": 530000 }] },
-        { "date_time": 1747612800, "pool_sizes": [{ "outcome": "yes", "size": 137000 }, { "outcome": "no", "size": 517000 }] },
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 111000 }, { "outcome": "no", "size": 543000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 104640 }, { "outcome": "no", "size": 549360 }] }
-      ]
+      "history": []
     },
     {
-      "market_id": "king-crestconomy",
+      "market_id": "day1-player-deaths",
       "outcomes": [
-        { "outcome": "rosual", "pool_size": 18600000 },
-        { "outcome": "philipkar", "pool_size": 11400000 }
+        { "outcome": "zero", "pool_size": 0 },
+        { "outcome": "one_two", "pool_size": 0 },
+        { "outcome": "three_five", "pool_size": 0 },
+        { "outcome": "six_plus", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1746057600, "pool_sizes": [{ "outcome": "rosual", "size": 16500000 }, { "outcome": "philipkar", "size": 13500000 }] },
-        { "date_time": 1746316800, "pool_sizes": [{ "outcome": "rosual", "size": 17400000 }, { "outcome": "philipkar", "size": 12600000 }] },
-        { "date_time": 1746576000, "pool_sizes": [{ "outcome": "rosual", "size": 16800000 }, { "outcome": "philipkar", "size": 13200000 }] },
-        { "date_time": 1746835200, "pool_sizes": [{ "outcome": "rosual", "size": 18000000 }, { "outcome": "philipkar", "size": 12000000 }] },
-        { "date_time": 1747094400, "pool_sizes": [{ "outcome": "rosual", "size": 17400000 }, { "outcome": "philipkar", "size": 12600000 }] },
-        { "date_time": 1747353600, "pool_sizes": [{ "outcome": "rosual", "size": 18600000 }, { "outcome": "philipkar", "size": 11400000 }] },
-        { "date_time": 1747612800, "pool_sizes": [{ "outcome": "rosual", "size": 18300000 }, { "outcome": "philipkar", "size": 11700000 }] },
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "rosual", "size": 18500000 }, { "outcome": "philipkar", "size": 11500000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "rosual", "size": 18600000 }, { "outcome": "philipkar", "size": 11400000 }] }
-      ]
-    },
-    {
-      "market_id": "elanuelo-maid",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 10200000 },
-        { "outcome": "no", "pool_size": 9800000 }
-      ],
-      "history": [
-        { "date_time": 1746057600, "pool_sizes": [{ "outcome": "yes", "size": 12400000 }, { "outcome": "no", "size": 7600000 }] },
-        { "date_time": 1746316800, "pool_sizes": [{ "outcome": "yes", "size": 11600000 }, { "outcome": "no", "size": 8400000 }] },
-        { "date_time": 1746576000, "pool_sizes": [{ "outcome": "yes", "size": 10800000 }, { "outcome": "no", "size": 9200000 }] },
-        { "date_time": 1746835200, "pool_sizes": [{ "outcome": "yes", "size": 10200000 }, { "outcome": "no", "size": 9800000 }] },
-        { "date_time": 1747094400, "pool_sizes": [{ "outcome": "yes", "size": 10600000 }, { "outcome": "no", "size": 9400000 }] },
-        { "date_time": 1747353600, "pool_sizes": [{ "outcome": "yes", "size": 10000000 }, { "outcome": "no", "size": 10000000 }] },
-        { "date_time": 1747612800, "pool_sizes": [{ "outcome": "yes", "size": 10300000 }, { "outcome": "no", "size": 9700000 }] },
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 10100000 }, { "outcome": "no", "size": 9900000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 10200000 }, { "outcome": "no", "size": 9800000 }] }
-      ]
-    },
-    {
-      "market_id": "day1-deaths",
-      "outcomes": [
-        { "outcome": "under5", "pool_size": 3608000 },
-        { "outcome": "five_plus", "pool_size": 4592000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "under5", "size": 3700000 }, { "outcome": "five_plus", "size": 4500000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "under5", "size": 3608000 }, { "outcome": "five_plus", "size": 4592000 }] }
-      ]
-    },
-    {
-      "market_id": "hardwood-profit",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 492000 },
-        { "outcome": "no", "pool_size": 3608000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 520000 }, { "outcome": "no", "size": 3580000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 492000 }, { "outcome": "no", "size": 3608000 }] }
-      ]
-    },
-    {
-      "market_id": "lucrum-collapse",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 649700 },
-        { "outcome": "no", "pool_size": 240300 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 620000 }, { "outcome": "no", "size": 270000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 649700 }, { "outcome": "no", "size": 240300 }] }
-      ]
-    },
-    {
-      "market_id": "anything-happen",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 14400 },
-        { "outcome": "no", "pool_size": 165600 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 18000 }, { "outcome": "no", "size": 162000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 14400 }, { "outcome": "no", "size": 165600 }] }
-      ]
-    },
-    {
-      "market_id": "bedrock-tower-deaths",
-      "outcomes": [
-        { "outcome": "under5", "pool_size": 890000 },
-        { "outcome": "five_plus", "pool_size": 2110000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "under5", "size": 920000 }, { "outcome": "five_plus", "size": 2080000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "under5", "size": 890000 }, { "outcome": "five_plus", "size": 2110000 }] }
-      ]
+      "history": []
     },
     {
       "market_id": "day1-cause-of-death",
       "outcomes": [
-        { "outcome": "falling", "pool_size": 1850000 },
-        { "outcome": "mobs", "pool_size": 920000 },
-        { "outcome": "players", "pool_size": 640000 },
-        { "outcome": "lava", "pool_size": 410000 }
+        { "outcome": "fall_damage", "pool_size": 0 },
+        { "outcome": "hostile_mobs", "pool_size": 0 },
+        { "outcome": "player_kills", "pool_size": 0 },
+        { "outcome": "lava", "pool_size": 0 },
+        { "outcome": "drowning", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "falling", "size": 1720000 }, { "outcome": "mobs", "size": 880000 }, { "outcome": "players", "size": 620000 }, { "outcome": "lava", "size": 380000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "falling", "size": 1850000 }, { "outcome": "mobs", "size": 920000 }, { "outcome": "players", "size": 640000 }, { "outcome": "lava", "size": 410000 }] }
-      ]
+      "history": []
     },
     {
-      "market_id": "tung-sahur",
+      "market_id": "death-first-30min",
       "outcomes": [
-        { "outcome": "yes", "pool_size": 312000 },
-        { "outcome": "no", "pool_size": 188000 }
+        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "no", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 280000 }, { "outcome": "no", "size": 220000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 312000 }, { "outcome": "no", "size": 188000 }] }
-      ]
+      "history": []
     },
     {
-      "market_id": "oracle-flop",
+      "market_id": "server-lag-day1",
       "outcomes": [
-        { "outcome": "yes", "pool_size": 42000 },
-        { "outcome": "no", "pool_size": 458000 }
+        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "no", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 48000 }, { "outcome": "no", "size": 452000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 42000 }, { "outcome": "no", "size": 458000 }] }
-      ]
+      "history": []
     },
     {
-      "market_id": "leader-deaths-day3",
+      "market_id": "crestconomy-failure-day1",
       "outcomes": [
-        { "outcome": "zero", "pool_size": 180000 },
-        { "outcome": "one_two", "pool_size": 520000 },
-        { "outcome": "two_three", "pool_size": 340000 },
-        { "outcome": "four_plus", "pool_size": 960000 }
+        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "no", "pool_size": 0 }
       ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "zero", "size": 190000 }, { "outcome": "one_two", "size": 500000 }, { "outcome": "two_three", "size": 330000 }, { "outcome": "four_plus", "size": 940000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "zero", "size": 180000 }, { "outcome": "one_two", "size": 520000 }, { "outcome": "two_three", "size": 340000 }, { "outcome": "four_plus", "size": 960000 }] }
-      ]
-    },
-    {
-      "market_id": "kapooklynn-survival",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 275000 },
-        { "outcome": "no", "pool_size": 425000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 290000 }, { "outcome": "no", "size": 410000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 275000 }, { "outcome": "no", "size": 425000 }] }
-      ]
-    },
-    {
-      "market_id": "economy-crash-day5",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 1240000 },
-        { "outcome": "no", "pool_size": 2760000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 1180000 }, { "outcome": "no", "size": 2820000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 1240000 }, { "outcome": "no", "size": 2760000 }] }
-      ]
-    },
-    {
-      "market_id": "generic-rdm",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 28000 },
-        { "outcome": "no", "pool_size": 72000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 26000 }, { "outcome": "no", "size": 74000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 28000 }, { "outcome": "no", "size": 72000 }] }
-      ]
-    },
-    {
-      "market_id": "generic-sports",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 22000 },
-        { "outcome": "no", "pool_size": 78000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 24000 }, { "outcome": "no", "size": 76000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 22000 }, { "outcome": "no", "size": 78000 }] }
-      ]
-    },
-    {
-      "market_id": "generic-metagaming",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 65000 },
-        { "outcome": "no", "pool_size": 35000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 68000 }, { "outcome": "no", "size": 32000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 65000 }, { "outcome": "no", "size": 35000 }] }
-      ]
-    },
-    {
-      "market_id": "generic-sevcorp",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 31000 },
-        { "outcome": "no", "pool_size": 69000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 30000 }, { "outcome": "no", "size": 70000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 31000 }, { "outcome": "no", "size": 69000 }] }
-      ]
-    },
-    {
-      "market_id": "generic-plinth",
-      "outcomes": [
-        { "outcome": "yes", "pool_size": 25000 },
-        { "outcome": "no", "pool_size": 75000 }
-      ],
-      "history": [
-        { "date_time": 1747785600, "pool_sizes": [{ "outcome": "yes", "size": 27000 }, { "outcome": "no", "size": 73000 }] },
-        { "date_time": 1747872000, "pool_sizes": [{ "outcome": "yes", "size": 25000 }, { "outcome": "no", "size": 75000 }] }
-      ]
+      "history": []
     }
   ]
 }

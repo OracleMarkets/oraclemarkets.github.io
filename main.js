@@ -120,14 +120,19 @@ function mergeMarkets(marketDefs, marketPools, site) {
     });
 }
 
+function equalOutcomePercent(outcomeCount) {
+    return Math.round(100 / outcomeCount);
+}
+
 function normaliseMarket(raw, site) {
     const totalPool = raw.outcomes.reduce((sum, o) => sum + o.pool_size, 0);
+    const evenPercent = equalOutcomePercent(raw.outcomes.length);
     const outcomes = raw.outcomes.map((o) => ({
         id: o.id,
         name: o.title,
         colour: o.colour,
         pool_size: o.pool_size,
-        percent: totalPool ? Math.round((o.pool_size / totalPool) * 100) : 0,
+        percent: totalPool ? Math.round((o.pool_size / totalPool) * 100) : evenPercent,
         url: `${site.defaultBetUrl}`
     }));
 
@@ -137,7 +142,7 @@ function normaliseMarket(raw, site) {
     const history = buildChartHistory(raw);
     const leading = outcomes.reduce((a, b) => (a.percent > b.percent ? a : b));
     const primaryId = history.primaryId;
-    const stats24h = compute24hStats(raw.history ?? [], totalPool, primaryId);
+    const stats24h = compute24hStats(raw.history ?? [], totalPool, primaryId, raw.outcomes.length);
 
     return {
         id: raw.id,
@@ -167,9 +172,9 @@ function totalPoolFromSnapshot(poolSizes) {
 }
 
 function percentForOutcome(poolSizes, outcomeId) {
-    let total = totalPoolFromSnapshot(poolSizes);
-    if (!total) return 0;
-    let size = poolSizes.find((p) => p.outcome === outcomeId)?.size ?? 0;
+    const total = totalPoolFromSnapshot(poolSizes);
+    if (!total) return equalOutcomePercent(poolSizes.length);
+    const size = poolSizes.find((p) => p.outcome === outcomeId)?.size ?? 0;
     return Math.round((size / total) * 1000) / 10;
 }
 
@@ -188,13 +193,14 @@ function getHistoryPoint24hAgo(history) {
     return best;
 }
 
-function compute24hStats(history, currentTotal, primaryId) {
+function compute24hStats(history, currentTotal, primaryId, outcomeCount) {
     const point24h = getHistoryPoint24hAgo(history);
     const latest = history.length ? [...history].sort((a, b) => a.date_time - b.date_time).at(-1) : null;
+    const evenPercent = equalOutcomePercent(outcomeCount);
 
     const displayPercent = latest
         ? percentForOutcome(latest.pool_sizes, primaryId)
-        : 0;
+        : (currentTotal ? 0 : evenPercent);
 
     if (!point24h || !latest) {
         return { volume24h: 0, change: 0, displayPercent };
@@ -216,7 +222,7 @@ function isBinaryOutcomes(outcomes) {
 
 function percentFromSnapshot(poolSizes, outcomeId) {
     const total = totalPoolFromSnapshot(poolSizes);
-    if (!total) return 0;
+    if (!total) return equalOutcomePercent(poolSizes.length);
     const size = poolSizes.find((p) => p.outcome === outcomeId)?.size ?? 0;
     return Math.round((size / total) * 1000) / 10;
 }
@@ -274,10 +280,25 @@ function getZonedParts(ms, timeZone) {
 
 const marketEndCache = new Map();
 
-function parseMarketEndMs(isoDate) {
-    if (!isoDate) return null;
-    if (marketEndCache.has(isoDate)) return marketEndCache.get(isoDate);
+function parseMarketEndMs(ends) {
+    if (ends === null || ends === undefined || ends === "") return null;
 
+    const cacheKey = String(ends);
+    if (marketEndCache.has(cacheKey)) return marketEndCache.get(cacheKey);
+
+    const unixSeconds = typeof ends === "number"
+        ? ends
+        : /^\d{10,13}$/.test(cacheKey)
+            ? Number(cacheKey)
+            : null;
+
+    if (unixSeconds !== null) {
+        const ms = unixSeconds < 1e12 ? unixSeconds * 1000 : unixSeconds;
+        marketEndCache.set(cacheKey, ms);
+        return ms;
+    }
+
+    const isoDate = cacheKey;
     const [year, month, day] = isoDate.split("-").map(Number);
 
     for (const offset of ["-04:00", "-05:00"]) {
@@ -291,13 +312,13 @@ function parseMarketEndMs(isoDate) {
             p.minute === 59 &&
             p.second === 59
         ) {
-            marketEndCache.set(isoDate, ms);
+            marketEndCache.set(cacheKey, ms);
             return ms;
         }
     }
 
     const fallback = Date.parse(`${isoDate}T23:59:59-05:00`);
-    marketEndCache.set(isoDate, fallback);
+    marketEndCache.set(cacheKey, fallback);
     return fallback;
 }
 
