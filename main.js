@@ -2,6 +2,7 @@ const ARC_LENGTH = 126;
 const STATIC_NAV_TABS = ["Trending", "New"];
 const HIGHLIGHT_LIMIT = 3;
 const HOURS_24_SEC = 86400;
+const MARKET_END_TZ = "America/New_York";
 
 let siteData = null;
 let newsData = null;
@@ -12,6 +13,7 @@ let activeNavTag = "Trending";
 let activeGridTag = "All";
 let searchQuery = "";
 let chartJsPromise = null;
+let marketEndTimer = null;
 
 const dataPromise = loadAllData();
 loadChartJs();
@@ -57,6 +59,7 @@ async function init() {
     bindGlobalEvents();
     document.getElementById("footer-tagline").textContent = siteData.site.tagline;
     renderFooterLinks();
+    startMarketEndTicker();
 }
 
 const DISCORD_ICON = `<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 12.3 12.3 0 0 0-.608 1.25 18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`;
@@ -142,7 +145,7 @@ function normaliseMarket(raw, site) {
         short_title: raw.short_title,
         icon: raw.icon,
         tags: raw.tags,
-        ends: formatEnds(raw.ends),
+        endsAt: parseMarketEndMs(raw.ends),
         type: isBinary ? "yes-no" : "multi",
         outcomes,
         yesPercent: yesOutcome?.percent ?? leading.percent,
@@ -205,18 +208,38 @@ function compute24hStats(history, currentTotal, primaryId) {
     return { volume24h, change, displayPercent };
 }
 
+function isBinaryOutcomes(outcomes) {
+    const yesOutcome = outcomes.find((o) => o.id === "yes");
+    const noOutcome = outcomes.find((o) => o.id === "no");
+    return outcomes.length === 2 && Boolean(yesOutcome && noOutcome);
+}
+
+function percentFromSnapshot(poolSizes, outcomeId) {
+    const total = totalPoolFromSnapshot(poolSizes);
+    if (!total) return 0;
+    const size = poolSizes.find((p) => p.outcome === outcomeId)?.size ?? 0;
+    return Math.round((size / total) * 1000) / 10;
+}
+
 function buildChartHistory(raw) {
+    const labels = raw.history.map((h) => formatChartDate(h.date_time));
     const primaryId = raw.outcomes.find((o) => o.id === "yes")?.id
         ?? raw.outcomes.reduce((a, b) => (a.pool_size > b.pool_size ? a : b)).id;
 
-    const labels = raw.history.map((h) => formatChartDate(h.date_time));
-    const values = raw.history.map((h) => {
-        const total = h.pool_sizes.reduce((s, p) => s + p.size, 0);
-        const primary = h.pool_sizes.find((p) => p.outcome === primaryId)?.size ?? 0;
-        return total ? Math.round((primary / total) * 1000) / 10 : 0;
-    });
+    if (!isBinaryOutcomes(raw.outcomes)) {
+        const series = raw.outcomes.map((outcome) => ({
+            id: outcome.id,
+            name: outcome.title,
+            colour: outcome.colour || "#3b82f6",
+            values: raw.history.map((h) => percentFromSnapshot(h.pool_sizes, outcome.id))
+        }));
 
-    return { labels, values, primaryId };
+        return { labels, values: [], series, primaryId, mode: "multi" };
+    }
+
+    const values = raw.history.map((h) => percentFromSnapshot(h.pool_sizes, primaryId));
+
+    return { labels, values, series: null, primaryId, mode: "binary" };
 }
 
 function formatVolume(amount) {
@@ -232,10 +255,139 @@ function formatVolumeToday(amount) {
     return "$0 today";
 }
 
-function formatEnds(iso) {
-    if (!iso) return "";
-    let d = new Date(iso + "T00:00:00");
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+function getZonedParts(ms, timeZone) {
+    const parts = {};
+    for (const p of new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false
+    }).formatToParts(new Date(ms))) {
+        if (p.type !== "literal") parts[p.type] = Number(p.value);
+    }
+    return parts;
+}
+
+const marketEndCache = new Map();
+
+function parseMarketEndMs(isoDate) {
+    if (!isoDate) return null;
+    if (marketEndCache.has(isoDate)) return marketEndCache.get(isoDate);
+
+    const [year, month, day] = isoDate.split("-").map(Number);
+
+    for (const offset of ["-04:00", "-05:00"]) {
+        const ms = Date.parse(`${isoDate}T23:59:59${offset}`);
+        const p = getZonedParts(ms, MARKET_END_TZ);
+        if (
+            p.year === year &&
+            p.month === month &&
+            p.day === day &&
+            p.hour === 23 &&
+            p.minute === 59 &&
+            p.second === 59
+        ) {
+            marketEndCache.set(isoDate, ms);
+            return ms;
+        }
+    }
+
+    const fallback = Date.parse(`${isoDate}T23:59:59-05:00`);
+    marketEndCache.set(isoDate, fallback);
+    return fallback;
+}
+
+function formatEndEst(ms) {
+    return new Intl.DateTimeFormat("en-US", {
+        timeZone: MARKET_END_TZ,
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZoneName: "short"
+    }).format(ms);
+}
+
+function formatCountdown(endsAt) {
+    const diff = endsAt - Date.now();
+    if (diff <= 0) return "Ended";
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (days > 0) return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+    if (minutes > 0) return `${minutes}m ${seconds}s`;
+    return `${seconds}s`;
+}
+
+function escapeAttr(str) {
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+function isMarketEnded(endsAt) {
+    return Boolean(endsAt && endsAt <= Date.now());
+}
+
+function marketEndsClasses(endsAt) {
+    const remaining = endsAt - Date.now();
+    const classes = ["market-ends"];
+    if (remaining <= 0) classes.push("market-ends--ended");
+    else if (remaining < 3600000) classes.push("market-ends--urgent");
+    return classes.join(" ");
+}
+
+function setMarketCardEndedState(card, endsAt) {
+    if (!card || !endsAt) return;
+
+    const ended = isMarketEnded(endsAt);
+    card.classList.toggle("event-card--ended", ended && card.classList.contains("event-card"));
+    card.classList.toggle("highlight--ended", ended && card.id === "featured-card");
+    card.querySelectorAll("[data-bet-url]").forEach((btn) => {
+        btn.disabled = ended;
+    });
+}
+
+function marketEndsHtml(market) {
+    if (!market.endsAt) return "";
+
+    const label = formatCountdown(market.endsAt);
+    const title = formatEndEst(market.endsAt);
+
+    return `<span class="${marketEndsClasses(market.endsAt)}" data-ends-at="${market.endsAt}" title="${escapeAttr(title)}">${label}</span>`;
+}
+
+function updateMarketEndTimers() {
+    document.querySelectorAll(".market-ends[data-ends-at]").forEach((el) => {
+        const endsAt = Number(el.dataset.endsAt);
+        if (!endsAt) return;
+
+        const remaining = endsAt - Date.now();
+        el.className = marketEndsClasses(endsAt);
+        el.textContent = formatCountdown(endsAt);
+        el.title = formatEndEst(endsAt);
+        setMarketCardEndedState(el.closest(".event-card, #featured-card"), endsAt);
+    });
+}
+
+function startMarketEndTicker() {
+    updateMarketEndTimers();
+    if (marketEndTimer) return;
+    marketEndTimer = setInterval(updateMarketEndTimers, 1000);
 }
 
 function formatChartDate(ts) {
@@ -261,6 +413,24 @@ function isStaticNavTab(tag) {
 function matchesNavFilter(market) {
     if (isStaticNavTab(activeNavTag)) return true;
     return market.tags.includes(activeNavTag);
+}
+
+function buildGridTags() {
+    const tagPools = new Map();
+    const navCategories = new Set(siteData.navTags);
+
+    for (const market of markets) {
+        for (const tag of market.tags) {
+            tagPools.set(tag, (tagPools.get(tag) ?? 0) + market.totalPool);
+        }
+    }
+
+    const sorted = [...tagPools.entries()]
+        .filter(([tag]) => !navCategories.has(tag))
+        .sort((a, b) => b[1] - a[1])
+        .map(([tag]) => tag);
+
+    return ["All", ...sorted];
 }
 
 function getFilteredMarkets() {
@@ -439,6 +609,7 @@ function renderFeatured() {
     if (!list.length) {
         let emptyMessage = searchQuery.length ?`No ${activeNavTag} markets for "${searchQuery}".` : `No ${activeNavTag} markets.`;
 
+        card.classList.remove("highlight--ended");
         card.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
         if (featuredChart) { featuredChart.destroy(); featuredChart = null; }
         return;
@@ -457,17 +628,22 @@ function renderFeatured() {
         ? `${market.yesPercent}% chance`
         : `${market.leadingOutcome.percent}% ${market.leadingOutcome.name}`;
 
+    const ended = isMarketEnded(market.endsAt);
+    const disabledAttr = ended ? " disabled" : "";
+
+    card.classList.toggle("highlight--ended", ended);
+
     const actionButtons = market.type === "yes-no"
         ? `<div class="btn-row">
-                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button">Yes</button>
-                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button">No</button>
+                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button"${disabledAttr}>Yes</button>
+                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button"${disabledAttr}>No</button>
            </div>`
         : `<div class="outcomes-list featured-outcomes">
                 ${market.outcomes.map((o) => `
                     <div class="outcome-row">
                         <p class="outcome-name">${o.name}</p>
                         <span class="outcome-pct lead">${o.percent}%</span>
-                        <button class="btn-bet" data-bet-url="${o.url}" type="button">Bet</button>
+                        <button class="btn-bet" data-bet-url="${o.url}" type="button"${disabledAttr}>Bet</button>
                     </div>
                 `).join("")}
            </div>`;
@@ -501,13 +677,16 @@ function renderFeatured() {
                 ${actionButtons}
                 ${buildNewsFeedHtml(articles)}
             </div>
-            <div class="graph-container">
+            <div class="graph-container${market.type === "multi" ? " graph-container--multi" : ""}">
                 <canvas id="marketChart"></canvas>
             </div>
         </div>
 
         <div class="featured-footer">
-            <span>${market.volume}${market.ends ? ` · Ends ${market.ends}` : ""}</span>
+            <span class="featured-footer-left">
+                <span>${market.volume}</span>
+                ${marketEndsHtml(market)}
+            </span>
             ${carouselHtml}
         </div>
     `;
@@ -534,6 +713,7 @@ function renderFeatured() {
     });
 
     renderFeaturedChart(market);
+    updateMarketEndTimers();
 }
 
 function getChartYScale(values) {
@@ -552,17 +732,92 @@ function sparseLabelIndices(count) {
     return [0, mid, count - 1];
 }
 
+function chartTooltipPlugin(displayColors) {
+    return {
+        mode: "index",
+        intersect: false,
+        backgroundColor: "#1a1f26",
+        borderColor: "#2a3139",
+        borderWidth: 1,
+        cornerRadius: 6,
+        padding: 10,
+        titleColor: "#9ca3af",
+        titleFont: { size: 11, weight: "500" },
+        bodyColor: "#e6edf3",
+        bodyFont: { size: 12, weight: "600" },
+        displayColors,
+        callbacks: {
+            title: (items) => items[0]?.label ?? "",
+            label: (c) => `${c.dataset.label ? `${c.dataset.label}: ` : ""}${c.raw}%`
+        }
+    };
+}
+
+function chartXScale(labels) {
+    const visibleLabelIndices = new Set(sparseLabelIndices(labels.length));
+
+    return {
+        border: { display: false },
+        grid: { display: false },
+        ticks: {
+            color: "#6b7280",
+            font: { size: 10, weight: "500" },
+            maxRotation: 0,
+            autoSkip: false,
+            callback: (_, index) => (
+                visibleLabelIndices.has(index) ? labels[index] : ""
+            )
+        }
+    };
+}
+
+function chartYScaleRight({ min, max, step }) {
+    return {
+        min,
+        max,
+        position: "right",
+        border: { display: false },
+        grid: {
+            color: "rgba(255,255,255,0.05)",
+            drawBorder: false,
+            tickLength: 0
+        },
+        ticks: {
+            stepSize: step,
+            color: "#6b7280",
+            font: { size: 10, weight: "500" },
+            padding: 6,
+            callback: (value) => (
+                Number.isInteger(value) ? `${value}%` : ""
+            )
+        }
+    };
+}
+
+function pointRadii(length, lastIndex, activeRadius, inactiveRadius = 0) {
+    return Array.from({ length }, (_, i) => (i === lastIndex ? activeRadius : inactiveRadius));
+}
+
 async function renderFeaturedChart(market) {
     const canvas = document.getElementById("marketChart");
-    if (!canvas || !market.history.values.length) return;
+    if (!canvas || !market.history.labels.length) return;
 
+    if (market.type === "multi" && market.history.series?.length) {
+        await renderMultiFeaturedChart(market, canvas);
+        return;
+    }
+
+    if (!market.history.values.length) return;
+    await renderBinaryFeaturedChart(market, canvas);
+}
+
+async function renderBinaryFeaturedChart(market, canvas) {
     const Chart = await loadChartJs();
     const ctx = canvas.getContext("2d");
     const values = market.history.values;
     const labels = market.history.labels;
     const lastIndex = values.length - 1;
     const { min, max, step } = getChartYScale(values);
-    const visibleLabelIndices = new Set(sparseLabelIndices(labels.length));
 
     if (featuredChart) featuredChart.destroy();
 
@@ -576,8 +831,8 @@ async function renderFeaturedChart(market) {
                 borderWidth: 2,
                 tension: 0.38,
                 capBezierPoints: true,
-                pointRadius: values.map((_, i) => (i === lastIndex ? 4 : 0)),
-                pointHoverRadius: values.map((_, i) => (i === lastIndex ? 5 : 0)),
+                pointRadius: pointRadii(values.length, lastIndex, 4),
+                pointHoverRadius: pointRadii(values.length, lastIndex, 5),
                 pointBackgroundColor: "#3b82f6",
                 pointBorderColor: "#e6edf3",
                 pointBorderWidth: 2,
@@ -601,60 +856,73 @@ async function renderFeaturedChart(market) {
             animation: { duration: 600, easing: "easeOutQuart" },
             plugins: {
                 legend: { display: false },
-                tooltip: {
-                    mode: "index",
-                    intersect: false,
-                    backgroundColor: "#1a1f26",
-                    borderColor: "#2a3139",
-                    borderWidth: 1,
-                    cornerRadius: 6,
-                    padding: 10,
-                    titleColor: "#9ca3af",
-                    titleFont: { size: 11, weight: "500" },
-                    bodyColor: "#e6edf3",
-                    bodyFont: { size: 12, weight: "600" },
-                    displayColors: false,
-                    callbacks: {
-                        title: (items) => items[0]?.label ?? "",
-                        label: (c) => `${c.raw}%`
-                    }
-                }
+                tooltip: chartTooltipPlugin(false)
             },
             interaction: { mode: "index", intersect: false },
             scales: {
-                x: {
-                    border: { display: false },
-                    grid: { display: false },
-                    ticks: {
-                        color: "#6b7280",
-                        font: { size: 10, weight: "500" },
-                        maxRotation: 0,
-                        autoSkip: false,
-                        callback: (_, index) => (
-                            visibleLabelIndices.has(index) ? labels[index] : ""
-                        )
+                x: chartXScale(labels),
+                y: chartYScaleRight({ min, max, step })
+            }
+        }
+    });
+}
+
+async function renderMultiFeaturedChart(market, canvas) {
+    const Chart = await loadChartJs();
+    const ctx = canvas.getContext("2d");
+    const labels = market.history.labels;
+    const series = market.history.series;
+    const lastIndex = labels.length - 1;
+
+    if (featuredChart) featuredChart.destroy();
+
+    featuredChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: series.map((line) => ({
+                label: line.name,
+                data: line.values,
+                borderColor: line.colour,
+                backgroundColor: line.colour,
+                borderWidth: 2,
+                tension: 0.38,
+                capBezierPoints: true,
+                fill: false,
+                pointRadius: pointRadii(line.values.length, lastIndex, 3),
+                pointHoverRadius: pointRadii(line.values.length, lastIndex, 4),
+                pointBackgroundColor: line.colour,
+                pointBorderColor: "#e6edf3",
+                pointBorderWidth: 1.5,
+                pointHitRadius: 10
+            }))
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 6, right: 2, bottom: 4, left: 0 } },
+            animation: { duration: 600, easing: "easeOutQuart" },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "bottom",
+                    align: "start",
+                    labels: {
+                        color: "#9ca3af",
+                        font: { size: 11, weight: "500" },
+                        boxWidth: 10,
+                        boxHeight: 10,
+                        padding: 12,
+                        usePointStyle: true,
+                        pointStyle: "circle"
                     }
                 },
-                y: {
-                    min,
-                    max,
-                    position: "right",
-                    border: { display: false },
-                    grid: {
-                        color: "rgba(255,255,255,0.05)",
-                        drawBorder: false,
-                        tickLength: 0
-                    },
-                    ticks: {
-                        stepSize: step,
-                        color: "#6b7280",
-                        font: { size: 10, weight: "500" },
-                        padding: 6,
-                        callback: (value) => (
-                            Number.isInteger(value) ? `${value}%` : ""
-                        )
-                    }
-                }
+                tooltip: chartTooltipPlugin(true)
+            },
+            interaction: { mode: "index", intersect: false },
+            scales: {
+                x: chartXScale(labels),
+                y: chartYScaleRight({ min: 0, max: 100, step: 25 })
             }
         }
     });
@@ -696,8 +964,13 @@ function renderSidebars() {
 
 function renderGridTags() {
     const container = document.getElementById("grid-tags");
+    const gridTags = buildGridTags();
 
-    container.innerHTML = siteData.gridTags.map((tag) => {
+    if (!gridTags.includes(activeGridTag)) {
+        activeGridTag = "All";
+    }
+
+    container.innerHTML = gridTags.map((tag) => {
         const active = tag === activeGridTag ? " active" : "";
         return `<button class="grid-tag${active}" data-grid-tag="${tag}" type="button">${tag}</button>`;
     }).join("");
@@ -735,6 +1008,8 @@ function renderMarkets() {
     grid.querySelectorAll(".arc-fill").forEach((arc) => {
         animateArc(arc, Number(arc.dataset.percent));
     });
+
+    updateMarketEndTimers();
 }
 
 function marketIconHtml(market) {
@@ -746,11 +1021,14 @@ function marketIconHtml(market) {
 
 function renderMarketCard(market, index) {
     const delay = Math.min(index * 0.04, 0.4);
+    const ended = isMarketEnded(market.endsAt);
+    const endedClass = ended ? " event-card--ended" : "";
+    const disabledAttr = ended ? " disabled" : "";
 
     if (market.type === "multi") {
         const maxPct = Math.max(...market.outcomes.map((o) => o.percent));
         return `
-            <article class="event-card fade-in" style="animation-delay:${delay}s">
+            <article class="event-card${endedClass} fade-in" style="animation-delay:${delay}s">
                 <div class="event-card-top">
                     <div class="event-card-header">
                         ${marketIconHtml(market)}
@@ -762,22 +1040,20 @@ function renderMarketCard(market, index) {
                         <div class="outcome-row">
                             <p class="outcome-name">${o.name}</p>
                             <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
-                            <button class="btn-bet" data-bet-url="${o.url}" type="button">Bet</button>
+                            <button class="btn-bet" data-bet-url="${o.url}" type="button"${disabledAttr}>Bet</button>
                         </div>
                     `).join("")}
                 </div>
                 <div class="card-meta">
                     <span>${market.volume}</span>
-                    <button class="bookmark-btn" type="button" aria-label="Bookmark">
-                        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
-                    </button>
+                    ${marketEndsHtml(market)}
                 </div>
             </article>
         `;
     }
 
     return `
-        <article class="event-card fade-in" style="animation-delay:${delay}s">
+        <article class="event-card${endedClass} fade-in" style="animation-delay:${delay}s">
             <div class="event-card-top">
                 <div class="event-card-header">
                     ${marketIconHtml(market)}
@@ -795,14 +1071,12 @@ function renderMarketCard(market, index) {
                 </div>
             </div>
             <div class="btn-row btn-row--compact">
-                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button">Yes</button>
-                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button">No</button>
+                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button"${disabledAttr}>Yes</button>
+                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button"${disabledAttr}>No</button>
             </div>
             <div class="card-meta">
                 <span>${market.volume}</span>
-                <button class="bookmark-btn" type="button" aria-label="Bookmark">
-                    <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
-                </button>
+                ${marketEndsHtml(market)}
             </div>
         </article>
     `;
@@ -828,7 +1102,9 @@ function carouselLabel(market) {
 
 function buildCarouselHtml(list, index) {
     let count = list.length;
-    if (count <= 1) return "";
+    if (count <= 1) {
+        return `<div class="featured-footer-center"></div><div class="featured-footer-right"></div>`;
+    }
 
     let dots = `<div class="carousel-dots">
         ${list.map((_, i) => `<button class="carousel-dot${i === index ? " active" : ""}" data-featured-idx="${i}" type="button" aria-label="Market ${i + 1}"></button>`).join("")}
@@ -846,7 +1122,10 @@ function buildCarouselHtml(list, index) {
         nav = `<div class="carousel-nav">${prevBtn}${nextBtn}</div>`;
     }
 
-    return `${dots}${nav}`;
+    return `
+        <div class="featured-footer-center">${dots}</div>
+        <div class="featured-footer-right">${nav}</div>
+    `;
 }
 
 function truncateTitle(title, max = 18) {

@@ -1,0 +1,240 @@
+.lottery-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#page-content {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(to bottom, rgba(59,130,246, 0.02), rgba(59,130,246, 0.0));
+}
+
+.lot-page-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+.lot-hero {
+  margin-bottom: 28px;
+}
+
+.lot-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lot-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.lot-accent {
+  width: min(200px, 40%);
+  height: 3px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.65;
+}
+
+.lot-desc {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.lot-current {
+  margin-bottom: 40px;
+}
+
+.lot-pot-card {
+  padding: 28px 28px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.lot-pot-label {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.lot-pot-value {
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #f5c15b;
+}
+
+.lot-pot-note {
+  margin: 10px 0 22px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.lot-enter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.lot-enter-btn:hover {
+  background: var(--accent-dim);
+  transform: translateY(-1px);
+}
+
+.lot-enter-btn svg {
+  opacity: 0.9;
+}
+
+.lot-section-title {
+  margin: 0 0 6px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.lot-section-desc {
+  margin: 0 0 16px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.lot-history-table {
+  --lot-col-pot: 6.5rem;
+  --lot-col-winner: 8.5rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.lot-history-head,
+.lot-history-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--lot-col-pot) var(--lot-col-winner);
+  column-gap: 16px;
+  align-items: center;
+  padding: 10px 14px;
+}
+
+.lot-history-head {
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.lot-history-head span:nth-child(2),
+.lot-history-head span:nth-child(3) {
+  text-align: right;
+}
+
+.lot-history-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.lot-history-row {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lot-history-row:last-child {
+  border-bottom: none;
+}
+
+.lot-history-date {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  min-width: 0;
+}
+
+.lot-history-pot {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.lot-history-winner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lot-history-empty {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 520px) {
+  .lot-page-wrap {
+    padding: 24px 16px 40px;
+  }
+
+  .lot-pot-card {
+    padding: 24px 20px 20px;
+  }
+
+  .lot-history-table {
+    --lot-col-pot: 5.25rem;
+    --lot-col-winner: 6.75rem;
+  }
+
+  .lot-history-head,
+  .lot-history-row {
+    column-gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .lot-history-date {
+    font-size: 0.75rem;
+  }
+
+  .lot-history-pot,
+  .lot-history-winner {
+    font-size: 0.8125rem;
+  }
+}

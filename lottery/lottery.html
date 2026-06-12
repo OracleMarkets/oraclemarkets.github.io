@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#15191d">
+    <meta name="color-scheme" content="dark">
+    <title>Lottery · Oracle</title>
+    <style>html,body{background:#15191d}</style>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="lottery.css">
+    <script src="../data/site-data.js" defer></script>
+    <script src="../data/lottery-data.js" defer></script>
+    <script src="../page-transitions.js" defer></script>
+    <script src="lottery.js" defer></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body class="lottery-page">
+<header class="site-header">
+    <div class="title-bar">
+        <a href="../index.html" class="logo" aria-label="Oracle home">
+            <img src="../assets/logo.svg" alt="" class="logo-icon" width="28" height="22">
+            <img class="logo-text" src="../assets/logo_text.svg" alt="" height="12">
+        </a>
+
+        <nav class="leaderboard-nav" aria-label="Site navigation">
+            <a href="../index.html" class="leaderboard-nav-link">Markets</a>
+            <a href="lottery.html" class="leaderboard-nav-link active" aria-current="page">Lottery</a>
+            <a href="../leaderboard/leaderboard.html" class="leaderboard-nav-link">Leaderboard</a>
+        </nav>
+    </div>
+</header>
+
+<div id="page-content" class="page-enter">
+    <div class="lot-page-wrap">
+        <header class="lot-hero">
+            <p class="lot-eyebrow">Daily draw</p>
+            <h1 class="lot-title">Lottery</h1>
+            <div class="lot-accent" aria-hidden="true"></div>
+            <p class="lot-desc">
+                A daily lottery held at the end of each Crestconomy session. Enter for a chance to
+                win whatever has accumulated in the pot that day.
+            </p>
+        </header>
+
+        <section class="lot-current" aria-label="Current lottery">
+            <div class="lot-pot-card">
+                <p class="lot-pot-label">Current pot</p>
+                <p class="lot-pot-value" id="pot-value">-</p>
+                <p class="lot-pot-note">Drawn at the end of today's session</p>
+                <a id="enter-link" class="lot-enter-btn" href="#" target="_blank" rel="noopener noreferrer">
+                    Enter lottery
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <section class="lot-history" aria-label="Past draws">
+            <h2 class="lot-section-title">Draw history</h2>
+            <p class="lot-section-desc">Past pot sizes and winners from previous sessions.</p>
+            <div class="lot-history-table" role="table" aria-label="Draw history">
+                <div class="lot-history-head" role="row">
+                    <span role="columnheader">Date</span>
+                    <span role="columnheader">Pot</span>
+                    <span role="columnheader">Winner</span>
+                </div>
+                <div id="history-list" class="lot-history-list" role="rowgroup"></div>
+            </div>
+            <p id="history-empty" class="lot-history-empty" hidden>No past draws yet.</p>
+        </section>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-row">
+            <div class="footer-brand">
+                <a href="../index.html" class="footer-logo-link" aria-label="Oracle home">
+                    <img src="../assets/logo.svg" alt="" width="24" height="19">
+                    <img src="../assets/logo_text.svg" alt="Oracle" height="11">
+                </a>
+                <p class="footer-tagline" id="footer-tagline"></p>
+            </div>
+            <div class="footer-links" id="footer-links"></div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Oracle Prediction Market</p>
+            <div class="footer-currency">
+                <label class="footer-currency-label" for="currency-select">Currency</label>
+                <select id="currency-select" class="footer-currency-select" aria-label="Currency">
+                    <option value="bedro" selected>Bedro</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
