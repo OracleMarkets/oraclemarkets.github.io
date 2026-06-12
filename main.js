@@ -227,8 +227,20 @@ function percentFromSnapshot(poolSizes, outcomeId) {
     return Math.round((size / total) * 1000) / 10;
 }
 
+function chartHistoryPoints(raw) {
+    const history = [...(raw.history ?? [])].sort((a, b) => a.date_time - b.date_time);
+    if (history.length !== 1) return history;
+
+    const first = history[0];
+    return [{
+        date_time: first.date_time - 86400,
+        pool_sizes: first.pool_sizes.map((p) => ({ outcome: p.outcome, size: 0 }))
+    }, first];
+}
+
 function buildChartHistory(raw) {
-    const labels = raw.history.map((h) => formatChartDate(h.date_time));
+    const history = chartHistoryPoints(raw);
+    const labels = history.map((h) => formatChartDate(h.date_time));
     const primaryId = raw.outcomes.find((o) => o.id === "yes")?.id
         ?? raw.outcomes.reduce((a, b) => (a.pool_size > b.pool_size ? a : b)).id;
 
@@ -237,13 +249,13 @@ function buildChartHistory(raw) {
             id: outcome.id,
             name: outcome.title,
             colour: outcome.colour || "#3b82f6",
-            values: raw.history.map((h) => percentFromSnapshot(h.pool_sizes, outcome.id))
+            values: history.map((h) => percentFromSnapshot(h.pool_sizes, outcome.id))
         }));
 
         return { labels, values: [], series, primaryId, mode: "multi" };
     }
 
-    const values = raw.history.map((h) => percentFromSnapshot(h.pool_sizes, primaryId));
+    const values = history.map((h) => percentFromSnapshot(h.pool_sizes, primaryId));
 
     return { labels, values, series: null, primaryId, mode: "binary" };
 }
@@ -251,13 +263,14 @@ function buildChartHistory(raw) {
 function formatVolume(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M Vol.`;
     if (amount >= 1_000) return `$${Math.round(amount / 1_000)}K Vol.`;
-    return `$${amount} Vol.`;
+    if (amount > 0) return "<$1k Vol.";
+    return "$0 Vol.";
 }
 
 function formatVolumeToday(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M today`;
     if (amount >= 1_000) return `$${Math.round(amount / 1_000)}K today`;
-    if (amount > 0) return `$${amount} today`;
+    if (amount > 0) return "<$1k today";
     return "$0 today";
 }
 
@@ -738,13 +751,22 @@ function renderFeatured() {
 }
 
 function getChartYScale(values) {
-    let dataMax = Math.max(...values, 1);
-    let step = dataMax > 35 ? 10 : 5;
+    const dataMax = Math.max(...values, 1);
+    const dataMin = Math.min(...values, 0);
+    const range = Math.max(dataMax - dataMin, 1);
+    let step = range > 35 ? 10 : 5;
     let yMax = Math.ceil(dataMax / step) * step;
+    let yMin = Math.floor(dataMin / step) * step;
 
     if (yMax <= dataMax) yMax += step;
+    if (yMin >= dataMin) yMin = Math.max(0, yMin - step);
+    if (yMax - yMin < step * 2) yMax = yMin + step * 2;
 
-    return { min: 0, max: yMax, step };
+    return { min: yMin, max: yMax, step };
+}
+
+function chartLineTension(pointCount) {
+    return pointCount <= 2 ? 0 : 0.38;
 }
 
 function sparseLabelIndices(count) {
@@ -850,7 +872,7 @@ async function renderBinaryFeaturedChart(market, canvas) {
                 data: values,
                 borderColor: "#3b82f6",
                 borderWidth: 2,
-                tension: 0.38,
+                tension: chartLineTension(values.length),
                 capBezierPoints: true,
                 pointRadius: pointRadii(values.length, lastIndex, 4),
                 pointHoverRadius: pointRadii(values.length, lastIndex, 5),
@@ -907,7 +929,7 @@ async function renderMultiFeaturedChart(market, canvas) {
                 borderColor: line.colour,
                 backgroundColor: line.colour,
                 borderWidth: 2,
-                tension: 0.38,
+                tension: chartLineTension(line.values.length),
                 capBezierPoints: true,
                 fill: false,
                 pointRadius: pointRadii(line.values.length, lastIndex, 3),

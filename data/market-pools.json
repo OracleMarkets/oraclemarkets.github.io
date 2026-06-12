@@ -4,54 +4,107 @@
       "market_id": "leader-assassination-day1",
       "outcomes": [
         { "outcome": "yes", "pool_size": 0 },
-        { "outcome": "no", "pool_size": 0 }
+        { "outcome": "no", "pool_size": 5 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781336545,
+          "pool_sizes": [
+            { "outcome": "yes", "size": 0 },
+            { "outcome": "no", "size": 5 }
+          ]
+        }
+      ]
     },
     {
       "market_id": "day1-player-deaths",
       "outcomes": [
         { "outcome": "zero", "pool_size": 0 },
         { "outcome": "one_two", "pool_size": 0 },
-        { "outcome": "three_five", "pool_size": 0 },
+        { "outcome": "three_five", "pool_size": 10 },
         { "outcome": "six_plus", "pool_size": 0 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781337703,
+          "pool_sizes": [
+            { "outcome": "zero", "size": 0 },
+            { "outcome": "one_two", "size": 0 },
+            { "outcome": "three_five", "size": 10 },
+            { "outcome": "six_plus", "size": 0 }
+          ]
+        }
+      ]
     },
     {
       "market_id": "day1-cause-of-death",
       "outcomes": [
-        { "outcome": "fall_damage", "pool_size": 0 },
+        { "outcome": "fall_damage", "pool_size": 15 },
         { "outcome": "hostile_mobs", "pool_size": 0 },
         { "outcome": "player_kills", "pool_size": 0 },
         { "outcome": "lava", "pool_size": 0 },
         { "outcome": "drowning", "pool_size": 0 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781338482,
+          "pool_sizes": [
+            { "outcome": "fall_damage", "size": 15 },
+            { "outcome": "hostile_mobs", "size": 0 },
+            { "outcome": "player_kills", "size": 0 },
+            { "outcome": "lava", "size": 0 },
+            { "outcome": "drowning", "size": 0 }
+          ]
+        }
+      ]
     },
     {
       "market_id": "death-first-30min",
       "outcomes": [
-        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "yes", "pool_size": 10 },
         { "outcome": "no", "pool_size": 0 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781338440,
+          "pool_sizes": [
+            { "outcome": "yes", "size": 10 },
+            { "outcome": "no", "size": 0 }
+          ]
+        }
+      ]
     },
     {
       "market_id": "server-lag-day1",
       "outcomes": [
-        { "outcome": "yes", "pool_size": 0 },
+        { "outcome": "yes", "pool_size": 10 },
         { "outcome": "no", "pool_size": 0 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781338504,
+          "pool_sizes": [
+            { "outcome": "yes", "size": 10 },
+            { "outcome": "no", "size": 0 }
+          ]
+        }
+      ]
     },
     {
       "market_id": "crestconomy-failure-day1",
       "outcomes": [
         { "outcome": "yes", "pool_size": 0 },
-        { "outcome": "no", "pool_size": 0 }
+        { "outcome": "no", "pool_size": 10 }
       ],
-      "history": []
+      "history": [
+        {
+          "date_time": 1781338531,
+          "pool_sizes": [
+            { "outcome": "yes", "size": 0 },
+            { "outcome": "no", "size": 10 }
+          ]
+        }
+      ]
     }
   ]
 }
