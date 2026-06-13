@@ -50,34 +50,112 @@
 <!--        </div>-->
     </div>
 
-    <nav id="tabs" class="tabs" aria-label="Market categories"></nav>
+    <nav id="tabs" class="tabs skeleton-tabs" aria-label="Market categories" aria-hidden="true">
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+        <span class="skeleton-pill skeleton-pill--tab"></span>
+    </nav>
 </header>
 
-<main class="page-enter">
+<main class="page-enter" id="main-content" aria-busy="true">
     <section class="highlights">
-        <article id="featured-card" class="card highlight fade-in"></article>
-        <aside id="sidebars" class="sidebar-stack"></aside>
+        <article id="featured-card" class="card highlight skeleton-featured" aria-hidden="true">
+            <div class="featured-header">
+                <div class="skeleton-block skeleton-icon"></div>
+                <div class="featured-title-block">
+                    <div class="skeleton-line skeleton-line--xs"></div>
+                    <div class="skeleton-line skeleton-line--lg"></div>
+                </div>
+            </div>
+            <div class="highlight-body">
+                <div class="highlight-left">
+                    <div class="skeleton-line skeleton-line--chance"></div>
+                    <div class="skeleton-btn-row">
+                        <div class="skeleton-block skeleton-btn"></div>
+                        <div class="skeleton-block skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="skeleton-block skeleton-chart"></div>
+            </div>
+            <div class="skeleton-featured-footer">
+                <div class="skeleton-line skeleton-line--footer-meta"></div>
+                <div class="skeleton-footer-dots">
+                    <span class="skeleton-dot"></span>
+                    <span class="skeleton-dot"></span>
+                    <span class="skeleton-dot"></span>
+                </div>
+                <div class="skeleton-line skeleton-line--footer-nav"></div>
+            </div>
+        </article>
+        <aside id="sidebars" class="sidebar-stack" aria-hidden="true">
+            <div class="sidebar-card skeleton-sidebar">
+                <div class="skeleton-line skeleton-line--sidebar-title"></div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-card skeleton-sidebar">
+                <div class="skeleton-line skeleton-line--sidebar-title"></div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+            </div>
+        </aside>
     </section>
 
     <section class="markets-section">
         <div class="section-header">
             <h2 class="section-title">All markets</h2>
-            <!-- TODO: Do I really need another search bar or filter? -->
-<!--            <div class="section-actions">-->
-<!--                <button type="button" class="icon-btn" aria-label="Search markets">-->
-<!--                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>-->
-<!--                </button>-->
-<!--                <button type="button" class="icon-btn" aria-label="Filter markets">-->
-<!--                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>-->
-<!--                </button>-->
-<!--                <button type="button" class="icon-btn" aria-label="Saved markets">-->
-<!--                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>-->
-<!--                </button>-->
-<!--            </div>-->
         </div>
 
-        <nav id="grid-tags" class="grid-tags" aria-label="Market filters"></nav>
-        <div id="event-grid" class="event-grid"></div>
+        <nav id="grid-tags" class="grid-tags skeleton-grid-tags" aria-label="Market filters" aria-hidden="true">
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill skeleton-pill--short"></span>
+        </nav>
+        <div id="event-grid" class="event-grid" aria-hidden="true">
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+            <article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>
+        </div>
         <p id="empty-state" class="empty-state" hidden>No markets match your filters.</p>
     </section>
 </main>
@@ -90,7 +168,7 @@
                     <img src="assets/logo.svg" alt="" width="24" height="19">
                     <img src="assets/logo_text.svg" alt="Oracle" height="11">
                 </a>
-                <p class="footer-tagline" id="footer-tagline"></p>
+                <p class="footer-tagline" id="footer-tagline">A prediction market for the Crestconomy civilisation event.</p>
             </div>
             <div class="footer-links" id="footer-links"></div>
         </div>
