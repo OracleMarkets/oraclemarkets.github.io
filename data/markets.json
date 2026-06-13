@@ -7,6 +7,8 @@
       "icon": "",
       "ends": 1781305200,
       "added_at": 1780920000,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Politics", "Nations", "Deaths", "RDM"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will any nation leaders be assassinated on Day 1? | Yes", "colour": "#16c784" },
@@ -20,6 +22,8 @@
       "icon": "",
       "ends": 1781305200,
       "added_at": 1780920001,
+      "resolved": true,
+      "winning_outcome": "one_two",
       "tags": ["Deaths", "War", "RDM"],
       "outcomes": [
         { "id": "zero", "title": "0", "item_summary": "How many player deaths will occur by the end of Day 1? | 0", "colour": "#16c784" },
@@ -36,6 +40,8 @@
       "ends": 1781305200,
       "added_at": 1780920002,
       "tags": ["Deaths", "RDM"],
+      "resolved": true,
+      "winning_outcome": "fall_damage",
       "outcomes": [
         { "id": "fall_damage", "title": "Fall Damage", "item_summary": "What will be the leading cause of death on Day 1? | Fall Damage", "colour": "#3b82f6" },
         { "id": "hostile_mobs", "title": "Hostile Mobs", "item_summary": "What will be the leading cause of death on Day 1? | Hostile Mobs", "colour": "#16c784" },
@@ -51,6 +57,8 @@
       "icon": "",
       "ends": 1781301600,
       "added_at": 1780920003,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Deaths", "RDM"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will a player die within the first 30 minutes? | Yes", "colour": "#16c784" },
@@ -64,6 +72,8 @@
       "icon": "",
       "ends": 1781305200,
       "added_at": 1780920004,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Drama", "Metagaming"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will there be major server lag or a crash on Day 1? | Yes", "colour": "#16c784" },
@@ -72,11 +82,13 @@
     },
     {
       "id": "crestconomy-failure-day1",
-      "title": "Will the Crestconomy plugin experience a game-breaking failure on Day 1?",
+      "title": "Will the Crestconomy plugin experience a game-breaking issue on Day 1?",
       "short_title": "Plugin Failure?",
       "icon": "",
       "ends": 1781305200,
       "added_at": 1780920005,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Economy", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Crestconomy plugin experience a game-breaking failure on Day 1? | Yes", "colour": "#16c784" },
