@@ -4,29 +4,60 @@ const WEBSITE_ICON = `<svg width="35" height="35" viewBox="0 0 128 128" xmlns="h
 
 document.addEventListener("DOMContentLoaded", init);
 
-function init() {
+async function init() {
     initFooter();
-    renderLottery();
+    renderLotteryStatic();
+
+    try {
+        const live = await loadLotteryPool();
+        renderLotteryPot(live);
+    } catch (err) {
+        console.error(err);
+        renderLotteryPot({ totalPool: 0 });
+    }
 }
 
-function renderLottery() {
+function loadLotteryPool() {
+    const apiUrl = window.ORACLE_DATA?.site?.site?.lotteryApiUrl;
+    return (window.__ORACLE_LOTTERY_POOL_PROMISE__ ?? fetchLotteryPool(apiUrl));
+}
+
+async function fetchLotteryPool(apiUrl) {
+    const url = apiUrl || "https://oracle-markets-backend.vercel.app/api/lottery";
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch lottery pool: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return {
+        totalPool: data.totalPool ?? 0,
+        ticketCount: data.ticketCount ?? 0,
+        currentLottery: data.currentLottery ?? null,
+        lastUpdated: data.lastUpdated ?? null
+    };
+}
+
+function renderLotteryPot(live) {
+    const potEl = document.getElementById("pot-value");
+    if (potEl) {
+        potEl.textContent = formatPot(live.totalPool ?? 0);
+    }
+}
+
+function renderLotteryStatic() {
     const data = window.LOTTERY_DATA;
     const site = window.ORACLE_DATA?.site?.site;
-    const potEl = document.getElementById("pot-value");
     const enterLink = document.getElementById("enter-link");
     const historyList = document.getElementById("history-list");
     const historyEmpty = document.getElementById("history-empty");
 
     if (!data) {
-        if (potEl) potEl.textContent = "-";
         const historyTable = historyList?.closest(".lot-history-table");
         if (historyTable) historyTable.hidden = true;
         if (historyEmpty) historyEmpty.hidden = false;
         return;
-    }
-
-    if (potEl) {
-        potEl.textContent = formatPot(data.pot ?? 0);
     }
 
     if (enterLink) {

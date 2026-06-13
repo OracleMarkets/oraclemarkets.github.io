@@ -94,6 +94,87 @@
         { "id": "yes", "title": "Yes", "item_summary": "Will the Crestconomy plugin experience a game-breaking failure on Day 1? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will the Crestconomy plugin experience a game-breaking failure on Day 1? | No", "colour": "#ea3943" }
       ]
+    },
+    {
+      "id": "day2-rollbacks",
+      "title": "How many rollbacks will occur on Day 2?",
+      "short_title": "Day 2 Rollbacks?",
+      "icon": "",
+      "ends": 1781389800,
+      "added_at": 1780920006,
+      "tags": ["Drama", "Rollbacks"],
+      "outcomes": [
+        { "id": "zero", "title": "0", "item_summary": "How many rollbacks will occur on Day 2? | 0", "colour": "#16c784" },
+        { "id": "one_two", "title": "1-2", "item_summary": "How many rollbacks will occur on Day 2? | 1-2", "colour": "#3b82f6" },
+        { "id": "three_plus", "title": "3+", "item_summary": "How many rollbacks will occur on Day 2? | 3+", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "leader-assassination-day3",
+      "title": "Will any major nation/guild leaders be assassinated by the end of Day 3?",
+      "short_title": "Leader Assassination D3?",
+      "icon": "",
+      "ends": 1781476200,
+      "added_at": 1780920007,
+      "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 3? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 3? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "helia-plinth-war",
+      "title": "Will Helia and Plinth go to war?",
+      "short_title": "Helia vs Plinth War?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1780920008,
+      "tags": ["War", "Nations", "Politics", "Drama","Plinth", "Helia"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Helia and Plinth go to war? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Helia and Plinth go to war? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "nations-merge-day2",
+      "title": "Will two or more nations merge with each other on Day 2?",
+      "short_title": "Nations Merge D2?",
+      "icon": "",
+      "ends": 1781389800,
+      "added_at": 1780920009,
+      "tags": ["Nations", "Politics"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will two or more nations merge with each other on Day 2? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will two or more nations merge with each other on Day 2? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "gcm-crash-day5",
+      "title": "Will the Global Crestconomy Market crash by the end of Day 5?",
+      "short_title": "GCM Crash D5?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1780920010,
+      "tags": ["Economy"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Global Crestconomy Market crash by the end of Day 5? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Global Crestconomy Market crash by the end of Day 5? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "border-drop-pk-deaths",
+      "title": "How many players will die to PvP after the border drops?",
+      "short_title": "Border Drop PKs?",
+      "icon": "",
+      "ends": 1781389800,
+      "added_at": 1780920011,
+      "tags": ["Deaths", "War", "RDM"],
+      "outcomes": [
+        { "id": "zero", "title": "0", "item_summary": "How many players will die to PvP after the border drops? | 0", "colour": "#16c784" },
+        { "id": "one_two", "title": "1-2", "item_summary": "How many players will die to PvP after the border drops? | 1-2", "colour": "#3b82f6" },
+        { "id": "three_five", "title": "3-5", "item_summary": "How many players will die to PvP after the border drops? | 3-5", "colour": "#f59e0b" },
+        { "id": "six_plus", "title": "6+", "item_summary": "How many players will die to PvP after the border drops? | 6+", "colour": "#ea3943" }
+      ]
     }
   ]
 }

@@ -1,5 +1,6 @@
 const ARC_LENGTH = 126;
-const STATIC_NAV_TABS = ["Trending", "New"];
+const STATIC_NAV_TABS = ["Trending", "New", "Resolved"];
+const EXPIRED_GRACE_MS = 30 * 60 * 1000;
 const HIGHLIGHT_LIMIT = 3;
 const HOURS_24_SEC = 86400;
 const MARKET_END_TZ = "America/New_York";
@@ -11,6 +12,7 @@ let featuredIndex = 0;
 let featuredChart = null;
 let activeNavTag = "Trending";
 let activeGridTag = "All";
+let activeResolvedGridTag = "All";
 let searchQuery = "";
 let chartJsPromise = null;
 let marketEndTimer = null;
@@ -213,6 +215,9 @@ function normaliseMarket(raw, site) {
         icon: raw.icon,
         tags: raw.tags,
         endsAt: parseMarketEndMs(raw.ends),
+        resolved: Boolean(raw.resolved && raw.winning_outcome),
+        winningOutcome: raw.resolved && raw.winning_outcome ? raw.winning_outcome : null,
+        winningOutcomeData: outcomes.find((o) => o.id === raw.winning_outcome) ?? null,
         type: isBinary ? "yes-no" : "multi",
         outcomes,
         yesPercent: yesOutcome?.percent ?? leading.percent,
@@ -320,6 +325,14 @@ function buildChartHistory(raw) {
     const values = history.map((h) => percentFromSnapshot(h.pool_sizes, primaryId));
 
     return { labels, values, series: null, primaryId, mode: "binary" };
+}
+
+function hasFeaturedChartHistory(market) {
+    if (!market?.history?.labels?.length) return false;
+    if (market.type === "multi") {
+        return market.history.series?.some((line) => line.values?.length) ?? false;
+    }
+    return market.history.values?.length > 0;
 }
 
 function formatVolume(amount) {
@@ -434,6 +447,16 @@ function escapeAttr(str) {
         .replace(/>/g, "&gt;");
 }
 
+function escapeHtml(str) {
+    return escapeAttr(str);
+}
+
+function articleMarketIds(article) {
+    if (Array.isArray(article.market_ids)) return article.market_ids;
+    if (article.market_id) return [article.market_id];
+    return [];
+}
+
 function isMarketEnded(endsAt) {
     return Boolean(endsAt && endsAt <= Date.now());
 }
@@ -449,6 +472,10 @@ function marketEndsClasses(endsAt) {
 function setMarketCardEndedState(card, endsAt) {
     if (!card || !endsAt) return;
 
+    const marketCard = card.closest?.("[data-market-id]") || card;
+    const resolved = marketCard.dataset?.resolved === "true" || card.dataset?.resolved === "true";
+    if (resolved) return;
+
     const ended = isMarketEnded(endsAt);
     card.classList.toggle("event-card--ended", ended && card.classList.contains("event-card"));
     card.classList.toggle("highlight--ended", ended && card.id === "featured-card");
@@ -458,6 +485,10 @@ function setMarketCardEndedState(card, endsAt) {
 }
 
 function marketEndsHtml(market) {
+    if (isMarketResolved(market)) {
+        return `<span class="market-ends market-ends--ended">Ended</span>`;
+    }
+
     if (!market.endsAt) return "";
 
     const label = formatCountdown(market.endsAt);
@@ -505,16 +536,41 @@ function isStaticNavTab(tag) {
     return STATIC_NAV_TABS.includes(tag);
 }
 
+function isMarketResolved(market) {
+    return Boolean(market.resolved && market.winningOutcome);
+}
+
+function isExpiredPendingResolution(market) {
+    return !isMarketResolved(market)
+        && Boolean(market.endsAt && market.endsAt <= Date.now() - EXPIRED_GRACE_MS);
+}
+
 function matchesNavFilter(market) {
+    if (activeNavTag === "Resolved") return isMarketResolved(market);
+    if (isMarketResolved(market)) return false;
     if (isStaticNavTab(activeNavTag)) return true;
     return market.tags.includes(activeNavTag);
+}
+
+function currentGridTag() {
+    return activeNavTag === "Resolved" ? activeResolvedGridTag : activeGridTag;
+}
+
+function setCurrentGridTag(tag) {
+    if (activeNavTag === "Resolved") activeResolvedGridTag = tag;
+    else activeGridTag = tag;
+}
+
+function marketsForGridTags() {
+    if (activeNavTag === "Resolved") return markets.filter(isMarketResolved);
+    return markets.filter((m) => !isMarketResolved(m));
 }
 
 function buildGridTags() {
     const tagPools = new Map();
     const navCategories = new Set(siteData.navTags);
 
-    for (const market of markets) {
+    for (const market of marketsForGridTags()) {
         for (const tag of market.tags) {
             tagPools.set(tag, (tagPools.get(tag) ?? 0) + market.totalPool);
         }
@@ -529,29 +585,56 @@ function buildGridTags() {
 }
 
 function getFilteredMarkets() {
+    const gridTag = currentGridTag();
+
     return markets.filter((m) => {
-        let matchesGrid = activeGridTag === "All" || m.tags.includes(activeGridTag);
+        let matchesGrid = gridTag === "All" || m.tags.includes(gridTag);
         let marketInfo = (m.title +  "," + m.tags.join(",")).toLowerCase();
         let matchesSearch = !searchQuery || marketInfo.includes(searchQuery);
         return matchesNavFilter(m) && matchesGrid && matchesSearch;
     });
 }
 
+function partitionExpiredPending(list) {
+    if (activeNavTag === "Resolved") return list;
+
+    const active = [];
+    const deprioritized = [];
+
+    for (const market of list) {
+        if (isExpiredPendingResolution(market)) deprioritized.push(market);
+        else active.push(market);
+    }
+
+    return [...active, ...deprioritized];
+}
+
 function sortByVolume(list) {
-    return [...list].sort((a, b) => b.totalPool - a.totalPool);
+    return partitionExpiredPending([...list].sort((a, b) => b.totalPool - a.totalPool));
 }
 
 function sortByNewest(list) {
-    return [...list].sort((a, b) => b.addedAt - a.addedAt);
+    return partitionExpiredPending([...list].sort((a, b) => b.addedAt - a.addedAt));
+}
+
+function sortResolved(list) {
+    return [...list].sort((a, b) => b.totalPool - a.totalPool);
 }
 
 function getSortedMarkets() {
     const filtered = getFilteredMarkets();
-    return activeNavTag === "New" ? sortByNewest(filtered) : sortByVolume(filtered);
+    if (activeNavTag === "Resolved") return sortResolved(filtered);
+    if (activeNavTag === "New") return sortByNewest(filtered);
+    return sortByVolume(filtered);
 }
 
 function getHighlightMarkets() {
     const filtered = getFilteredMarkets();
+
+    if (activeNavTag === "Resolved") {
+        return sortResolved(filtered).slice(0, HIGHLIGHT_LIMIT);
+    }
+
     const overrides = siteData.highlightOverrides ?? [];
 
     const overrideMarkets = overrides
@@ -566,7 +649,7 @@ function getHighlightMarkets() {
 
 function getArticlesForMarket(marketId) {
     return newsData.articles
-        .filter((a) => a.market_id === marketId)
+        .filter((a) => articleMarketIds(a).includes(marketId))
         .sort((a, b) => b.date_time - a.date_time)
         .map((a) => {
             const paper = getNewspaper(a.author_id);
@@ -620,11 +703,15 @@ function newsSourceIcon(article) {
 }
 
 function newsItemHtml(article) {
+    const headline = article.link
+        ? `<a class="news-headline" href="${escapeAttr(article.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(article.headline)}</a>`
+        : `<div class="news-headline">${escapeHtml(article.headline)}</div>`;
+
     return `
         <div class="news-item">
             ${newsSourceIcon(article)}
-            <div class="news-headline">${article.headline}</div>
-            <div class="news-time">${article.time}</div>
+            ${headline}
+            <div class="news-time">${escapeHtml(article.time)}</div>
         </div>`;
 }
 
@@ -685,7 +772,7 @@ function renderNavTabs() {
         return `<button class="tab${active}" data-nav-tag="${tag}" type="button">${tag}</button>`;
     }).join("");
 
-    container.innerHTML = staticTabs + dynamicTabs;
+    container.innerHTML = staticTabs + `<span class="tab-divider" aria-hidden="true"></span>` + dynamicTabs;
 
     container.querySelectorAll("[data-nav-tag]").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -693,6 +780,7 @@ function renderNavTabs() {
             activeNavTag = btn.dataset.navTag;
             featuredIndex = 0;
             renderNavTabs();
+            renderGridTags();
             renderFeatured();
             renderSidebars();
             renderMarkets();
@@ -700,16 +788,40 @@ function renderNavTabs() {
     });
 }
 
+function resolvedOutcomesHtml(market, { featured = false } = {}) {
+    const listClass = featured ? "outcomes-list featured-outcomes outcomes-list--resolved" : "outcomes-list outcomes-list--resolved";
+
+    return `<div class="${listClass}">
+        ${market.outcomes.map((o) => {
+            const won = o.id === market.winningOutcome;
+            return `<div class="outcome-row${won ? " outcome-row--winner" : ""}">
+                <p class="outcome-name">${o.name}</p>
+                <span class="outcome-pct${won ? " outcome-pct--winner" : " trail"}">${o.percent}%</span>
+                ${won ? `<span class="outcome-winner-tag">Winner</span>` : ""}
+            </div>`;
+        }).join("")}
+    </div>`;
+}
+
+function featuredChanceText(market) {
+    if (isMarketResolved(market)) {
+        return market.winningOutcomeData?.name ?? market.winningOutcome;
+    }
+
+    return market.type === "yes-no"
+        ? `${market.yesPercent}% chance`
+        : `${market.leadingOutcome.percent}% ${market.leadingOutcome.name}`;
+}
+
 function renderFeatured() {
     const list = getHighlightMarkets();
     const card = document.getElementById("featured-card");
-    card.classList.remove("skeleton-featured");
+    card.classList.remove("skeleton-featured", "highlight--resolved", "highlight--ended");
     card.classList.add("fade-in");
 
     if (!list.length) {
         let emptyMessage = searchQuery.length ?`No ${activeNavTag} markets for "${searchQuery}".` : `No ${activeNavTag} markets.`;
 
-        card.classList.remove("highlight--ended");
         card.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
         if (featuredChart) { featuredChart.destroy(); featuredChart = null; }
         return;
@@ -724,16 +836,18 @@ function renderFeatured() {
         ? `<div class="featured-icon"><img src="${market.icon}" alt=""></div>`
         : `<div class="featured-icon">${initials(market.title)}</div>`;
 
-    const chanceText = market.type === "yes-no"
-        ? `${market.yesPercent}% chance`
-        : `${market.leadingOutcome.percent}% ${market.leadingOutcome.name}`;
+    const chanceText = featuredChanceText(market);
 
-    const ended = isMarketEnded(market.endsAt);
+    const resolved = isMarketResolved(market);
+    const ended = !resolved && isMarketEnded(market.endsAt);
     const disabledAttr = ended ? " disabled" : "";
 
-    card.classList.toggle("highlight--ended", ended);
+    if (resolved) card.classList.add("highlight--resolved");
+    else if (ended) card.classList.add("highlight--ended");
 
-    const actionButtons = market.type === "yes-no"
+    const actionButtons = resolved
+        ? resolvedOutcomesHtml(market, { featured: true })
+        : market.type === "yes-no"
         ? `<div class="btn-row">
                 <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button"${disabledAttr}>Yes</button>
                 <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button"${disabledAttr}>No</button>
@@ -748,6 +862,18 @@ function renderFeatured() {
                 `).join("")}
            </div>`;
 
+    const changeHtml = resolved ? "" : `
+                    <div class="change ${market.change >= 0 ? "up" : "down"}">
+                        ${market.change >= 0 ? "▲" : "▼"} ${Math.abs(market.change)}%
+                    </div>`;
+
+    const showChart = hasFeaturedChartHistory(market);
+    const graphHtml = showChart
+        ? `<div class="graph-container${market.type === "multi" && !resolved ? " graph-container--multi" : ""}">
+                <canvas id="marketChart"></canvas>
+           </div>`
+        : "";
+
     card.innerHTML = `
         <div class="featured-header">
             ${featuredIcon}
@@ -755,31 +881,18 @@ function renderFeatured() {
                 <div class="featured-subtitle">${market.subtitle}</div>
                 <h2>${market.title}</h2>
             </div>
-           <!-- TODO: Add market links and bookmarks -->
-<!--            <div class="featured-actions">-->
-<!--                <button class="icon-btn" type="button" aria-label="Copy link">-->
-<!--                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>-->
-<!--                </button>-->
-<!--                <button class="icon-btn bookmark-btn" type="button" aria-label="Bookmark">-->
-<!--                    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>-->
-<!--                </button>-->
-<!--            </div>-->
         </div>
 
-        <div class="highlight-body">
+        <div class="highlight-body${showChart ? "" : " highlight-body--no-chart"}">
             <div class="highlight-left">
                 <div class="chance-row">
                     <div class="chance">${chanceText}</div>
-                    <div class="change ${market.change >= 0 ? "up" : "down"}">
-                        ${market.change >= 0 ? "▲" : "▼"} ${Math.abs(market.change)}%
-                    </div>
+                    ${changeHtml}
                 </div>
                 ${actionButtons}
-                ${buildNewsFeedHtml(articles)}
+                ${resolved ? "" : buildNewsFeedHtml(articles)}
             </div>
-            <div class="graph-container${market.type === "multi" ? " graph-container--multi" : ""}">
-                <canvas id="marketChart"></canvas>
-            </div>
+            ${graphHtml}
         </div>
 
         <div class="featured-footer">
@@ -909,7 +1022,13 @@ function pointRadii(length, lastIndex, activeRadius, inactiveRadius = 0) {
 
 async function renderFeaturedChart(market) {
     const canvas = document.getElementById("marketChart");
-    if (!canvas || !market.history.labels.length) return;
+    if (!canvas || !hasFeaturedChartHistory(market)) {
+        if (featuredChart) {
+            featuredChart.destroy();
+            featuredChart = null;
+        }
+        return;
+    }
 
     if (market.type === "multi" && market.history.series?.length) {
         await renderMultiFeaturedChart(market, canvas);
@@ -1075,20 +1194,22 @@ function renderGridTags() {
     const container = document.getElementById("grid-tags");
     container.classList.remove("skeleton-grid-tags");
     const gridTags = buildGridTags();
+    let gridTag = currentGridTag();
 
-    if (!gridTags.includes(activeGridTag)) {
-        activeGridTag = "All";
+    if (!gridTags.includes(gridTag)) {
+        gridTag = "All";
+        setCurrentGridTag("All");
     }
 
     container.innerHTML = gridTags.map((tag) => {
-        const active = tag === activeGridTag ? " active" : "";
+        const active = tag === gridTag ? " active" : "";
         return `<button class="grid-tag${active}" data-grid-tag="${tag}" type="button">${tag}</button>`;
     }).join("");
 
     container.querySelectorAll("[data-grid-tag]").forEach((btn) => {
         btn.addEventListener("click", () => {
             if (!marketsReady) return;
-            activeGridTag = btn.dataset.gridTag;
+            setCurrentGridTag(btn.dataset.gridTag);
             featuredIndex = 0;
             renderGridTags();
             renderFeatured();
@@ -1132,14 +1253,33 @@ function marketIconHtml(market) {
 
 function renderMarketCard(market, index) {
     const delay = Math.min(index * 0.04, 0.4);
-    const ended = isMarketEnded(market.endsAt);
-    const endedClass = ended ? " event-card--ended" : "";
+    const resolved = isMarketResolved(market);
+    const ended = !resolved && isMarketEnded(market.endsAt);
+    const stateClass = resolved ? " event-card--resolved" : (ended ? " event-card--ended" : "");
     const disabledAttr = ended ? " disabled" : "";
+
+    if (resolved) {
+        return `
+            <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}" data-resolved="true">
+                <div class="event-card-top">
+                    <div class="event-card-header">
+                        ${marketIconHtml(market)}
+                        <h3 class="event-card-title">${market.title}</h3>
+                    </div>
+                </div>
+                ${resolvedOutcomesHtml(market)}
+                <div class="card-meta">
+                    <span>${market.volume}</span>
+                    ${marketEndsHtml(market)}
+                </div>
+            </article>
+        `;
+    }
 
     if (market.type === "multi") {
         const maxPct = Math.max(...market.outcomes.map((o) => o.percent));
         return `
-            <article class="event-card${endedClass} fade-in" style="animation-delay:${delay}s">
+            <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}">
                 <div class="event-card-top">
                     <div class="event-card-header">
                         ${marketIconHtml(market)}
@@ -1164,7 +1304,7 @@ function renderMarketCard(market, index) {
     }
 
     return `
-        <article class="event-card${endedClass} fade-in" style="animation-delay:${delay}s">
+        <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}">
             <div class="event-card-top">
                 <div class="event-card-header">
                     ${marketIconHtml(market)}

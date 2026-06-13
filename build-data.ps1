@@ -31,7 +31,24 @@ $lbContent = "window.LEADERBOARD_DATA = $lbJson;`n"
 
 $lottery = Get-Content -Raw "data\lottery.json" | ConvertFrom-Json
 $lotJson = $lottery | ConvertTo-Json -Depth 100 -Compress
-$lotContent = "window.LOTTERY_DATA = $lotJson;`n"
+$lotContent = @"
+window.LOTTERY_DATA = $lotJson;
+window.__ORACLE_LOTTERY_POOL_PROMISE__ = (() => {
+    const url = window.ORACLE_DATA?.site?.site?.lotteryApiUrl;
+    if (!url) return Promise.reject(new Error("lotteryApiUrl not configured"));
+    return fetch(url)
+        .then((response) => {
+            if (!response.ok) throw new Error("Failed to fetch lottery pool: " + response.status);
+            return response.json();
+        })
+        .then((data) => ({
+            totalPool: data.totalPool ?? 0,
+            ticketCount: data.ticketCount ?? 0,
+            currentLottery: data.currentLottery ?? null,
+            lastUpdated: data.lastUpdated ?? null
+        }));
+})();
+"@
 [System.IO.File]::WriteAllText("$PSScriptRoot\data\lottery-data.js", $lotContent)
 
 Write-Host "Built data\site-data.js"

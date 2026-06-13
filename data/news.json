@@ -1,3 +1,40 @@
 {
-  "articles": []
+  "articles": [
+    {
+      "title": "Plinth and Helia Clash Over Leader Disputes",
+      "author_id": "silver-spyglass",
+      "date_time": 1781208600,
+      "link": "https://media.discordapp.net/attachments/1505221488649699338/1514723394891944028/1.png?ex=6a2e61d7&is=6a2d1057&hm=eafbc56979aea130956a2d72357f2f47fae6ee135e007c262479396ff8a6dcb7&=&format=webp&quality=lossless&width=1149&height=1265",
+      "market_ids": ["helia-plinth-war"],
+      "tags": []
+    },
+    {
+      "title": "Day 1: Same Old, Same Old",
+      "author_id": "ventura-journals",
+      "date_time": 1781317680,
+      "link": "https://media.discordapp.net/attachments/1504141089689440256/1515180966186979358/article_13.png?ex=6a2e11bd&is=6a2cc03d&hm=0ef8441f67981ae37f13367e143c27c64f615cfe902f6e0e915fb7ee88de9f17&=&format=webp&quality=lossless&width=894&height=1265",
+      "market_ids": ["day2-rollbacks"],
+      "tags": []
+    },
+    {
+      "title": "Server Crashes Twice",
+      "author_id": "ventura-journals",
+      "date_time": 1781303400,
+      "link": "https://media.discordapp.net/attachments/1504141089689440256/1515121114945421402/image.png?ex=6a2e82bf&is=6a2d313f&hm=7e7a1f8f4fbcdcab80d242ff9645a31f4e428709c957a0141702a2b900258e67&=&format=webp&quality=lossless&width=420&height=525",
+      "market_ids": ["day2-rollbacks"],
+      "tags": []
+    },
+    {
+      "title": "Antlantis and Eden Have Merged",
+      "author_id": "ventura-journals",
+      "date_time": 1781275320,
+      "link": "https://media.discordapp.net/attachments/1504141089689440256/1515003422758146158/poster_5.png?ex=6a2e1523&is=6a2cc3a3&hm=f187cb86396e447bcab318ffe0796a11e594d65baa23f66e79d43ee7803b5c9a&=&format=webp&quality=lossless&width=1011&height=1265",
+      "market_ids": ["nations-merge-day2"],
+      "tags": []
+    }
+  ],
+  "newspapers": [
+    { "id": "silver-spyglass", "name": "Silver Spyglass", "image": "https://images.crestconomy.com/files/5642bb98ac8f44d1b507d26e3f90c64e.png" },
+    { "id": "ventura-journals", "name": "Venture Journals", "image": "https://images.crestconomy.com/files/3f2d14dd3dcb4b4a9f244f30343e9e52.webp" }
+  ]
 }

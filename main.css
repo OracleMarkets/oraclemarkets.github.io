@@ -273,6 +273,15 @@ button {
     color: var(--text);
 }
 
+.tab-divider {
+    align-self: center;
+    width: 2px;
+    height: 18px;
+    margin: 0 6px;
+    background: var(--border-subtle);
+    flex-shrink: 0;
+}
+
 .tab-more {
     color: var(--text-dim);
     font-weight: 500;
@@ -379,6 +388,10 @@ main {
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
     gap: 16px;
     flex: 1;
+}
+
+.highlight-body--no-chart {
+    grid-template-columns: 1fr;
 }
 
 .highlight-left {
@@ -572,6 +585,16 @@ main {
     color: var(--text-muted);
     font-weight: 500;
     line-height: 1.35;
+}
+
+a.news-headline {
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a.news-headline:hover {
+    color: var(--text);
+    text-decoration: underline;
 }
 
 .news-time {
@@ -864,6 +887,53 @@ main {
     filter: grayscale(0.25);
 }
 
+.event-card--resolved,
+.highlight--resolved {
+    background: linear-gradient(180deg, rgba(22, 199, 132, 0.06) 0%, var(--panel) 48%);
+}
+
+.event-card--resolved:hover {
+    background: linear-gradient(180deg, rgba(22, 199, 132, 0.09) 0%, var(--panel-hover) 48%);
+}
+
+.outcomes-list--resolved {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.outcomes-list--resolved .outcome-row {
+    grid-template-columns: 1fr auto auto;
+}
+
+.outcome-row--winner {
+    background: rgba(22, 199, 132, 0.08);
+    border: 1px solid rgba(22, 199, 132, 0.22);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+    margin: -6px -8px;
+}
+
+.outcome-row--winner .outcome-name {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.outcome-pct--winner {
+    color: var(--green);
+}
+
+.outcome-winner-tag {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(22, 199, 132, 0.14);
+    border-radius: 999px;
+    padding: 2px 7px;
+    white-space: nowrap;
+}
+
 .event-card--ended:hover {
     border-color: var(--border-subtle);
     background: var(--panel);
@@ -969,6 +1039,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-width: 450px;
 }
 
 .outcome-row {

@@ -5,7 +5,8 @@
     "defaultBetUrl": "https://crestconomy.com/guild/oracle/store",
     "discordUrl": "https://discord.gg/QzbU77kCcv",
     "eventUrl": "https://crestconomy.com/guild/oracle",
-    "marketsApiUrl": "https://oracle-markets-backend.vercel.app/api/markets"
+    "marketsApiUrl": "https://oracle-markets-backend.vercel.app/api/markets",
+    "lotteryApiUrl": "https://oracle-markets-backend.vercel.app/api/lottery"
   },
   "navTags": [
     "Politics",
