@@ -4,7 +4,8 @@
     "tagline": "A prediction market for the Crestconomy civilisation event.",
     "defaultBetUrl": "https://crestconomy.com/guild/oracle/store",
     "discordUrl": "https://discord.gg/QzbU77kCcv",
-    "eventUrl": "https://crestconomy.com/guild/oracle"
+    "eventUrl": "https://crestconomy.com/guild/oracle",
+    "marketsApiUrl": "https://oracle-markets-backend.vercel.app/api/markets"
   },
   "navTags": [
     "Politics",

@@ -87,13 +87,30 @@ function renderFooterLinks() {
 }
 
 function loadAllData() {
-    const { site, news, marketDefs, marketPools } = window.ORACLE_DATA ?? {};
+    const { site, news, marketDefs } = window.ORACLE_DATA ?? {};
 
-    if (!site || !news || !marketDefs || !marketPools) {
+    if (!site || !news || !marketDefs) {
         return Promise.reject(new Error("Failed to load site data"));
     }
 
-    return Promise.resolve({ site, news, marketDefs, marketPools });
+    return (window.__ORACLE_MARKETS_POOLS_PROMISE__ ?? fetchMarketPools(site.site.marketsApiUrl)).then((marketPools) => ({
+        site,
+        news,
+        marketDefs,
+        marketPools
+    }));
+}
+
+async function fetchMarketPools(apiUrl) {
+    const url = apiUrl || "https://oracle-markets-backend.vercel.app/api/markets";
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch market pools: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return { pools: data.pools ?? [] };
 }
 
 function mergeMarkets(marketDefs, marketPools, site) {
