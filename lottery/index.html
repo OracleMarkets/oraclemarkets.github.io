@@ -13,6 +13,7 @@
     <script src="../data/site-data.js" defer></script>
     <script src="../data/lottery-data.js" defer></script>
     <script src="../page-transitions.js" defer></script>
+    <script src="../info-modal.js" defer></script>
     <script src="lottery.js" defer></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -27,11 +28,16 @@
             <img class="logo-text" src="../assets/logo_text.svg" alt="" height="12">
         </a>
 
-        <nav class="leaderboard-nav" aria-label="Site navigation">
-            <a href="../" class="leaderboard-nav-link">Markets</a>
-            <a href="./" class="leaderboard-nav-link active" aria-current="page">Lottery</a>
-            <a href="../leaderboard/" class="leaderboard-nav-link">Leaderboard</a>
-        </nav>
+        <div class="title-bar-actions">
+            <nav class="leaderboard-nav" aria-label="Site navigation">
+                <a href="../" class="leaderboard-nav-link">Markets</a>
+                <a href="./" class="leaderboard-nav-link active" aria-current="page">Lottery</a>
+                <a href="../leaderboard/" class="leaderboard-nav-link">Leaderboard</a>
+            </nav>
+            <button type="button" class="info-btn" id="info-btn" aria-label="How Oracle works">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            </button>
+        </div>
     </div>
 </header>
 

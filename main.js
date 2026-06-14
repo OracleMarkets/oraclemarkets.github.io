@@ -9,7 +9,8 @@ let siteData = null;
 let newsData = null;
 let markets = [];
 let featuredIndex = 0;
-let featuredChart = null;
+const featuredChartStore = { chart: null };
+const modalChartStore = { chart: null };
 let activeNavTag = "Trending";
 let activeGridTag = "All";
 let activeResolvedGridTag = "All";
@@ -87,6 +88,7 @@ function finishMarketsRender() {
     renderFeatured();
     bindGlobalEvents();
     bindBetModal();
+    bindMarketModal();
     startMarketEndTicker();
 }
 
@@ -876,7 +878,7 @@ function renderFeatured() {
         let emptyMessage = searchQuery.length ?`No ${activeNavTag} markets for "${searchQuery}".` : `No ${activeNavTag} markets.`;
 
         card.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
-        if (featuredChart) { featuredChart.destroy(); featuredChart = null; }
+        if (featuredChartStore.chart) { featuredChartStore.chart.destroy(); featuredChartStore.chart = null; }
         return;
     }
 
@@ -893,31 +895,11 @@ function renderFeatured() {
 
     const resolved = isMarketResolved(market);
     const ended = !resolved && isMarketEnded(market.endsAt);
-    const disabledAttr = ended ? " disabled" : "";
 
     if (resolved) card.classList.add("highlight--resolved");
     else if (ended) card.classList.add("highlight--ended");
 
-    const actionButtons = resolved
-        ? resolvedOutcomesHtml(market, { featured: true })
-        : market.type === "yes-no"
-        ? (() => {
-            const yesOutcome = market.outcomes.find((o) => o.id === "yes");
-            const noOutcome = market.outcomes.find((o) => o.id === "no");
-            return `<div class="btn-row">
-                <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
-                <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
-           </div>`;
-        })()
-        : `<div class="outcomes-list featured-outcomes">
-                ${market.outcomes.map((o) => `
-                    <div class="outcome-row">
-                        <p class="outcome-name">${o.name}</p>
-                        <span class="outcome-pct lead">${o.percent}%</span>
-                        <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
-                    </div>
-                `).join("")}
-           </div>`;
+    const actionButtons = marketDetailActionButtons(market, { featured: true });
 
     const changeHtml = resolved ? "" : `
                     <div class="change ${market.change >= 0 ? "up" : "down"}">
@@ -1075,38 +1057,42 @@ function pointRadii(length, lastIndex, activeRadius, inactiveRadius = 0) {
 
 async function renderFeaturedChart(market) {
     const canvas = document.getElementById("marketChart");
-    if (!canvas || !hasFeaturedChartHistory(market)) {
-        if (featuredChart) {
-            featuredChart.destroy();
-            featuredChart = null;
-        }
-        return;
+    await renderMarketChart(market, canvas, featuredChartStore);
+}
+
+async function renderMarketChart(market, canvas, chartStore) {
+    if (chartStore.chart) {
+        chartStore.chart.destroy();
+        chartStore.chart = null;
     }
 
+    if (!canvas || !hasFeaturedChartHistory(market)) return;
+
     if (market.type === "multi" && market.history.series?.length) {
-        await renderMultiFeaturedChart(market, canvas);
+        await renderMultiChart(market, canvas, chartStore);
         return;
     }
 
     if (!market.history.values.length) return;
-    await renderBinaryFeaturedChart(market, canvas);
+    await renderBinaryChart(market, canvas, chartStore);
 }
 
-async function renderBinaryFeaturedChart(market, canvas) {
+async function renderBinaryChart(market, canvas, chartStore) {
     const Chart = await loadChartJs();
     const ctx = canvas.getContext("2d");
     const values = market.history.values;
     const labels = market.history.labels;
     const lastIndex = values.length - 1;
-    const { min, max, step } = getChartYScale(values);
+    const yScale = isMarketResolved(market)
+        ? { min: 0, max: 100, step: 25 }
+        : getChartYScale(values);
 
-    if (featuredChart) featuredChart.destroy();
-
-    featuredChart = new Chart(ctx, {
+    chartStore.chart = new Chart(ctx, {
         type: "line",
         data: {
             labels,
             datasets: [{
+                label: "Yes",
                 data: values,
                 borderColor: "#3b82f6",
                 borderWidth: 2,
@@ -1142,22 +1128,20 @@ async function renderBinaryFeaturedChart(market, canvas) {
             interaction: { mode: "index", intersect: false },
             scales: {
                 x: chartXScale(labels),
-                y: chartYScaleRight({ min, max, step })
+                y: chartYScaleRight(yScale)
             }
         }
     });
 }
 
-async function renderMultiFeaturedChart(market, canvas) {
+async function renderMultiChart(market, canvas, chartStore) {
     const Chart = await loadChartJs();
     const ctx = canvas.getContext("2d");
     const labels = market.history.labels;
     const series = market.history.series;
     const lastIndex = labels.length - 1;
 
-    if (featuredChart) featuredChart.destroy();
-
-    featuredChart = new Chart(ctx, {
+    chartStore.chart = new Chart(ctx, {
         type: "line",
         data: {
             labels,
@@ -1494,9 +1478,154 @@ function bindBetModal() {
     });
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && document.body.classList.contains("bet-modal-open")) {
+        if (e.key !== "Escape") return;
+        if (document.body.classList.contains("bet-modal-open")) {
             closeBetModal();
+            return;
         }
+        if (document.body.classList.contains("market-modal-open")) {
+            closeMarketModal();
+            return;
+        }
+        if (document.body.classList.contains("info-modal-open")) {
+            closeInfoModal();
+        }
+    });
+}
+
+function marketDetailActionButtons(market, { featured = false } = {}) {
+    const resolved = isMarketResolved(market);
+    const ended = !resolved && isMarketEnded(market.endsAt);
+    const disabledAttr = ended ? " disabled" : "";
+
+    if (resolved) {
+        return resolvedOutcomesHtml(market, { featured });
+    }
+
+    if (market.type === "yes-no") {
+        const yesOutcome = market.outcomes.find((o) => o.id === "yes");
+        const noOutcome = market.outcomes.find((o) => o.id === "no");
+        const rowClass = featured ? "btn-row" : "btn-row btn-row--compact";
+        return `<div class="${rowClass}">
+            <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
+            <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
+        </div>`;
+    }
+
+    const listClass = featured ? "outcomes-list featured-outcomes" : "outcomes-list";
+    return `<div class="${listClass}">
+        ${market.outcomes.map((o) => `
+            <div class="outcome-row">
+                <p class="outcome-name">${o.name}</p>
+                <span class="outcome-pct lead">${o.percent}%</span>
+                <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
+            </div>
+        `).join("")}
+    </div>`;
+}
+
+function buildMarketDetailHtml(market) {
+    const articles = getArticlesForMarket(market.id);
+    const resolved = isMarketResolved(market);
+    const ended = !resolved && isMarketEnded(market.endsAt);
+    const stateClass = ended ? " highlight--ended" : "";
+
+    const icon = market.icon
+        ? `<div class="featured-icon"><img src="${market.icon}" alt=""></div>`
+        : `<div class="featured-icon">${initials(market.title)}</div>`;
+
+    const chanceText = featuredChanceText(market);
+    const changeHtml = `
+        <div class="change ${market.change >= 0 ? "up" : "down"}">
+            ${market.change >= 0 ? "▲" : "▼"} ${Math.abs(market.change)}%
+        </div>`;
+
+    const chanceRowHtml = resolved ? "" : `
+                    <div class="chance-row">
+                        <div class="chance">${chanceText}</div>
+                        ${changeHtml}
+                    </div>`;
+
+    const showChart = hasFeaturedChartHistory(market);
+    const graphHtml = showChart
+        ? `<div class="graph-container market-modal-graph${market.type === "multi" && !resolved ? " graph-container--multi" : ""}">
+            <canvas id="market-modal-chart"></canvas>
+        </div>`
+        : "";
+
+    return `
+        <div class="market-modal-detail${stateClass}">
+            <header class="featured-header">
+                ${icon}
+                <div class="featured-title-block">
+                    <div class="featured-subtitle">${market.subtitle}</div>
+                    <h2 id="market-modal-title">${market.title}</h2>
+                </div>
+            </header>
+            <div class="highlight-body market-modal-body${showChart ? "" : " highlight-body--no-chart"}">
+                <div class="highlight-left">
+                    ${chanceRowHtml}
+                    ${marketDetailActionButtons(market, { featured: resolved })}
+                    ${resolved ? "" : buildNewsFeedHtml(articles)}
+                </div>
+                ${graphHtml}
+            </div>
+            <div class="featured-footer market-modal-footer">
+                <span class="featured-footer-left">
+                    <span>${market.volume}</span>
+                    ${marketEndsHtml(market)}
+                </span>
+            </div>
+        </div>
+    `;
+}
+
+function openMarketModal(marketId) {
+    const market = markets.find((m) => m.id === marketId);
+    const modal = document.getElementById("market-modal");
+    const content = document.getElementById("market-modal-content");
+    if (!market || !modal || !content) return;
+
+    content.innerHTML = buildMarketDetailHtml(market);
+    modal.hidden = false;
+    document.body.classList.add("market-modal-open");
+    modal.querySelector(".market-modal-panel")?.classList.toggle(
+        "market-modal-panel--resolved",
+        isMarketResolved(market)
+    );
+    document.getElementById("market-modal-close")?.focus();
+
+    const canvas = document.getElementById("market-modal-chart");
+    renderMarketChart(market, canvas, modalChartStore);
+    updateMarketEndTimers();
+}
+
+function closeMarketModal() {
+    const modal = document.getElementById("market-modal");
+    if (!modal) return;
+
+    modal.hidden = true;
+    document.body.classList.remove("market-modal-open");
+    modal.querySelector(".market-modal-panel")?.classList.remove("market-modal-panel--resolved");
+
+    if (modalChartStore.chart) {
+        modalChartStore.chart.destroy();
+        modalChartStore.chart = null;
+    }
+}
+
+function bindMarketModal() {
+    document.getElementById("event-grid")?.addEventListener("click", (e) => {
+        if (e.target.closest(".btn-yes, .btn-no, .btn-bet")) return;
+
+        const card = e.target.closest(".event-card[data-market-id]");
+        if (!card) return;
+
+        openMarketModal(card.dataset.marketId);
+    });
+
+    document.getElementById("market-modal")?.addEventListener("click", (e) => {
+        if (e.target.closest("[data-market-modal-close]")) closeMarketModal();
     });
 }
 
