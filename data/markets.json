@@ -196,6 +196,48 @@
         { "id": "lucrum", "title": "Lucrum", "item_summary": "Who will win the war between Lucrum and Birch? | Lucrum", "colour": "#16c784" },
         { "id": "birch", "title": "Birch", "item_summary": "Who will win the war between Lucrum and Birch? | Birch", "colour": "#3b82f6" }
       ]
+    },
+    {
+      "id": "elanuelo-maid-dress",
+      "title": "Will Elanuelo wear a maid dress?",
+      "short_title": "Elanuelo Maid Dress?",
+      "icon": "../assets/elanuelo_maid_dress.png",
+      "ends": 1782080100,
+      "added_at": 1780920013,
+      "tags": ["Culture", "Femboys"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Elanuelo wear a maid dress? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Elanuelo wear a maid dress? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "anything-ever-happen",
+      "title": "Will anything ever happen?",
+      "short_title": "Anything Ever Happen?",
+      "description": "Resolves 'Yes' if any major world wide events take place by the end of Day 5.",
+      "icon": "../assets/nothing_ever_happens.png",
+      "ends": 1781993700,
+      "added_at": 1780920014,
+      "tags": ["Drama", "Politics"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will anything ever happen? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will anything ever happen? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "bedrock-corp-tower-deaths",
+      "title": "How many people will fall to their deaths while building the Bedrock Corp tower?",
+      "short_title": "Bedrock Corp Tower Deaths?",
+      "icon": "",
+      "ends": 1781817300,
+      "added_at": 1781461605,
+      "tags": ["Deaths", "Bedrock Corp"],
+      "outcomes": [
+        { "id": "zero", "title": "0", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 0", "colour": "#16c784" },
+        { "id": "one", "title": "1", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 1", "colour": "#3b82f6" },
+        { "id": "two", "title": "2", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 2", "colour": "#ea3943" },
+        { "id": "three_plus", "title": "3+", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 3+", "colour": "#ea3943" }
+      ]
     }
   ]
 }
