@@ -181,6 +181,19 @@
         { "id": "three_five", "title": "3-5", "item_summary": "How many players will die to PvP after the border drops? | 3-5", "colour": "#f59e0b" },
         { "id": "six_plus", "title": "6+", "item_summary": "How many players will die to PvP after the border drops? | 6+", "colour": "#ea3943" }
       ]
+    },
+    {
+      "id": "lucrum-birch-war-winner",
+      "title": "Who will win the war between Lucrum and Birch?",
+      "short_title": "Lucrum vs Birch?",
+      "icon": "../assets/lucrum_vs_birch.png",
+      "ends": 1781992800,
+      "added_at": 1780920012,
+      "tags": ["War", "Nations", "Politics", "Lucrum", "Birch"],
+      "outcomes": [
+        { "id": "lucrum", "title": "Lucrum", "item_summary": "Who will win the war between Lucrum and Birch? | Lucrum", "colour": "#16c784" },
+        { "id": "birch", "title": "Birch", "item_summary": "Who will win the war between Lucrum and Birch? | Birch", "colour": "#3b82f6" }
+      ]
     }
   ]
 }
