@@ -102,6 +102,8 @@
       "icon": "",
       "ends": 1781389800,
       "added_at": 1780920006,
+      "resolved": true,
+      "winning_outcome": "zero",
       "tags": ["Drama", "Rollbacks"],
       "outcomes": [
         { "id": "zero", "title": "0", "item_summary": "How many rollbacks will occur on Day 2? | 0", "colour": "#16c784" },
@@ -142,6 +144,8 @@
       "icon": "",
       "ends": 1781389800,
       "added_at": 1780920009,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will two or more nations merge with each other on Day 2? | Yes", "colour": "#16c784" },
@@ -168,6 +172,8 @@
       "icon": "",
       "ends": 1781389800,
       "added_at": 1780920011,
+      "resolved": true,
+      "winning_outcome": "zero",
       "tags": ["Deaths", "War", "RDM"],
       "outcomes": [
         { "id": "zero", "title": "0", "item_summary": "How many players will die to PvP after the border drops? | 0", "colour": "#16c784" },
