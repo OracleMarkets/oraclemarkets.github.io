@@ -22,6 +22,40 @@
     "Deaths"
   ],
   "highlightOverrides": [
-    "lucrum-birch-war-winner"
-  ]
+  ],
+  "defaultIcons": {
+    "Oracle": "../assets/default/dreamscape.webp",
+    "Bedrock Corp": "../assets/default/bedrock_corp.webp",
+    "Lucrum": "../assets/default/lucrum.webp",
+    "SevCorp": "../assets/default/sevcorp.webp",
+    "Dreamscape": "../assets/default/dreamscape.webp",
+    "Helia": "../assets/default/helia.webp",
+    "Plinth": "../assets/default/plinth.webp",
+    "Crestia Bay": "../assets/default/crestia_bay.webp",
+    "Ascentia": "../assets/default/ascentia.webp",
+    "Solvierra": "../assets/default/solvierra.webp",
+    "Triple T": "../assets/default/triple_t.png",
+    "Kohaku": "../assets/default/kohaku.png",
+    "Abberline Crime Family": "../assets/default/abberline.webp",
+    "Pony Express": "../assets/default/pony_express.webp",
+    "Dreamscape": "../assets/default/dreamscape.webp",
+    "Eden": "../assets/default/eden.webp",
+    "C.R.I.T.": "../assets/default/crit_business.webp",
+    "Catopia": "../assets/default/catopia.webp",
+    "Ventura Journals": "../assets/default/ventura_journals.webp",
+    "Silver Spyglass": "../assets/default/silver_spyglass.webp",
+    "Mountain Edge": "../assets/default/mountain_edge.webp",
+    "Sitat Sabea": "../assets/default/sitat_sabea.webp",
+    "Birbee Sanctuaree": "../assets/default/lucrum.webp",
+    "Hardwood Advanced": "../assets/default/hardwood_advanced.webp",
+    "RDM":  "../assets/default/rdm.png",
+    "Economy":  "../assets/default/economy.png",
+    "War":  "../assets/default/war.png",
+    "Sports":  "../assets/default/sports.png",
+    "Metagaming":  "../assets/default/metagaming.png",
+    "Politics":  "../assets/default/politics.png",
+    "Deaths":  "../assets/default/deaths.png",
+    "Drama":  "../assets/default/drama.gif",
+    "Nations":  "../assets/default/nations.webp"
+  }
 }

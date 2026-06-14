@@ -47,10 +47,19 @@
       "link": "https://discord.com/channels/1403834434934931608/1510779549212999872/1515619912985477225",
       "market_ids": ["lucrum-birch-war-winner"],
       "tags": []
+    },
+    {
+      "title": "Community: Lucrumites Living in Fear of Birch Trees",
+      "author_id": "discord-community",
+      "date_time": 1781401380,
+      "link": "https://discord.com/channels/1403834434934931608/1510779206588567652/1515532477190377613",
+      "market_ids": ["lucrum-birch-war-winner"],
+      "tags": []
     }
   ],
   "newspapers": [
     { "id": "silver-spyglass", "name": "Silver Spyglass", "image": "https://images.crestconomy.com/files/5642bb98ac8f44d1b507d26e3f90c64e.png" },
-    { "id": "ventura-journals", "name": "Venture Journals", "image": "https://images.crestconomy.com/files/3f2d14dd3dcb4b4a9f244f30343e9e52.webp" }
+    { "id": "ventura-journals", "name": "Venture Journals", "image": "https://images.crestconomy.com/files/3f2d14dd3dcb4b4a9f244f30343e9e52.webp" },
+    { "id": "discord-community", "name": "Community", "image": "https://static.wikia.nocookie.net/eclesiar/images/3/31/Discord-icon-svgrepo-com.svg/revision/latest?cb=20231111140808"}
   ]
 }

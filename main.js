@@ -227,6 +227,17 @@ function equalOutcomePercent(outcomeCount) {
     return Math.round(100 / outcomeCount);
 }
 
+function resolveDefaultIcon(tags) {
+    const defaultIcons = siteData?.defaultIcons;
+    if (!defaultIcons || !tags?.length) return "";
+
+    for (const key of Object.keys(defaultIcons)) {
+        if (tags.includes(key)) return defaultIcons[key];
+    }
+
+    return "";
+}
+
 function normaliseMarket(raw, site) {
     const totalPool = raw.outcomes.reduce((sum, o) => sum + o.pool_size, 0);
     const evenPercent = equalOutcomePercent(raw.outcomes.length);
@@ -252,7 +263,7 @@ function normaliseMarket(raw, site) {
         id: raw.id,
         title: raw.title,
         short_title: raw.short_title,
-        icon: raw.icon,
+        icon: raw.icon || resolveDefaultIcon(raw.tags),
         tags: raw.tags,
         endsAt: parseMarketEndMs(raw.ends),
         resolved: Boolean(raw.resolved && raw.winning_outcome),

@@ -342,6 +342,11 @@ main {
     object-fit: cover;
 }
 
+.featured-icon:has(img) {
+    background: none;
+    border: none;
+}
+
 .featured-title-block {
     flex: 1;
     min-width: 0;
@@ -974,6 +979,11 @@ a.news-headline:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.market-icon:has(img) {
+    background: none;
+    border: none;
 }
 
 .event-card-title {
