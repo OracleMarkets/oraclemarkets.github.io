@@ -279,6 +279,7 @@ function normaliseMarket(raw, site) {
         volume: formatVolume(totalPool),
         totalPool,
         subtitle: raw.tags.slice(0, 2).join(" • "),
+        description: raw.description?.trim() || null,
         change: stats24h.change,
         volume24h: stats24h.volume24h,
         displayPercent: stats24h.displayPercent,
@@ -868,6 +869,15 @@ function featuredChanceText(market) {
         : `${market.leadingOutcome.percent}% ${market.leadingOutcome.name}`;
 }
 
+function marketDescriptionHtml(market) {
+    if (!market.description) return "";
+
+    return `<div class="market-description">
+        <svg class="market-description-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <p class="market-description-text">${escapeHtml(market.description)}</p>
+    </div>`;
+}
+
 function renderFeatured() {
     const list = getHighlightMarkets();
     const card = document.getElementById("featured-card");
@@ -921,6 +931,7 @@ function renderFeatured() {
                 <h2>${market.title}</h2>
             </div>
         </div>
+        ${marketDescriptionHtml(market)}
 
         <div class="highlight-body${showChart ? "" : " highlight-body--no-chart"}">
             <div class="highlight-left">
@@ -1562,6 +1573,7 @@ function buildMarketDetailHtml(market) {
                     <h2 id="market-modal-title">${market.title}</h2>
                 </div>
             </header>
+            ${marketDescriptionHtml(market)}
             <div class="highlight-body market-modal-body${showChart ? "" : " highlight-body--no-chart"}">
                 <div class="highlight-left">
                     ${chanceRowHtml}
