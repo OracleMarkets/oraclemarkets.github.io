@@ -1,1 +1,1 @@
-window.LEADERBOARD_DATA = {"entries":[]};
+window.LEADERBOARD_DATA = {"entries":[{"name":"KapookLynn","skinId":"","nation":"Bedrock Corp","guild":"International Artist\u0027s Guild"},{"name":"Mikrowave","skinId":"","nation":"Dreamscape","guild":"Securitons"},{"name":"AntFx","skinId":"","nation":"Bedrock Corp","guild":"ARCSEC"},{"name":"Altemus","skinId":"","nation":"SevCorp","guild":"Greed Department"}]};
