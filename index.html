@@ -193,5 +193,33 @@
         </div>
     </div>
 </footer>
+
+<div id="bet-modal" class="bet-modal" role="dialog" aria-modal="true" aria-labelledby="bet-modal-title" hidden>
+    <div class="bet-modal-backdrop" data-bet-modal-close></div>
+    <div class="bet-modal-panel">
+        <button type="button" class="bet-modal-close" id="bet-modal-close" data-bet-modal-close aria-label="Close">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <h2 class="bet-modal-title" id="bet-modal-title">How to place your bet</h2>
+        <p class="bet-modal-market" id="bet-modal-market"></p>
+        <p class="bet-modal-outcome">Outcome: <strong id="bet-modal-outcome"></strong></p>
+        <ol class="bet-modal-steps">
+            <li>Open the Oracle store using the button below</li>
+            <li>Search for the listing shown here</li>
+            <li>Purchase the item and enter how much you want to bet</li>
+        </ol>
+        <div class="bet-modal-search-wrap">
+            <span class="bet-modal-search-label">Search for</span>
+            <div class="bet-modal-search-row">
+                <code class="bet-modal-search" id="bet-modal-search"></code>
+                <button type="button" class="bet-modal-copy" id="bet-modal-copy">Copy</button>
+            </div>
+        </div>
+        <a id="bet-modal-store-link" class="bet-modal-store-btn" href="#" target="_blank" rel="noopener noreferrer">
+            Open Oracle store
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        </a>
+    </div>
+</div>
 </body>
 </html>

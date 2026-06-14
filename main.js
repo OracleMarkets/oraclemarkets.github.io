@@ -86,6 +86,7 @@ function finishMarketsRender() {
     renderMarkets();
     renderFeatured();
     bindGlobalEvents();
+    bindBetModal();
     startMarketEndTicker();
 }
 
@@ -235,7 +236,8 @@ function normaliseMarket(raw, site) {
         colour: o.colour,
         pool_size: o.pool_size,
         percent: totalPool ? Math.round((o.pool_size / totalPool) * 100) : evenPercent,
-        url: `${site.defaultBetUrl}`
+        url: `${site.defaultBetUrl}`,
+        itemSummary: o.item_summary || `${raw.title} | ${o.title}`
     }));
 
     const yesOutcome = outcomes.find((o) => o.id === "yes");
@@ -888,16 +890,20 @@ function renderFeatured() {
     const actionButtons = resolved
         ? resolvedOutcomesHtml(market, { featured: true })
         : market.type === "yes-no"
-        ? `<div class="btn-row">
-                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button"${disabledAttr}>Yes</button>
-                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button"${disabledAttr}>No</button>
-           </div>`
+        ? (() => {
+            const yesOutcome = market.outcomes.find((o) => o.id === "yes");
+            const noOutcome = market.outcomes.find((o) => o.id === "no");
+            return `<div class="btn-row">
+                <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
+                <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
+           </div>`;
+        })()
         : `<div class="outcomes-list featured-outcomes">
                 ${market.outcomes.map((o) => `
                     <div class="outcome-row">
                         <p class="outcome-name">${o.name}</p>
                         <span class="outcome-pct lead">${o.percent}%</span>
-                        <button class="btn-bet" data-bet-url="${o.url}" type="button"${disabledAttr}>Bet</button>
+                        <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
                     </div>
                 `).join("")}
            </div>`;
@@ -943,10 +949,6 @@ function renderFeatured() {
             ${carouselHtml}
         </div>
     `;
-
-    card.querySelectorAll("[data-bet-url]").forEach((btn) => {
-        btn.addEventListener("click", () => redirectBet(btn.dataset.betUrl));
-    });
 
     card.querySelectorAll("[data-featured-idx]").forEach((dot) => {
         dot.addEventListener("click", () => {
@@ -1273,10 +1275,6 @@ function renderMarkets() {
     empty.hidden = true;
     grid.innerHTML = filtered.map((m, i) => renderMarketCard(m, i)).join("");
 
-    grid.querySelectorAll("[data-bet-url]").forEach((btn) => {
-        btn.addEventListener("click", () => redirectBet(btn.dataset.betUrl));
-    });
-
     grid.querySelectorAll(".arc-fill").forEach((arc) => {
         animateArc(arc, Number(arc.dataset.percent));
     });
@@ -1331,7 +1329,7 @@ function renderMarketCard(market, index) {
                         <div class="outcome-row">
                             <p class="outcome-name">${o.name}</p>
                             <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
-                            <button class="btn-bet" data-bet-url="${o.url}" type="button"${disabledAttr}>Bet</button>
+                            <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
                         </div>
                     `).join("")}
                 </div>
@@ -1342,6 +1340,9 @@ function renderMarketCard(market, index) {
             </article>
         `;
     }
+
+    const yesOutcome = market.outcomes.find((o) => o.id === "yes");
+    const noOutcome = market.outcomes.find((o) => o.id === "no");
 
     return `
         <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}">
@@ -1362,8 +1363,8 @@ function renderMarketCard(market, index) {
                 </div>
             </div>
             <div class="btn-row btn-row--compact">
-                <button class="btn-yes" data-bet-url="${market.betUrls.yes}" type="button"${disabledAttr}>Yes</button>
-                <button class="btn-no" data-bet-url="${market.betUrls.no}" type="button"${disabledAttr}>No</button>
+                <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
+                <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
             </div>
             <div class="card-meta">
                 <span>${market.volume}</span>
@@ -1419,10 +1420,75 @@ function buildCarouselHtml(list, index) {
     `;
 }
 
-function truncateTitle(title, max = 18) {
-    return title.length > max ? title.slice(0, max) + "…" : title;
+function betButtonAttrs(outcome, marketTitle) {
+    const search = outcome.itemSummary || `${marketTitle} | ${outcome.name}`;
+    return `data-bet-url="${escapeAttr(outcome.url)}" data-bet-search="${escapeAttr(search)}" data-outcome-name="${escapeAttr(outcome.name)}" data-market-title="${escapeAttr(marketTitle)}"`;
 }
 
-function redirectBet(url) {
-    window.open(url || siteData.site.defaultBetUrl, "_blank", "noopener,noreferrer");
+function openBetModal(btn) {
+    const modal = document.getElementById("bet-modal");
+    if (!modal) return;
+
+    const marketEl = document.getElementById("bet-modal-market");
+    const outcomeEl = document.getElementById("bet-modal-outcome");
+    const searchEl = document.getElementById("bet-modal-search");
+    const storeLink = document.getElementById("bet-modal-store-link");
+
+    if (marketEl) marketEl.textContent = btn.dataset.marketTitle || "";
+    if (outcomeEl) outcomeEl.textContent = btn.dataset.outcomeName || "";
+    if (searchEl) searchEl.textContent = btn.dataset.betSearch || "";
+    if (storeLink) {
+        storeLink.href = btn.dataset.betUrl || siteData?.site?.defaultBetUrl || "#";
+    }
+
+    modal.hidden = false;
+    document.body.classList.add("bet-modal-open");
+    document.getElementById("bet-modal-close")?.focus();
+}
+
+function closeBetModal() {
+    const modal = document.getElementById("bet-modal");
+    if (!modal) return;
+
+    modal.hidden = true;
+    document.body.classList.remove("bet-modal-open");
+}
+
+function bindBetModal() {
+    document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn-yes, .btn-no, .btn-bet");
+        if (!btn?.dataset.betUrl || btn.disabled) return;
+
+        e.preventDefault();
+        openBetModal(btn);
+    });
+
+    document.getElementById("bet-modal")?.addEventListener("click", (e) => {
+        if (e.target.closest("[data-bet-modal-close]")) closeBetModal();
+    });
+
+    document.getElementById("bet-modal-copy")?.addEventListener("click", async () => {
+        const search = document.getElementById("bet-modal-search")?.textContent;
+        if (!search) return;
+
+        try {
+            await navigator.clipboard.writeText(search);
+            const copyBtn = document.getElementById("bet-modal-copy");
+            if (copyBtn) {
+                const original = copyBtn.textContent;
+                copyBtn.textContent = "Copied";
+                setTimeout(() => { copyBtn.textContent = original; }, 1500);
+            }
+        } catch (_) {}
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && document.body.classList.contains("bet-modal-open")) {
+            closeBetModal();
+        }
+    });
+}
+
+function truncateTitle(title, max = 18) {
+    return title.length > max ? title.slice(0, max) + "…" : title;
 }
