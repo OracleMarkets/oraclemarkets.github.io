@@ -101,7 +101,9 @@
   font-weight: 600;
   color: #fff;
   background: var(--accent);
+  border: none;
   border-radius: var(--radius-md);
+  cursor: pointer;
   transition: background var(--transition), transform var(--transition);
 }
 

@@ -4,9 +4,13 @@ const WEBSITE_ICON = `<svg width="35" height="35" viewBox="0 0 128 128" xmlns="h
 
 document.addEventListener("DOMContentLoaded", init);
 
+let lotteryStoreUrl = "";
+let lotterySearchTerm = "";
+
 async function init() {
     initFooter();
     renderLotteryStatic();
+    bindLotteryModal();
 
     try {
         const live = await loadLotteryPool();
@@ -44,12 +48,16 @@ function renderLotteryPot(live) {
     if (potEl) {
         potEl.textContent = formatPot(live.totalPool ?? 0);
     }
+
+    if (live.currentLottery) {
+        lotterySearchTerm = live.currentLottery;
+    }
 }
 
 function renderLotteryStatic() {
     const data = window.LOTTERY_DATA;
     const site = window.ORACLE_DATA?.site?.site;
-    const enterLink = document.getElementById("enter-link");
+    const enterBtn = document.getElementById("enter-link");
     const historyList = document.getElementById("history-list");
     const historyEmpty = document.getElementById("history-empty");
 
@@ -60,13 +68,11 @@ function renderLotteryStatic() {
         return;
     }
 
-    if (enterLink) {
-        const url = data.entryUrl || site?.defaultBetUrl;
-        if (url) {
-            enterLink.href = url;
-        } else {
-            enterLink.hidden = true;
-        }
+    lotteryStoreUrl = data.entryUrl || site?.defaultBetUrl || "";
+    lotterySearchTerm = data.currentLottery || "Oracle Daily Lottery Ticket";
+
+    if (enterBtn) {
+        enterBtn.hidden = !lotteryStoreUrl;
     }
 
     if (!historyList) return;
@@ -145,4 +151,61 @@ function escapeHtml(str) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
+}
+
+function openLotteryModal() {
+    const modal = document.getElementById("bet-modal");
+    if (!modal) return;
+
+    const marketEl = document.getElementById("bet-modal-market");
+    const searchEl = document.getElementById("bet-modal-search");
+    const storeLink = document.getElementById("bet-modal-store-link");
+
+    if (marketEl) marketEl.textContent = lotterySearchTerm;
+    if (searchEl) searchEl.textContent = lotterySearchTerm;
+    if (storeLink) storeLink.href = lotteryStoreUrl || "#";
+
+    modal.hidden = false;
+    document.body.classList.add("bet-modal-open");
+    document.getElementById("bet-modal-close")?.focus();
+}
+
+function closeLotteryModal() {
+    const modal = document.getElementById("bet-modal");
+    if (!modal) return;
+
+    modal.hidden = true;
+    document.body.classList.remove("bet-modal-open");
+}
+
+function bindLotteryModal() {
+    document.getElementById("enter-link")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        openLotteryModal();
+    });
+
+    document.getElementById("bet-modal")?.addEventListener("click", (e) => {
+        if (e.target.closest("[data-bet-modal-close]")) closeLotteryModal();
+    });
+
+    document.getElementById("bet-modal-copy")?.addEventListener("click", async () => {
+        const search = document.getElementById("bet-modal-search")?.textContent;
+        if (!search) return;
+
+        try {
+            await navigator.clipboard.writeText(search);
+            const copyBtn = document.getElementById("bet-modal-copy");
+            if (copyBtn) {
+                const original = copyBtn.textContent;
+                copyBtn.textContent = "Copied";
+                setTimeout(() => { copyBtn.textContent = original; }, 1500);
+            }
+        } catch (_) {}
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && document.body.classList.contains("bet-modal-open")) {
+            closeLotteryModal();
+        }
+    });
 }
