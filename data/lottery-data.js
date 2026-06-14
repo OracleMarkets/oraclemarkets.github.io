@@ -1,4 +1,4 @@
-window.LOTTERY_DATA = {"pot":0,"entryUrl":"https://crestconomy.com/guild/oracle/store","currentLottery":"Oracle Daily Lottery Ticket | Day 2","history":[]};
+window.LOTTERY_DATA = {"pot":0,"entryUrl":"https://crestconomy.com/guild/oracle/store","currentLottery":"Oracle Daily Lottery Ticket | Day 3","history":[{"date":"Day 2","pot":63,"winner":"Mikrowave"}]};
 window.__ORACLE_LOTTERY_POOL_PROMISE__ = (() => {
     const url = window.ORACLE_DATA?.site?.site?.lotteryApiUrl;
     if (!url) return Promise.reject(new Error("lotteryApiUrl not configured"));

@@ -1,7 +1,12 @@
 {
   "pot": 0,
   "entryUrl": "https://crestconomy.com/guild/oracle/store",
-  "currentLottery": "Oracle Daily Lottery Ticket | Day 2",
+  "currentLottery": "Oracle Daily Lottery Ticket | Day 3",
   "history": [
+    {
+      "date": "Day 2",
+      "pot": 63,
+      "winner": "Mikrowave"
+    }
   ]
 }
