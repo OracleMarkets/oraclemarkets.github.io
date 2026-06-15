@@ -118,6 +118,8 @@
       "icon": "",
       "ends": 1781476200,
       "added_at": 1780920007,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 3? | Yes", "colour": "#16c784" },
