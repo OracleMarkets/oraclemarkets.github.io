@@ -126,6 +126,7 @@
 .rank-inner {
   position: relative;
   display: flex;
+  align-items: center;
   opacity: 0;
   transform: translateY(6px);
   animation: none;
@@ -140,6 +141,7 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   padding: 14px 16px;
+  gap: 1rem;
 }
 
 .lb-board-animate .rank-inner {
@@ -212,6 +214,8 @@
 
 .mage-info {
   display: flex;
+  flex: 1;
+  min-width: 0;
   flex-direction: column;
   align-items: space-between;
   height: 100%;
@@ -220,6 +224,33 @@
   color: var(--muted);
   gap: 0.3rem;
   align-self: center;
+}
+
+.nation-emblem {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin-left: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--panel);
+}
+
+.nation-emblem img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nation-emblem--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
 }
 
 .mage-info h2 {
@@ -382,6 +413,10 @@
 
   .mage-info h2 {
     text-align: center;
+  }
+
+  .nation-emblem {
+    margin-left: 0;
   }
 }
 

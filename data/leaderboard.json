@@ -1,28 +1,64 @@
 {
   "entries": [
     {
-      "name": "KapookLynn",
-      "skinId": "",
+      "name": "GeoPupae",
+      "skinId": "30b6aeb05b5e18db6b433392f48de67ec098334f7332dc97ce4600916f356a8e",
+      "nation": "Kohaku",
+      "guild": "Central Bank of Kohaku"
+    },
+    {
+      "name": "AnkaaGrey",
+      "skinId": "de2dc0723180eb9e85f7132733973414f0ba813c88cf5030af857597a6645b7c",
+      "nation": "Kohaku",
+      "guild": ""
+    },
+    {
+      "name": "TheNickels",
+      "skinId": "207d0591e95794ab73e7252f02a99e2379d4f5dd575b1c3402ff3486e6c33e0",
+      "nation": "Bedrock Corp",
+      "guild": "Pony Express"
+    },
+    {
+      "name": "KingBayne",
+      "skinId": "f53c8fecb72a73e19950a1400e8e4648e9a84efcf325be4d31c9a0821e39db41",
+      "nation": "Bedrock Corp",
+      "guild": "Bedrock News"
+    },
+    {
+      "name": "Luna_rian",
+      "skinId": "925247757924f9110dd6413778ac45a350a619229616f163a142c9e807216112",
       "nation": "Bedrock Corp",
       "guild": "International Artist's Guild"
     },
     {
-      "name": "Mikrowave",
-      "skinId": "",
-      "nation": "Dreamscape",
-      "guild": "Securitons"
+      "name": "KapookLynn",
+      "skinId": "58c4a9655ea8a5a923b9af09dc1c14febd6239f0a200c0d4aa55f24e002282eb",
+      "nation": "Bedrock Corp",
+      "guild": "International Artist's Guild"
+    },
+    {
+      "name": "AltemusX",
+      "skinId": "52e75527ed02b5b4ccf287d8ac58be48952e338f96a991e292c39bb3b8bcdb86",
+      "nation": "SevCorp",
+      "guild": "Greed Department"
+    },
+    {
+      "name": "Bardun_",
+      "skinId": "44f31390975c1c591838867a8e6074eb38c4d2a80af0c64e50c2ea403c2d036b",
+      "nation": "Helia",
+      "guild": "Diplomatic Office"
     },
     {
       "name": "GangstaAnt",
-      "skinId": "",
+      "skinId": "cc2601e7d1e612a410e4c457dde048be9739ece38ab7cac7ebd38c365fb2f386",
       "nation": "Bedrock Corp",
       "guild": "ARCSEC"
     },
     {
-      "name": "Altemus",
-      "skinId": "",
-      "nation": "SevCorp",
-      "guild": "Greed Department"
+      "name": "Oof1010",
+      "skinId": "f84e6df701be2c57fcd0dde96027bc8be26d39081b966d05094dcb36ba9a5109",
+      "nation": "Lucrum Federation",
+      "guild": "Tung Tung Tung Sahur Church"
     }
   ]
 }

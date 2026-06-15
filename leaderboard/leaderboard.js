@@ -44,6 +44,44 @@ function avatarUrl(entry) {
     return `${AVATAR_API}${encodeURIComponent(id)}`;
 }
 
+function resolveNationIcon(nation, override) {
+    if (override) return override;
+
+    const defaultIcons = window.ORACLE_DATA?.site?.defaultIcons;
+    if (!defaultIcons || !nation) return "";
+
+    if (defaultIcons[nation]) return defaultIcons[nation];
+
+    let best = "";
+    let bestLen = 0;
+
+    for (const key of Object.keys(defaultIcons)) {
+        if (nation.includes(key) || key.includes(nation)) {
+            if (key.length > bestLen) {
+                best = defaultIcons[key];
+                bestLen = key.length;
+            }
+        }
+    }
+
+    return best;
+}
+
+function nationEmblemHtml(entry) {
+    if (!entry.nation) return "";
+
+    const icon = resolveNationIcon(entry.nation, entry.nation_icon);
+
+    if (icon) {
+        return `<div class="nation-emblem" title="${escapeHtml(entry.nation)}">
+            <img src="${escapeHtml(icon)}" alt="">
+        </div>`;
+    }
+
+    const letter = entry.nation.charAt(0).toUpperCase();
+    return `<div class="nation-emblem nation-emblem--fallback" title="${escapeHtml(entry.nation)}">${escapeHtml(letter)}</div>`;
+}
+
 function renderMembers(filteredMembers = members) {
     const container = document.getElementById("members");
     container.innerHTML = "";
@@ -78,6 +116,7 @@ function renderMembers(filteredMembers = members) {
                     <h2>${escapeHtml(m.name)}</h2>
                     ${affiliation}
                 </div>
+                ${nationEmblemHtml(m)}
             </div>
         `;
         container.appendChild(card);
