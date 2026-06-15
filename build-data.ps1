@@ -12,9 +12,11 @@ $json = $bundle | ConvertTo-Json -Depth 100 -Compress
 $content = @"
 window.ORACLE_DATA = $json;
 window.__ORACLE_MARKETS_POOLS_PROMISE__ = (() => {
-    const url = window.ORACLE_DATA?.site?.site?.marketsApiUrl;
-    if (!url) return Promise.reject(new Error("marketsApiUrl not configured"));
-    return fetch(url)
+    const base = window.ORACLE_DATA?.site?.site?.marketsApiUrl;
+    if (!base) return Promise.reject(new Error("marketsApiUrl not configured"));
+    const url = new URL(base);
+    url.searchParams.set("status", "active");
+    return fetch(url.href)
         .then((response) => {
             if (!response.ok) throw new Error("Failed to fetch market pools: " + response.status);
             return response.json();

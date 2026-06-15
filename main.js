@@ -5,6 +5,87 @@ const HIGHLIGHT_LIMIT = 3;
 const HOURS_24_SEC = 86400;
 const MARKET_END_TZ = "America/New_York";
 
+const SKELETON_EVENT_CARD = `<article class="event-card skeleton-card"><div class="skeleton-card-top"><div class="skeleton-block skeleton-card-icon"></div><div class="skeleton-card-copy"><div class="skeleton-line skeleton-line--card-title"></div><div class="skeleton-line skeleton-line--card-title-sub"></div></div><div class="skeleton-block skeleton-card-arc"></div></div><div class="skeleton-btn-row"><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div><div class="skeleton-block skeleton-btn skeleton-btn--compact"></div></div><div class="skeleton-line skeleton-line--card-meta"></div></article>`;
+
+const SKELETON_FEATURED_HTML = `
+        <div class="featured-header">
+            <div class="skeleton-block skeleton-icon"></div>
+            <div class="featured-title-block">
+                <div class="skeleton-line skeleton-line--xs"></div>
+                <div class="skeleton-line skeleton-line--lg"></div>
+            </div>
+        </div>
+        <div class="highlight-body">
+            <div class="highlight-left">
+                <div class="skeleton-line skeleton-line--chance"></div>
+                <div class="skeleton-btn-row">
+                    <div class="skeleton-block skeleton-btn"></div>
+                    <div class="skeleton-block skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="skeleton-block skeleton-chart"></div>
+        </div>
+        <div class="skeleton-featured-footer">
+            <div class="skeleton-line skeleton-line--footer-meta"></div>
+            <div class="skeleton-footer-dots">
+                <span class="skeleton-dot"></span>
+                <span class="skeleton-dot"></span>
+                <span class="skeleton-dot"></span>
+            </div>
+            <div class="skeleton-line skeleton-line--footer-nav"></div>
+        </div>`;
+
+const SKELETON_GRID_TAGS_HTML = `
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill"></span>
+            <span class="skeleton-pill skeleton-pill--short"></span>`;
+
+const SKELETON_SIDEBARS_HTML = `
+            <div class="sidebar-card skeleton-sidebar">
+                <div class="skeleton-line skeleton-line--sidebar-title"></div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+                <div class="skeleton-breaking-item">
+                    <div class="skeleton-line skeleton-line--rank"></div>
+                    <div class="skeleton-line skeleton-line--breaking-title"></div>
+                    <div class="skeleton-breaking-stat">
+                        <div class="skeleton-line skeleton-line--stat"></div>
+                        <div class="skeleton-line skeleton-line--stat-sm"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-card skeleton-sidebar">
+                <div class="skeleton-line skeleton-line--sidebar-title"></div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+                <div class="skeleton-hot-item">
+                    <div class="skeleton-line skeleton-line--hot-name"></div>
+                    <div class="skeleton-line skeleton-line--hot-vol"></div>
+                </div>
+            </div>`;
+
 let siteData = null;
 let newsData = null;
 let markets = [];
@@ -19,6 +100,8 @@ let chartJsPromise = null;
 let marketEndTimer = null;
 let marketsReady = false;
 let liveDataUnavailable = false;
+let resolvedPoolsLoaded = false;
+let resolvedPoolsLoading = null;
 
 const dataPromise = loadAllData();
 loadChartJs();
@@ -132,9 +215,17 @@ async function retryLoadPools() {
     btn.textContent = "Retrying…";
 
     try {
+        const status = activeNavTag === "Resolved" ? "resolved" : "active";
         const { marketDefs } = window.ORACLE_DATA ?? {};
-        const marketPools = await fetchMarketPools(siteData.site.marketsApiUrl);
-        markets = mergeMarkets(marketDefs, marketPools, siteData.site);
+        const marketPools = await fetchMarketPools(siteData.site.marketsApiUrl, status);
+
+        if (status === "resolved") {
+            applyMarketPoolUpdates(marketPools, siteData.site);
+            resolvedPoolsLoaded = true;
+        } else {
+            markets = mergeMarkets(marketDefs, marketPools, siteData.site);
+        }
+
         liveDataUnavailable = false;
         hideLiveDataBanner();
         renderSidebars();
@@ -181,7 +272,7 @@ function loadAllData() {
         return Promise.reject(new Error("Failed to load site data"));
     }
 
-    return (window.__ORACLE_MARKETS_POOLS_PROMISE__ ?? fetchMarketPools(site.site.marketsApiUrl)).then((marketPools) => ({
+    return (window.__ORACLE_MARKETS_POOLS_PROMISE__ ?? fetchMarketPools(site.site.marketsApiUrl, "active")).then((marketPools) => ({
         site,
         news,
         marketDefs,
@@ -189,9 +280,14 @@ function loadAllData() {
     }));
 }
 
-async function fetchMarketPools(apiUrl) {
-    const url = apiUrl || "https://oracle-markets-backend.vercel.app/api/markets";
-    const response = await fetch(url);
+function marketsApiUrl(apiUrl, status) {
+    const url = new URL(apiUrl || "https://oracle-markets-backend.vercel.app/api/markets");
+    url.searchParams.set("status", status);
+    return url.href;
+}
+
+async function fetchMarketPools(apiUrl, status = "active") {
+    const response = await fetch(marketsApiUrl(apiUrl, status));
 
     if (!response.ok) {
         throw new Error(`Failed to fetch market pools: ${response.status}`);
@@ -201,28 +297,63 @@ async function fetchMarketPools(apiUrl) {
     return { pools: data.pools ?? [] };
 }
 
+function marketFromDefAndPool(def, pool, site) {
+    const poolSizes = pool
+        ? Object.fromEntries(pool.outcomes.map((o) => [o.outcome, o.pool_size]))
+        : {};
+
+    const merged = {
+        ...def,
+        outcomes: def.outcomes.map((o) => ({
+            ...o,
+            pool_size: poolSizes[o.id] ?? 0
+        })),
+        history: pool?.history ?? []
+    };
+
+    return normaliseMarket(merged, site);
+}
+
 function mergeMarkets(marketDefs, marketPools, site) {
     const poolsById = Object.fromEntries(
         marketPools.pools.map((p) => [p.market_id, p])
     );
 
-    return marketDefs.markets.map((def) => {
-        const pool = poolsById[def.id];
-        const poolSizes = pool
-            ? Object.fromEntries(pool.outcomes.map((o) => [o.outcome, o.pool_size]))
-            : {};
+    return marketDefs.markets.map((def) => marketFromDefAndPool(def, poolsById[def.id], site));
+}
 
-        const merged = {
-            ...def,
-            outcomes: def.outcomes.map((o) => ({
-                ...o,
-                pool_size: poolSizes[o.id] ?? 0
-            })),
-            history: pool?.history ?? []
-        };
+function applyMarketPoolUpdates(marketPools, site) {
+    const poolsById = Object.fromEntries(
+        marketPools.pools.map((p) => [p.market_id, p])
+    );
+    const defsById = Object.fromEntries(
+        (window.ORACLE_DATA?.marketDefs?.markets ?? []).map((d) => [d.id, d])
+    );
 
-        return normaliseMarket(merged, site);
+    markets = markets.map((market) => {
+        const pool = poolsById[market.id];
+        const def = defsById[market.id];
+        if (!pool || !def) return market;
+        return marketFromDefAndPool(def, pool, site);
     });
+}
+
+async function ensureResolvedPools() {
+    if (resolvedPoolsLoaded) return;
+    if (resolvedPoolsLoading) return resolvedPoolsLoading;
+
+    resolvedPoolsLoading = fetchMarketPools(siteData.site.marketsApiUrl, "resolved")
+        .then((marketPools) => {
+            applyMarketPoolUpdates(marketPools, siteData.site);
+            resolvedPoolsLoaded = true;
+            resolvedPoolsLoading = null;
+        })
+        .catch((err) => {
+            resolvedPoolsLoading = null;
+            throw err;
+        });
+
+    return resolvedPoolsLoading;
 }
 
 function equalOutcomePercent(outcomeCount) {
@@ -811,6 +942,40 @@ function bindGlobalEvents() {
     });
 }
 
+function showResolvedTabSkeleton() {
+    const card = document.getElementById("featured-card");
+    const gridTags = document.getElementById("grid-tags");
+    const grid = document.getElementById("event-grid");
+    const sidebars = document.getElementById("sidebars");
+    const empty = document.getElementById("empty-state");
+
+    if (featuredChartStore.chart) {
+        featuredChartStore.chart.destroy();
+        featuredChartStore.chart = null;
+    }
+
+    if (card) {
+        card.classList.add("skeleton-featured");
+        card.classList.remove("highlight--resolved", "highlight--ended", "fade-in");
+        card.innerHTML = SKELETON_FEATURED_HTML;
+    }
+
+    if (gridTags) {
+        gridTags.classList.add("skeleton-grid-tags");
+        gridTags.innerHTML = SKELETON_GRID_TAGS_HTML;
+    }
+
+    if (grid) {
+        grid.innerHTML = SKELETON_EVENT_CARD.repeat(6);
+    }
+
+    if (sidebars) {
+        sidebars.innerHTML = SKELETON_SIDEBARS_HTML;
+    }
+
+    if (empty) empty.hidden = true;
+}
+
 function renderNavTabs() {
     const container = document.getElementById("tabs");
     container.classList.remove("skeleton-tabs");
@@ -831,11 +996,32 @@ function renderNavTabs() {
     container.innerHTML = staticTabs + `<span class="tab-divider" aria-hidden="true"></span>` + dynamicTabs;
 
     container.querySelectorAll("[data-nav-tag]").forEach((btn) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
             if (!marketsReady) return;
-            activeNavTag = btn.dataset.navTag;
+
+            const tag = btn.dataset.navTag;
+            activeNavTag = tag;
             featuredIndex = 0;
             renderNavTabs();
+
+            if (tag === "Resolved" && !resolvedPoolsLoaded) {
+                showResolvedTabSkeleton();
+
+                try {
+                    await ensureResolvedPools();
+                } catch (err) {
+                    console.error(err);
+                }
+
+                if (activeNavTag !== "Resolved") return;
+
+                renderGridTags();
+                renderFeatured();
+                renderSidebars();
+                renderMarkets();
+                return;
+            }
+
             renderGridTags();
             renderFeatured();
             renderSidebars();
