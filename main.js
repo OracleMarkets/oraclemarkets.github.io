@@ -999,7 +999,20 @@ function bindGlobalEvents() {
         if (e.key === "/" && document.activeElement !== document.getElementById("search-bar")) {
             e.preventDefault();
             document.getElementById("search-bar").focus();
+            return;
         }
+
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+        const active = document.activeElement;
+        const tag = active?.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || active?.isContentEditable) return;
+        if (document.body.classList.contains("bet-modal-open")
+            || document.body.classList.contains("market-modal-open")
+            || document.body.classList.contains("info-modal-open")) return;
+
+        e.preventDefault();
+        stepFeaturedCarousel(e.key === "ArrowLeft" ? -1 : 1);
     });
 }
 
@@ -1134,6 +1147,13 @@ function marketSponsoredNoticeHtml(market) {
     </div>`;
 }
 
+function stepFeaturedCarousel(delta) {
+    const list = getHighlightMarkets();
+    if (!list.length) return;
+    featuredIndex = (featuredIndex + delta + list.length) % list.length;
+    renderFeatured();
+}
+
 function renderFeatured() {
     const list = getHighlightMarkets();
     const card = document.getElementById("featured-card");
@@ -1220,15 +1240,9 @@ function renderFeatured() {
         });
     });
 
-    card.querySelector("[data-carousel=prev]")?.addEventListener("click", () => {
-        featuredIndex = (featuredIndex - 1 + list.length) % list.length;
-        renderFeatured();
-    });
+    card.querySelector("[data-carousel=prev]")?.addEventListener("click", () => stepFeaturedCarousel(-1));
 
-    card.querySelector("[data-carousel=next]")?.addEventListener("click", () => {
-        featuredIndex = (featuredIndex + 1) % list.length;
-        renderFeatured();
-    });
+    card.querySelector("[data-carousel=next]")?.addEventListener("click", () => stepFeaturedCarousel(1));
 
     renderFeaturedChart(market);
     updateMarketEndTimers();
