@@ -240,6 +240,110 @@
         { "id": "two", "title": "2", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 2", "colour": "#ea3943" },
         { "id": "three_plus", "title": "3+", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 3+", "colour": "#ea3943" }
       ]
+    },
+    {
+      "id": "leader-assassination-day4",
+      "title": "Will any major nation/guild leaders be assassinated by the end of Day 4?",
+      "short_title": "Leader Assassination D4?",
+      "icon": "",
+      "ends": 1781908740,
+      "added_at": 1781461606,
+      "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 4? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 4? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "nations-merge-day4",
+      "title": "Will there be a big nation merge on Day 4?",
+      "short_title": "Nation Merge D4?",
+      "icon": "",
+      "ends": 1781908740,
+      "added_at": 1781461607,
+      "tags": ["Nations", "Politics"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will there be a big nation merge on Day 4? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will there be a big nation merge on Day 4? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "lucrum-federation-break-apart-day6",
+      "title": "Will the Lucrum Federation break up by Day 6?",
+      "short_title": "Lucrum Federation Split?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781461608,
+      "tags": ["Nations", "Politics", "Lucrum", "Drama"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation break up by Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Lucrum Federation break up by Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "bedrock-corp-tower-finish-build-day",
+      "title": "Will Bedrock Corp finish their tower by the end of build day?",
+      "short_title": "Bedrock Tower Done?",
+      "icon": "",
+      "ends": 1781817300,
+      "added_at": 1781461609,
+      "tags": ["Bedrock Corp", "Metagaming", "Economy"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Bedrock Corp finish their tower by the end of build day? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Bedrock Corp finish their tower by the end of build day? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "economy-ranked-first-day4",
+      "title": "Which nation's economy will be ranked first at the end of Day 4?",
+      "short_title": "Top Economy D4?",
+      "icon": "",
+      "ends": 1781908740,
+      "added_at": 1781461611,
+      "tags": ["Economy", "Nations"],
+      "outcomes": [
+        { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | SevCorp", "colour": "#16c784" },
+        { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Bedrock Corp", "colour": "#3b82f6" },
+        { "id": "kohaku", "title": "Kohaku", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Kohaku", "colour": "#f59e0b" },
+        { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Lucrum Federation", "colour": "#ea3943" },
+        { "id": "dreamscape", "title": "Dreamscape", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Dreamscape", "colour": "#8b5cf6" },
+        { "id": "plinth", "title": "Plinth", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Plinth", "colour": "#06b6d4" },
+        { "id": "helia", "title": "Helia", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Helia", "colour": "#ec4899" },
+        { "id": "other", "title": "Other", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | Other", "colour": "#9ca3af" }
+      ]
+    },
+    {
+      "id": "crestvision-song-contest-winner",
+      "title": "Who will win the Crestvision Song Contest?",
+      "short_title": "Crestvision Winner?",
+      "icon": "../assets/crestvision.png",
+      "ends": 1781908740,
+      "added_at": 1781461613,
+      "tags": ["Culture"],
+      "sponsored": true,
+      "outcomes": [
+        { "id": "the_crestconomists", "title": "The Crestconomists", "item_summary": "Who will win the Crestvision Song Contest? | The Crestconomists", "colour": "#16c784" },
+        { "id": "shine_the_dwarf", "title": "Shine, The Dwarf", "item_summary": "Who will win the Crestvision Song Contest? | Shine, The Dwarf", "colour": "#3b82f6" },
+        { "id": "aurasyte", "title": "Aurasyte", "item_summary": "Who will win the Crestvision Song Contest? | Aurasyte", "colour": "#f59e0b" },
+        { "id": "fortywinks", "title": "Fortywinks", "item_summary": "Who will win the Crestvision Song Contest? | Fortywinks", "colour": "#ea3943" },
+        { "id": "yelena", "title": "Yelena", "item_summary": "Who will win the Crestvision Song Contest? | Yelena", "colour": "#8b5cf6" },
+        { "id": "creek", "title": "Creek", "item_summary": "Who will win the Crestvision Song Contest? | Creek", "colour": "#06b6d4" },
+        { "id": "cianelle", "title": "Cianelle", "item_summary": "Who will win the Crestvision Song Contest? | Cianelle", "colour": "#ec4899" },
+        { "id": "milkjia", "title": "Milkjia", "item_summary": "Who will win the Crestvision Song Contest? | Milkjia", "colour": "#84cc16" }
+      ]
+    },
+    {
+      "id": "lucrum-bedrock-corp-war",
+      "title": "Will the Lucrum Federation and Bedrock Corp go to war?",
+      "short_title": "Lucrum vs Bedrock War?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781461614,
+      "tags": ["War", "Nations", "Politics", "Lucrum", "Bedrock Corp"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation and Bedrock Corp go to war? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Lucrum Federation and Bedrock Corp go to war? | No", "colour": "#ea3943" }
+      ]
     }
   ]
 }

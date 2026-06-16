@@ -80,6 +80,22 @@
       "link": "https://discord.com/channels/1403834434934931608/1510779549212999872/1515699505822175302",
       "market_ids": ["leader-assassination-day3", "helia-plinth-war"],
       "tags": []
+    },
+    {
+      "title": "Crestvision Song Contest Announced",
+      "author_id": "discord-community",
+      "date_time": 1781624340,
+      "link": "https://discord.com/channels/1403834434934931608/1510779549212999872/1516467187257184287",
+      "market_ids": ["crestvision-song-contest-winner"],
+      "tags": []
+    },
+    {
+      "title": "Nations Declare Exclusive Rights to Mountain Resources",
+      "author_id": "silver-spyglass",
+      "date_time": 1781472300,
+      "link": "https://media.discordapp.net/attachments/1510779549212999872/1515829616730968114/1.png?ex=6a326817&is=6a311697&hm=3d55615a05e183b119f89c739564cc452b98f1ee7eaad8d112c6e27384af8d11&=&format=webp&quality=lossless&width=1149&height=1265",
+      "market_ids": ["economy-ranked-first-day4", "nations-merge-day4", "helia-plinth-war"],
+      "tags": []
     }
   ],
   "newspapers": [

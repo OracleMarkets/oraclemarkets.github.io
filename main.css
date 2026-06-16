@@ -24,6 +24,32 @@
     --radius-md: 10px;
     --radius-lg: 14px;
     --transition: 0.18s ease;
+    --sponsored-gradient-elevated:
+        linear-gradient(
+            165deg,
+            rgba(234, 179, 58, 0.13) 0%,
+            rgba(234, 179, 58, 0.05) 48%,
+            transparent 100%
+        ),
+        var(--bg-elevated);
+    --sponsored-gradient-panel:
+        linear-gradient(
+            165deg,
+            rgba(234, 179, 58, 0.15) 0%,
+            rgba(234, 179, 58, 0.06) 42%,
+            transparent 100%
+        ),
+        var(--panel);
+    --sponsored-gradient-panel-hover:
+        linear-gradient(
+            165deg,
+            rgba(234, 179, 58, 0.19) 0%,
+            rgba(234, 179, 58, 0.08) 42%,
+            transparent 100%
+        ),
+        var(--panel-hover);
+    --sponsored-border: rgba(234, 179, 58, 0.22);
+    --sponsored-border-card: rgba(234, 179, 58, 0.26);
 }
 
 @font-face {
@@ -273,6 +299,7 @@ button {
     margin: 0 auto;
     overflow-x: auto;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .tabs::-webkit-scrollbar {
@@ -280,25 +307,31 @@ button {
 }
 
 .tab {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 10px 12px;
+    padding: 10px 12px 8px;
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--text-muted);
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
     white-space: nowrap;
     flex-shrink: 0;
-    transition: color var(--transition);
+    transition: color var(--transition), box-shadow var(--transition);
+}
+
+.tab svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
 }
 
 
 .tab.active {
     color: var(--text);
-    border-bottom-color: var(--accent);
+    box-shadow: inset 0 -2px 0 0 var(--accent);
 }
 
 .tab:hover {
@@ -343,7 +376,14 @@ main {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    min-height: 0;
+    overflow: visible;
+}
+
+.highlight > .featured-header,
+.highlight > .market-description,
+.highlight > .market-sponsored-notice,
+.highlight > .featured-footer {
+    flex-shrink: 0;
 }
 
 .featured-header {
@@ -422,6 +462,11 @@ main {
     margin-top: -2px;
 }
 
+.highlight .market-sponsored-notice {
+    margin-top: 8px;
+    flex-shrink: 0;
+}
+
 .market-modal-detail .market-description {
     margin-top: 4px;
 }
@@ -453,7 +498,8 @@ main {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
     gap: 16px;
-    flex: 1;
+    flex: 0 1 auto;
+    min-width: 0;
 }
 
 .highlight-body--no-chart {
@@ -1004,6 +1050,57 @@ a.news-headline:hover {
 .event-card--ended:hover {
     border-color: var(--border-subtle);
     background: var(--panel);
+}
+
+.event-card--sponsored {
+    background: var(--sponsored-gradient-panel);
+    border-color: var(--sponsored-border-card);
+}
+
+.event-card--sponsored:hover {
+    border-color: rgba(234, 179, 58, 0.36);
+    background: var(--sponsored-gradient-panel-hover);
+}
+
+.highlight--sponsored {
+    background: var(--sponsored-gradient-elevated);
+    border-color: var(--sponsored-border);
+}
+
+.market-sponsored-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(234, 179, 58, 0.1);
+    border: 1px solid rgba(234, 179, 58, 0.2);
+}
+
+.market-sponsored-notice-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: rgba(234, 179, 58, 0.9);
+}
+
+.market-sponsored-notice-text {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+.market-sponsored-notice-text strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.market-modal-detail .market-sponsored-notice {
+    margin-top: 12px;
 }
 
 .event-card-top {
@@ -1621,17 +1718,28 @@ a.news-headline:hover {
     background: var(--panel-hover);
 }
 
+.market-modal-panel--sponsored,
+.market-modal-panel--sponsored.market-modal-panel--resolved {
+    background: var(--sponsored-gradient-elevated);
+    border-color: var(--sponsored-border);
+}
+
+.market-modal-panel--sponsored .market-modal-close {
+    background: var(--bg-elevated);
+}
+
+.market-modal-panel--sponsored .market-modal-close:hover {
+    background: var(--panel-hover);
+}
+
 .market-modal-close {
-    position: sticky;
-    top: 0;
-    float: right;
-    z-index: 2;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    margin: -4px -4px 0 0;
+    margin: 0;
     border: none;
     border-radius: var(--radius-sm);
     background: var(--bg-elevated);
@@ -1640,13 +1748,30 @@ a.news-headline:hover {
     transition: color var(--transition), background var(--transition);
 }
 
+.market-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.market-modal-header-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.market-modal-header-main .featured-title-block h2 {
+    overflow-wrap: anywhere;
+}
+
 .market-modal-close:hover {
     color: var(--text);
     background: var(--panel-hover);
 }
 
 .market-modal-detail {
-    clear: both;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .market-modal-body {
@@ -2264,8 +2389,13 @@ a.news-headline:hover {
     }
 
     .tab {
-        padding: 10px 10px;
+        padding: 10px 10px 8px;
         font-size: 0.75rem;
+    }
+
+    .tab svg {
+        width: 14px;
+        height: 14px;
     }
 
     .skeleton-tabs {

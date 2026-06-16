@@ -371,6 +371,47 @@ function resolveDefaultIcon(tags) {
     return "";
 }
 
+function parseSponsored(raw) {
+    return Boolean(raw.sponsored);
+}
+
+function applySponsoredToElement(el, market, block) {
+    if (!el) return;
+    el.classList.toggle(`${block}--sponsored`, Boolean(market?.sponsored));
+}
+
+function eventCardPresentation(market, delay) {
+    const resolved = isMarketResolved(market);
+    const ended = !resolved && isMarketEnded(market.endsAt);
+    const stateClass = resolved ? " event-card--resolved" : (ended ? " event-card--ended" : "");
+    const sponsoredClass = (!resolved && market.sponsored) ? " event-card--sponsored" : "";
+
+    return {
+        className: `event-card${stateClass}${sponsoredClass} fade-in`,
+        style: `animation-delay:${delay}s`,
+        resolvedAttr: resolved ? ' data-resolved="true"' : ""
+    };
+}
+
+function prioritizeSponsoredMarkets(list) {
+    if (!list.some((m) => m.sponsored)) return list;
+
+    const overrideOrder = siteData.highlightOverrides ?? [];
+    const sponsored = list.filter((m) => m.sponsored);
+    const rest = list.filter((m) => !m.sponsored);
+
+    sponsored.sort((a, b) => {
+        const ai = overrideOrder.indexOf(a.id);
+        const bi = overrideOrder.indexOf(b.id);
+        if (ai >= 0 && bi >= 0) return ai - bi;
+        if (ai >= 0) return -1;
+        if (bi >= 0) return 1;
+        return compareByVolume(a, b);
+    });
+
+    return [...sponsored, ...rest];
+}
+
 function normaliseMarket(raw, site) {
     const totalPool = raw.outcomes.reduce((sum, o) => sum + o.pool_size, 0);
     const evenPercent = equalOutcomePercent(raw.outcomes.length);
@@ -411,6 +452,7 @@ function normaliseMarket(raw, site) {
         totalPool,
         subtitle: raw.tags.slice(0, 2).join(" • "),
         description: raw.description?.trim() || null,
+        sponsored: parseSponsored(raw),
         change: stats24h.change,
         volume24h: stats24h.volume24h,
         displayPercent: stats24h.displayPercent,
@@ -794,8 +836,17 @@ function partitionExpiredPending(list) {
     return [...active, ...deprioritized];
 }
 
+function compareByVolume(a, b) {
+    const poolDiff = b.totalPool - a.totalPool;
+    if (poolDiff !== 0) return poolDiff;
+
+    const aEnds = a.endsAt ?? Number.MAX_SAFE_INTEGER;
+    const bEnds = b.endsAt ?? Number.MAX_SAFE_INTEGER;
+    return aEnds - bEnds;
+}
+
 function sortByVolume(list) {
-    return partitionExpiredPending([...list].sort((a, b) => b.totalPool - a.totalPool));
+    return partitionExpiredPending([...list].sort(compareByVolume));
 }
 
 function sortByNewest(list) {
@@ -803,14 +854,20 @@ function sortByNewest(list) {
 }
 
 function sortResolved(list) {
-    return [...list].sort((a, b) => b.totalPool - a.totalPool);
+    return [...list].sort(compareByVolume);
 }
 
 function getSortedMarkets() {
     const filtered = getFilteredMarkets();
-    if (activeNavTag === "Resolved") return sortResolved(filtered);
-    if (activeNavTag === "New") return sortByNewest(filtered);
-    return sortByVolume(filtered);
+    let result;
+    if (activeNavTag === "Resolved") result = sortResolved(filtered);
+    else if (activeNavTag === "New") result = sortByNewest(filtered);
+    else result = sortByVolume(filtered);
+
+    if (activeNavTag !== "Resolved" && currentGridTag() === "All") {
+        result = prioritizeSponsoredMarkets(result);
+    }
+    return result;
 }
 
 function getHighlightMarkets() {
@@ -827,9 +884,13 @@ function getHighlightMarkets() {
         .filter(Boolean);
 
     const usedIds = new Set(overrideMarkets.map((m) => m.id));
+    const sponsoredMarkets = sortByVolume(
+        filtered.filter((m) => m.sponsored && !usedIds.has(m.id))
+    );
+    sponsoredMarkets.forEach((m) => usedIds.add(m.id));
     const remainder = sortByVolume(filtered.filter((m) => !usedIds.has(m.id)));
 
-    return [...overrideMarkets, ...remainder].slice(0, HIGHLIGHT_LIMIT);
+    return [...overrideMarkets, ...sponsoredMarkets, ...remainder].slice(0, HIGHLIGHT_LIMIT);
 }
 
 function getArticlesForMarket(marketId) {
@@ -1064,10 +1125,20 @@ function marketDescriptionHtml(market) {
     </div>`;
 }
 
+function marketSponsoredNoticeHtml(market) {
+    if (!market.sponsored) return "";
+
+    return `<div class="market-sponsored-notice">
+        <svg class="market-sponsored-notice-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor"><path d="M160-80v-440H80v-240h208q-5-9-6.5-19t-1.5-21q0-50 35-85t85-35q23 0 43 8.5t37 23.5q17-16 37-24t43-8q50 0 85 35t35 85q0 11-2 20.5t-6 19.5h208v240h-80v440H160Zm371.5-748.5Q520-817 520-800t11.5 28.5Q543-760 560-760t28.5-11.5Q600-783 600-800t-11.5-28.5Q577-840 560-840t-28.5 11.5ZM360-800q0 17 11.5 28.5T400-760q17 0 28.5-11.5T440-800q0-17-11.5-28.5T400-840q-17 0-28.5 11.5T360-800ZM160-680v80h280v-80H160Zm280 520v-360H240v360h200Zm80 0h200v-360H520v360Zm280-440v-80H520v80h280Z"/></svg>
+        <p class="market-sponsored-notice-text"><strong>Giving Back to the Community.</strong> Oracle is proud to support the players and creators who make this event exciting. A majority of the proceeds from this market will be donated directly to the contest winners to fund their prize pool.</p>
+    </div>`;
+}
+
 function renderFeatured() {
     const list = getHighlightMarkets();
     const card = document.getElementById("featured-card");
     card.classList.remove("skeleton-featured", "highlight--resolved", "highlight--ended");
+    applySponsoredToElement(card, null, "highlight");
     card.classList.add("fade-in");
 
     if (!list.length) {
@@ -1094,6 +1165,7 @@ function renderFeatured() {
 
     if (resolved) card.classList.add("highlight--resolved");
     else if (ended) card.classList.add("highlight--ended");
+    if (!resolved) applySponsoredToElement(card, market, "highlight");
 
     const actionButtons = marketDetailActionButtons(market, { featured: true });
 
@@ -1118,6 +1190,7 @@ function renderFeatured() {
             </div>
         </div>
         ${marketDescriptionHtml(market)}
+        ${marketSponsoredNoticeHtml(market)}
 
         <div class="highlight-body${showChart ? "" : " highlight-body--no-chart"}">
             <div class="highlight-left">
@@ -1485,12 +1558,12 @@ function renderMarketCard(market, index) {
     const delay = Math.min(index * 0.04, 0.4);
     const resolved = isMarketResolved(market);
     const ended = !resolved && isMarketEnded(market.endsAt);
-    const stateClass = resolved ? " event-card--resolved" : (ended ? " event-card--ended" : "");
     const disabledAttr = ended ? " disabled" : "";
+    const card = eventCardPresentation(market, delay);
 
     if (resolved) {
         return `
-            <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}" data-resolved="true">
+            <article class="${card.className}" style="${card.style}" data-market-id="${market.id}" data-resolved="true">
                 <div class="event-card-top">
                     <div class="event-card-header">
                         ${marketIconHtml(market)}
@@ -1509,7 +1582,7 @@ function renderMarketCard(market, index) {
     if (market.type === "multi") {
         const maxPct = Math.max(...market.outcomes.map((o) => o.percent));
         return `
-            <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}">
+            <article class="${card.className}" style="${card.style}" data-market-id="${market.id}">
                 <div class="event-card-top">
                     <div class="event-card-header">
                         ${marketIconHtml(market)}
@@ -1537,7 +1610,7 @@ function renderMarketCard(market, index) {
     const noOutcome = market.outcomes.find((o) => o.id === "no");
 
     return `
-        <article class="event-card${stateClass} fade-in" style="animation-delay:${delay}s" data-market-id="${market.id}">
+        <article class="${card.className}" style="${card.style}" data-market-id="${market.id}">
             <div class="event-card-top">
                 <div class="event-card-header">
                     ${marketIconHtml(market)}
@@ -1752,14 +1825,20 @@ function buildMarketDetailHtml(market) {
 
     return `
         <div class="market-modal-detail${stateClass}">
-            <header class="featured-header">
-                ${icon}
-                <div class="featured-title-block">
-                    <div class="featured-subtitle">${market.subtitle}</div>
-                    <h2 id="market-modal-title">${market.title}</h2>
+            <header class="market-modal-header">
+                <div class="market-modal-header-main featured-header">
+                    ${icon}
+                    <div class="featured-title-block">
+                        <div class="featured-subtitle">${market.subtitle}</div>
+                        <h2 id="market-modal-title">${market.title}</h2>
+                    </div>
                 </div>
+                <button type="button" class="market-modal-close" id="market-modal-close" data-market-modal-close aria-label="Close">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
             </header>
             ${marketDescriptionHtml(market)}
+            ${marketSponsoredNoticeHtml(market)}
             <div class="highlight-body market-modal-body${showChart ? "" : " highlight-body--no-chart"}">
                 <div class="highlight-left">
                     ${chanceRowHtml}
@@ -1787,10 +1866,9 @@ function openMarketModal(marketId) {
     content.innerHTML = buildMarketDetailHtml(market);
     modal.hidden = false;
     document.body.classList.add("market-modal-open");
-    modal.querySelector(".market-modal-panel")?.classList.toggle(
-        "market-modal-panel--resolved",
-        isMarketResolved(market)
-    );
+    const panel = modal.querySelector(".market-modal-panel");
+    panel?.classList.toggle("market-modal-panel--resolved", isMarketResolved(market));
+    applySponsoredToElement(panel, market, "market-modal-panel");
     document.getElementById("market-modal-close")?.focus();
 
     const canvas = document.getElementById("market-modal-chart");
@@ -1804,7 +1882,9 @@ function closeMarketModal() {
 
     modal.hidden = true;
     document.body.classList.remove("market-modal-open");
-    modal.querySelector(".market-modal-panel")?.classList.remove("market-modal-panel--resolved");
+    const panel = modal.querySelector(".market-modal-panel");
+    panel?.classList.remove("market-modal-panel--resolved");
+    applySponsoredToElement(panel, null, "market-modal-panel");
 
     if (modalChartStore.chart) {
         modalChartStore.chart.destroy();
