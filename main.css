@@ -1926,10 +1926,13 @@ a.news-headline:hover {
     color: var(--text-dim);
 }
 
-.footer-currency {
+.footer-currencies-section {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .footer-currency-label {
@@ -1938,32 +1941,61 @@ a.news-headline:hover {
     color: var(--text-dim);
 }
 
-.footer-currency-select {
-    appearance: none;
-    min-width: 6.5rem;
-    padding: 6px 28px 6px 10px;
-    font-family: inherit;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236b7280'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")
-        no-repeat right 6px center / 16px,
-        var(--panel);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: border-color var(--transition), color var(--transition);
+.footer-currencies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.footer-currency-select:hover {
+.currency-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px 6px 8px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: var(--panel);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.currency-option:hover {
     border-color: var(--border);
     color: var(--text);
+    background: var(--panel-hover);
 }
 
-.footer-currency-select:focus {
-    outline: none;
-    border-color: var(--accent);
+.currency-option.active {
+    border-color: rgba(59, 130, 246, 0.55);
+    color: var(--text);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.currency-option-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.currency-option-icon--fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--border-subtle);
+    color: var(--text-dim);
+    font-size: 0.625rem;
+    font-weight: 700;
+}
+
+.currency-option-name {
+    white-space: nowrap;
 }
 
 @keyframes fadeSlideUp {

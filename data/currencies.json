@@ -1,0 +1,89 @@
+{
+  "baseCurrencyId": "89daee72-3804-4421-b391-c1d1b24ccd85",
+  "currencies": [
+    {
+      "id": "c0679e36-56db-4a03-95bd-c2fe4b12c612",
+      "code": "atlantis",
+      "name": "Seashell",
+      "currency_icon_url": "https://images.crestconomy.com/files/5790a3c3a14c4363abf32825a56ce0a4.png",
+      "nation_name": "Atlantis"
+    },
+    {
+      "id": "89daee72-3804-4421-b391-c1d1b24ccd85",
+      "code": "bedrock-corp",
+      "name": "Bedro",
+      "currency_icon_url": "https://images.crestconomy.com/files/a2ee4e642ac84f1792d4d834d3108a20.webp",
+      "nation_name": "Bedrock Corp"
+    },
+    {
+      "id": "abee8c79-c61e-45b3-b744-7d1a8e11d81c",
+      "code": "c-r-i-t-business",
+      "name": "C.R.I.T coin",
+      "currency_icon_url": "https://images.crestconomy.com/files/fd307092f82d4335803a8a25f1c324cc.png",
+      "nation_name": "C.R.I.T Business"
+    },
+    {
+      "id": "d8d2b1e9-771c-4f90-95d5-0fb34564e2fd",
+      "code": "dreamscape",
+      "name": "Dollary Doos",
+      "currency_icon_url": "https://images.crestconomy.com/files/8407d37c9da942cbac071c85f0616cae.png",
+      "nation_name": "Dreamscape"
+    },
+    {
+      "id": "934b352f-d880-4d6f-8db0-8b0c23119987",
+      "code": "eden",
+      "name": "Social Credit",
+      "currency_icon_url": "https://images.crestconomy.com/files/5dd812046acd46d5969862f5396a77c9.webp",
+      "nation_name": "Eden"
+    },
+    {
+      "id": "82399aa8-23cf-47d7-95c7-3743a9285d39",
+      "code": "helia",
+      "name": "Drachma",
+      "currency_icon_url": "https://images.crestconomy.com/files/898cb6caf4864989819845694f5a5891.png",
+      "nation_name": "Helia"
+    },
+    {
+      "id": "a69528ac-2717-4d7d-b349-59618788f81d",
+      "code": "mountain-edge",
+      "name": "Mountain Edge",
+      "currency_icon_url": null,
+      "nation_name": "Mountain Edge"
+    },
+    {
+      "id": "af96e49a-82b2-4fe2-90dc-2cde274d5d49",
+      "code": "plinith",
+      "name": "Plin",
+      "currency_icon_url": "https://images.crestconomy.com/files/389190d74ec24481b7a56daa12684e83.webp",
+      "nation_name": "Plinth"
+    },
+    {
+      "id": "9011769f-1579-4f83-8b1a-903d944f1336",
+      "code": "sevcorp",
+      "name": "Sin",
+      "currency_icon_url": "https://images.crestconomy.com/files/f63e2e1c764e44fd838f97190a55f4c3.webp",
+      "nation_name": "SevCorp"
+    },
+    {
+      "id": "76fa6473-f6bb-4a1b-ba4d-488b86515f37",
+      "code": "sitat-sabea",
+      "name": "Gold Dinar",
+      "currency_icon_url": "https://images.crestconomy.com/files/ab3ea2e496e249a5a33a46a094bb5531.png",
+      "nation_name": "Sitat Sabea"
+    },
+    {
+      "id": "423dc4f4-188c-4e54-95bc-a60c6f94f1d0",
+      "code": "smore-gambling-c",
+      "name": "NOT_CASINO_BUCKS",
+      "currency_icon_url": null,
+      "nation_name": "Smore Gambling Corp."
+    },
+    {
+      "id": "b8afd695-7003-4dd6-97d5-a8f4c5ba7d9a",
+      "code": "the-lucrum-feder",
+      "name": "Merit",
+      "currency_icon_url": "https://images.crestconomy.com/files/e32bd6b4327343fcbf65000cf77c8076.webp",
+      "nation_name": "The Lucrum Federation"
+    }
+  ]
+}

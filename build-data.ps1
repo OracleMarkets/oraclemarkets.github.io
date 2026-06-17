@@ -1,16 +1,33 @@
 $site = Get-Content -Raw "data\data.json" | ConvertFrom-Json
 $news = Get-Content -Raw "data\news.json" | ConvertFrom-Json
 $marketDefs = Get-Content -Raw "data\markets.json" | ConvertFrom-Json
+$currencies = Get-Content -Raw "data\currencies.json" | ConvertFrom-Json
 
 $bundle = [ordered]@{
     site = $site
     news = $news
     marketDefs = $marketDefs
+    currencies = $currencies
 }
+
+$ammPools = @()
+try {
+    $ammBody = '{"query":"query CrestGql($path: String!) { api(method: \"GET\", path: $path) }","variables":{"path":"/v1/amm/pools"}}'
+    $ammResponse = Invoke-RestMethod -Uri "https://api.crestconomy.com/graphql" -Method Post -ContentType "application/json" -Body $ammBody
+    if ($ammResponse.data.api) {
+        $ammPools = $ammResponse.data.api
+    }
+} catch {
+    Write-Warning "AMM pools fetch failed: $_"
+}
+
+$ammPoolsJson = $ammPools | ConvertTo-Json -Depth 20 -Compress
+if (-not $ammPoolsJson) { $ammPoolsJson = "[]" }
 
 $json = $bundle | ConvertTo-Json -Depth 100 -Compress
 $content = @"
 window.ORACLE_DATA = $json;
+window.__ORACLE_AMM_POOLS_PROMISE__ = Promise.resolve({ pools: $ammPoolsJson });
 window.__ORACLE_MARKETS_POOLS_PROMISE__ = (() => {
     const base = window.ORACLE_DATA?.site?.site?.marketsApiUrl;
     if (!base) return Promise.reject(new Error("marketsApiUrl not configured"));

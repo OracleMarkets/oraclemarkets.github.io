@@ -102,6 +102,7 @@ let marketsReady = false;
 let liveDataUnavailable = false;
 let resolvedPoolsLoaded = false;
 let resolvedPoolsLoading = null;
+let openModalMarketId = null;
 
 const dataPromise = loadAllData();
 loadChartJs();
@@ -172,7 +173,22 @@ function finishMarketsRender() {
     bindGlobalEvents();
     bindBetModal();
     bindMarketModal();
+    bindCurrencyChange();
     startMarketEndTicker();
+}
+
+function bindCurrencyChange() {
+    window.addEventListener("oracle:currencychange", () => {
+        if (!marketsReady) return;
+
+        renderSidebars();
+        renderMarkets();
+        renderFeatured();
+
+        if (openModalMarketId && document.body.classList.contains("market-modal-open")) {
+            openMarketModal(openModalMarketId);
+        }
+    });
 }
 
 function showFatalError(message) {
@@ -448,7 +464,6 @@ function normaliseMarket(raw, site) {
         yesPercent: yesOutcome?.percent ?? leading.percent,
         leadingOutcome: leading,
         betUrls: isBinary ? { yes: yesOutcome.url, no: noOutcome.url } : null,
-        volume: formatVolume(totalPool),
         totalPool,
         subtitle: raw.tags.slice(0, 2).join(" • "),
         description: raw.description?.trim() || null,
@@ -571,12 +586,22 @@ function displayOutcomes(market) {
 }
 
 function formatVolume(amount) {
+    return window.OracleCurrency?.formatVolume(amount)
+        ?? legacyFormatVolume(amount);
+}
+
+function formatVolumeToday(amount) {
+    return window.OracleCurrency?.formatVolumeToday(amount)
+        ?? legacyFormatVolumeToday(amount);
+}
+
+function legacyFormatVolume(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M Vol.`;
     if (amount >= 1_000) return `$${(amount / 1_000).toFixed(1)}K Vol.`;
     return `$${amount} Vol.`;
 }
 
-function formatVolumeToday(amount) {
+function legacyFormatVolumeToday(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M today`;
     if (amount >= 1_000) return `$${(amount / 1_000).toFixed(1)}K today`;
     if (amount > 0) return `$${amount} today`;
@@ -1234,7 +1259,7 @@ function renderFeatured() {
 
         <div class="featured-footer">
             <span class="featured-footer-left">
-                <span>${market.volume}</span>
+                <span>${formatVolume(market.totalPool)}</span>
                 ${marketEndsHtml(market)}
             </span>
             ${carouselHtml}
@@ -1594,7 +1619,7 @@ function renderMarketCard(market, index) {
                 </div>
                 ${resolvedOutcomesHtml(market)}
                 <div class="card-meta">
-                    <span>${market.volume}</span>
+                    <span>${formatVolume(market.totalPool)}</span>
                     ${marketEndsHtml(market)}
                 </div>
             </article>
@@ -1622,7 +1647,7 @@ function renderMarketCard(market, index) {
                     `).join("")}
                 </div>
                 <div class="card-meta">
-                    <span>${market.volume}</span>
+                    <span>${formatVolume(market.totalPool)}</span>
                     ${marketEndsHtml(market)}
                 </div>
             </article>
@@ -1655,7 +1680,7 @@ function renderMarketCard(market, index) {
                 <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
             </div>
             <div class="card-meta">
-                <span>${market.volume}</span>
+                <span>${formatVolume(market.totalPool)}</span>
                 ${marketEndsHtml(market)}
             </div>
         </article>
@@ -1874,7 +1899,7 @@ function buildMarketDetailHtml(market) {
             </div>
             <div class="featured-footer market-modal-footer">
                 <span class="featured-footer-left">
-                    <span>${market.volume}</span>
+                    <span>${formatVolume(market.totalPool)}</span>
                     ${marketEndsHtml(market)}
                 </span>
             </div>
@@ -1887,6 +1912,8 @@ function openMarketModal(marketId) {
     const modal = document.getElementById("market-modal");
     const content = document.getElementById("market-modal-content");
     if (!market || !modal || !content) return;
+
+    openModalMarketId = marketId;
 
     content.innerHTML = buildMarketDetailHtml(market);
     modal.hidden = false;
@@ -1904,6 +1931,8 @@ function openMarketModal(marketId) {
 function closeMarketModal() {
     const modal = document.getElementById("market-modal");
     if (!modal) return;
+
+    openModalMarketId = null;
 
     modal.hidden = true;
     document.body.classList.remove("market-modal-open");

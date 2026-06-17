@@ -19,6 +19,14 @@ async function init() {
         console.error(err);
         renderLotteryPot({ totalPool: 0 });
     }
+
+    window.addEventListener("oracle:currencychange", () => {
+        renderLotteryStatic();
+        const potEl = document.getElementById("pot-value");
+        if (potEl?.dataset.basePot) {
+            renderLotteryPot({ totalPool: Number(potEl.dataset.basePot) });
+        }
+    });
 }
 
 function loadLotteryPool() {
@@ -46,7 +54,9 @@ async function fetchLotteryPool(apiUrl) {
 function renderLotteryPot(live) {
     const potEl = document.getElementById("pot-value");
     if (potEl) {
-        potEl.textContent = formatPot(live.totalPool ?? 0);
+        const basePot = live.totalPool ?? 0;
+        potEl.dataset.basePot = String(basePot);
+        potEl.textContent = formatPot(basePot);
     }
 
     if (live.currentLottery) {
@@ -102,6 +112,10 @@ function renderLotteryStatic() {
 }
 
 function formatPot(amount) {
+    return window.OracleCurrency?.formatPot(amount) ?? legacyFormatPot(amount);
+}
+
+function legacyFormatPot(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(2)}M`;
     if (amount >= 1_000) return `$${(amount / 1_000).toFixed(1)}K`;
     return `$${Number(amount).toLocaleString("en-US")}`;

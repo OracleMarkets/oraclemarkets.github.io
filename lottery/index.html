@@ -8,10 +8,12 @@
     <title>Lottery · Oracle</title>
     <style>html,body{background:#15191d}</style>
     <link rel="preconnect" href="https://oracle-markets-backend.vercel.app" crossorigin>
+    <link rel="preconnect" href="https://api.crestconomy.com" crossorigin>
     <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="lottery.css">
     <script src="../data/site-data.js" defer></script>
     <script src="../data/lottery-data.js" defer></script>
+    <script src="../currency.js" defer></script>
     <script src="../page-transitions.js" defer></script>
     <script src="../info-modal.js" defer></script>
     <script src="lottery.js" defer></script>
@@ -95,12 +97,10 @@
         </div>
         <div class="footer-bottom">
             <p class="footer-copy">© 2026 Oracle Prediction Market</p>
-            <div class="footer-currency">
-                <label class="footer-currency-label" for="currency-select">Currency</label>
-                <select id="currency-select" class="footer-currency-select" aria-label="Currency">
-                    <option value="bedro" selected>Bedro</option>
-                </select>
-            </div>
+        </div>
+        <div class="footer-currencies-section">
+            <span class="footer-currency-label" id="footer-currency-label">Display currency</span>
+            <div id="footer-currencies" class="footer-currencies" role="listbox" aria-labelledby="footer-currency-label"></div>
         </div>
     </div>
 </footer>
