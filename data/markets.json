@@ -352,7 +352,7 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461615,
-      "tags": ["Culture", "Drama"],
+      "tags": ["Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Baunihian Baun make a comeback by the end of Day 6? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will the Baunihian Baun make a comeback by the end of Day 6? | No", "colour": "#ea3943" }
@@ -365,7 +365,7 @@
       "icon": "",
       "ends": 1782597600,
       "added_at": 1781461616,
-      "tags": ["Culture", "Drama"],
+      "tags": ["Culture", "Triple T", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur appear before his believers by the end of Day 8? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will Tung Tung Tung Sahur appear before his believers by the end of Day 8? | No", "colour": "#ea3943" }
@@ -378,7 +378,7 @@
       "icon": "",
       "ends": 1782597600,
       "added_at": 1781461617,
-      "tags": ["Culture", "Drama"],
+      "tags": ["Culture", "Triple T", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur perform a miracle for its followers by the end of Day 8? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will Tung Tung Tung Sahur perform a miracle for its followers by the end of Day 8? | No", "colour": "#ea3943" }
@@ -391,7 +391,7 @@
       "icon": "",
       "ends": 1781908740,
       "added_at": 1781461618,
-      "tags": ["Economy"],
+      "tags": ["Nations","Economy"],
       "outcomes": [
         { "id": "desert", "title": "Desert", "item_summary": "Which continent will have the strongest economy by the end of Day 4? | Desert", "colour": "#16c784" },
         { "id": "mountain", "title": "Mountain", "item_summary": "Which continent will have the strongest economy by the end of Day 4? | Mountain", "colour": "#3b82f6" },
