@@ -407,9 +407,9 @@
       "added_at": 1781461619,
       "tags": ["Drama", "Lucrum", "Politics"],
       "outcomes": [
-        { "id": "leadership", "title": "Leadership", "item_summary": "Who stole the diamonds from Lucrum? | Lucrum Leadership", "colour": "#16c784" },
-        { "id": "qm", "title": "QM", "item_summary": "Who stole the diamonds from Lucrum? | Quartermaster", "colour": "#3b82f6" },
-        { "id": "regular_citizen", "title": "Regular Citizen", "item_summary": "Who stole the diamonds from Lucrum? | Regular Lucrum Citizen", "colour": "#ea3943" },
+        { "id": "leadership", "title": "Lucrum Leadership", "item_summary": "Who stole the diamonds from Lucrum? | Lucrum Leadership", "colour": "#16c784" },
+        { "id": "qm", "title": "quartermaster", "item_summary": "Who stole the diamonds from Lucrum? | Quartermaster", "colour": "#3b82f6" },
+        { "id": "regular_citizen", "title": "Regular Lucrum Citizen", "item_summary": "Who stole the diamonds from Lucrum? | Regular Lucrum Citizen", "colour": "#ea3943" },
         { "id": "abberline_crime_family", "title": "Abberline Crime Family", "item_summary": "Who stole the diamonds from Lucrum? | Abberline Crime Family", "colour": "#8b5cf6" },
         { "id": "foreigner", "title": "Foreigner", "item_summary": "Who stole the diamonds from Lucrum? | Foreigner", "colour": "#06b6d4" }
       ]
