@@ -975,6 +975,7 @@ a.news-headline:hover {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
+    align-items: start;
 }
 
 .event-card {
@@ -984,9 +985,20 @@ a.news-headline:hover {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     cursor: pointer;
     transition: border-color var(--transition), background var(--transition);
+}
+
+.event-card .btn-row {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.event-card .card-meta {
+    margin-top: 0;
+    padding-top: 2px;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .event-card:hover {
@@ -1209,6 +1221,24 @@ a.news-headline:hover {
     flex-direction: column;
     gap: 8px;
     max-width: 450px;
+}
+
+.event-card .outcomes-list {
+    max-height: 176px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+.event-card .outcomes-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.event-card .outcomes-list::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
 }
 
 .outcome-row {

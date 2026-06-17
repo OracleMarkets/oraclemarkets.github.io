@@ -562,15 +562,23 @@ function hasFeaturedChartHistory(market) {
     return market.history.values?.length > 0;
 }
 
+function displayOutcomes(market) {
+    if (market.type !== "multi") return market.outcomes;
+    return market.outcomes
+        .map((outcome, index) => ({ outcome, index }))
+        .sort((a, b) => b.outcome.percent - a.outcome.percent || a.index - b.index)
+        .map(({ outcome }) => outcome);
+}
+
 function formatVolume(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M Vol.`;
-    if (amount >= 1_000) return `$${Math.round(amount / 1_000)}K Vol.`;
+    if (amount >= 1_000) return `$${(amount / 1_000).toFixed(1)}K Vol.`;
     return `$${amount} Vol.`;
 }
 
 function formatVolumeToday(amount) {
     if (amount >= 1_000_000) return `$${(amount / 1_000_000).toFixed(1)}M today`;
-    if (amount >= 1_000) return `$${Math.round(amount / 1_000)}K today`;
+    if (amount >= 1_000) return `$${(amount / 1_000).toFixed(1)}K today`;
     if (amount > 0) return `$${amount} today`;
     return "$0 today";
 }
@@ -1108,7 +1116,7 @@ function resolvedOutcomesHtml(market, { featured = false } = {}) {
     const listClass = featured ? "outcomes-list featured-outcomes outcomes-list--resolved" : "outcomes-list outcomes-list--resolved";
 
     return `<div class="${listClass}">
-        ${market.outcomes.map((o) => {
+        ${displayOutcomes(market).map((o) => {
             const won = o.id === market.winningOutcome;
             return `<div class="outcome-row${won ? " outcome-row--winner" : ""}">
                 <p class="outcome-name">${o.name}</p>
@@ -1594,7 +1602,8 @@ function renderMarketCard(market, index) {
     }
 
     if (market.type === "multi") {
-        const maxPct = Math.max(...market.outcomes.map((o) => o.percent));
+        const outcomes = displayOutcomes(market);
+        const maxPct = Math.max(...outcomes.map((o) => o.percent));
         return `
             <article class="${card.className}" style="${card.style}" data-market-id="${market.id}">
                 <div class="event-card-top">
@@ -1604,7 +1613,7 @@ function renderMarketCard(market, index) {
                     </div>
                 </div>
                 <div class="outcomes-list">
-                    ${market.outcomes.map((o) => `
+                    ${outcomes.map((o) => `
                         <div class="outcome-row">
                             <p class="outcome-name">${o.name}</p>
                             <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
@@ -1797,11 +1806,13 @@ function marketDetailActionButtons(market, { featured = false } = {}) {
     }
 
     const listClass = featured ? "outcomes-list featured-outcomes" : "outcomes-list";
+    const outcomes = displayOutcomes(market);
+    const maxPct = Math.max(...outcomes.map((o) => o.percent));
     return `<div class="${listClass}">
-        ${market.outcomes.map((o) => `
+        ${outcomes.map((o) => `
             <div class="outcome-row">
                 <p class="outcome-name">${o.name}</p>
-                <span class="outcome-pct lead">${o.percent}%</span>
+                <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
                 <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
             </div>
         `).join("")}
