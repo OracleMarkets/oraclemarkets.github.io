@@ -985,7 +985,7 @@ a.news-headline:hover {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
     cursor: pointer;
     transition: border-color var(--transition), background var(--transition);
 }
@@ -1024,6 +1024,14 @@ a.news-headline:hover {
 .outcomes-list--resolved {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.event-card .outcomes-list--resolved {
+    margin-top: 0;
+    margin-bottom: 0;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
 }
 
 .outcomes-list--resolved .outcome-row {
@@ -1223,7 +1231,7 @@ a.news-headline:hover {
     max-width: 450px;
 }
 
-.event-card .outcomes-list {
+.event-card .outcomes-list:not(.outcomes-list--resolved) {
     max-height: 176px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -1232,11 +1240,11 @@ a.news-headline:hover {
     scrollbar-color: var(--border) transparent;
 }
 
-.event-card .outcomes-list::-webkit-scrollbar {
+.event-card .outcomes-list:not(.outcomes-list--resolved)::-webkit-scrollbar {
     width: 5px;
 }
 
-.event-card .outcomes-list::-webkit-scrollbar-thumb {
+.event-card .outcomes-list:not(.outcomes-list--resolved)::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 999px;
 }
