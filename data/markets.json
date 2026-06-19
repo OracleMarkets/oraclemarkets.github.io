@@ -452,6 +452,71 @@
         { "id": "kohaku", "title": "Kohaku", "item_summary": "Which nation will declare war first? | Kohaku", "colour": "#ec4899" },
         { "id": "mountain_edge", "title": "Mountain Edge", "item_summary": "Which nation will declare war first? | Mountain Edge", "colour": "#84cc16" }
       ]
+    },
+    {
+      "id": "arcsec-invade-day6",
+      "title": "Will ARCSEC invade another nation by the end of Day 6?",
+      "short_title": "ARCSEC Invade?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781461622,
+      "tags": ["War", "Nations", "Politics", "ARCSEC"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will ARCSEC invade another nation by the end of Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will ARCSEC invade another nation by the end of Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "netherite-war-day5",
+      "title": "Will a war start over the limited supply of netherite?",
+      "short_title": "Netherite War?",
+      "icon": "",
+      "ends": 1781994600,
+      "added_at": 1781461624,
+      "tags": ["War", "Economy"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will a war start over the limited supply of netherite? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will a war start over the limited supply of netherite? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "plinth-eden-breakup-day6",
+      "title": "Will Plinth and Eden break up by the end of Day 6?",
+      "short_title": "Plinth & Eden Split?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781461625,
+      "tags": ["Nations", "Politics", "Drama", "Plinth", "Eden"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Plinth and Eden break up by the end of Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Plinth and Eden break up by the end of Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "new-islands-day6",
+      "title": "Will new islands be available by the end of Day 6?",
+      "short_title": "New Islands D6?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781461626,
+      "tags": ["Nations", "Economy"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will new islands be available by the end of Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will new islands be available by the end of Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "sitzkrieg-arrested-day4",
+      "title": "Will SitzKrieg be arrested by the end of Day 4?",
+      "short_title": "SitzKrieg Arrested?",
+      "icon": "",
+      "ends": 1781908200,
+      "added_at": 1781461627,
+      "tags": ["Politics", "Drama", "SitzKrieg"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will SitzKrieg be arrested by the end of Day 4? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will SitzKrieg be arrested by the end of Day 4? | No", "colour": "#ea3943" }
+      ]
     }
   ]
 }
