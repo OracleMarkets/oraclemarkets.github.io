@@ -287,6 +287,8 @@
       "icon": "",
       "ends": 1781817300,
       "added_at": 1781461609,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Bedrock Corp", "Metagaming", "Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Bedrock Corp finish their tower by the end of build day? | Yes", "colour": "#16c784" },
