@@ -248,6 +248,8 @@
       "icon": "",
       "ends": 1781908740,
       "added_at": 1781461606,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 4? | Yes", "colour": "#16c784" },
@@ -261,6 +263,8 @@
       "icon": "",
       "ends": 1781908740,
       "added_at": 1781461607,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will there be a big nation merge on Day 4? | Yes", "colour": "#16c784" },
@@ -302,6 +306,8 @@
       "icon": "",
       "ends": 1781908740,
       "added_at": 1781461611,
+      "resolved": true,
+      "winning_outcome": "sevcorp",
       "tags": ["Economy", "Nations"],
       "outcomes": [
         { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's economy will be ranked first at the end of Day 4? | SevCorp", "colour": "#16c784" },
@@ -397,6 +403,8 @@
       "icon": "",
       "ends": 1781908740,
       "added_at": 1781461618,
+      "resolved": true,
+      "winning_outcome": "mountain",
       "tags": ["Nations","Economy"],
       "outcomes": [
         { "id": "desert", "title": "Desert", "item_summary": "Which continent will have the strongest economy by the end of Day 4? | Desert", "colour": "#16c784" },
