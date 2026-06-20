@@ -233,6 +233,8 @@
       "icon": "",
       "ends": 1781817300,
       "added_at": 1781461605,
+      "resolved": true,
+      "winning_outcome": "zero",
       "tags": ["Deaths", "Bedrock Corp"],
       "outcomes": [
         { "id": "zero", "title": "0", "item_summary": "How many people will fall to their deaths while building the Bedrock Corp tower? | 0", "colour": "#16c784" },
@@ -526,6 +528,8 @@
       "icon": "",
       "ends": 1781908200,
       "added_at": 1781461627,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Politics", "Drama", "SitzKrieg"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will SitzKrieg be arrested by the end of Day 4? | Yes", "colour": "#16c784" },
