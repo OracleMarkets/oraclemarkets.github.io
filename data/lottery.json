@@ -1,8 +1,13 @@
 {
   "pot": 0,
   "entryUrl": "https://crestconomy.com/guild/oracle/store",
-  "currentLottery": "Oracle Daily Lottery Ticket | Day 4",
+  "currentLottery": "Oracle Daily Lottery Ticket | Day 5",
   "history": [
+    {
+      "date": "Day 4",
+      "pot": 210,
+      "winner": "Cyborg_Chris"
+    },
     {
       "date": "Day 3",
       "pot": 180,
