@@ -300,7 +300,7 @@
       "title": "Which nation's economy will be ranked first at the end of Day 4?",
       "short_title": "Top Economy D4?",
       "icon": "",
-      "ends": 1782597600,
+      "ends": 1781908740,
       "added_at": 1781461611,
       "tags": ["Economy", "Nations"],
       "outcomes": [
@@ -520,6 +520,25 @@
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will SitzKrieg be arrested by the end of Day 4? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will SitzKrieg be arrested by the end of Day 4? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "economy-ranked-first-day5",
+      "title": "Which nation's economy will be ranked first at the end of Day 5?",
+      "short_title": "Top Economy D5?",
+      "icon": "",
+      "ends": 1781993700,
+      "added_at": 1781915897,
+      "tags": ["Economy", "Nations"],
+      "outcomes": [
+        { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | SevCorp", "colour": "#16c784" },
+        { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Bedrock Corp", "colour": "#3b82f6" },
+        { "id": "kohaku", "title": "Kohaku", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Kohaku", "colour": "#f59e0b" },
+        { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Lucrum Federation", "colour": "#ea3943" },
+        { "id": "dreamscape", "title": "Dreamscape", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Dreamscape", "colour": "#8b5cf6" },
+        { "id": "plinth", "title": "Plinth", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Plinth", "colour": "#06b6d4" },
+        { "id": "helia", "title": "Helia", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Helia", "colour": "#ec4899" },
+        { "id": "other", "title": "Other", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Other", "colour": "#9ca3af" }
       ]
     }
   ]
