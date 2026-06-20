@@ -421,7 +421,7 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781461619,
-      "tags": ["Drama", "Lucrum", "Politics"],
+      "tags": ["Drama", "Lucrum", "Politics", "Lucrum Looters"],
       "outcomes": [
         { "id": "leadership", "title": "Lucrum Leadership", "item_summary": "Who stole the diamonds from Lucrum? | Lucrum Leadership", "colour": "#16c784" },
         { "id": "qm", "title": "Quartermaster", "item_summary": "Who stole the diamonds from Lucrum? | Quartermaster", "colour": "#3b82f6" },
@@ -553,6 +553,84 @@
         { "id": "plinth", "title": "Plinth", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Plinth", "colour": "#06b6d4" },
         { "id": "helia", "title": "Helia", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Helia", "colour": "#ec4899" },
         { "id": "other", "title": "Other", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | Other", "colour": "#9ca3af" }
+      ]
+    },
+    {
+      "id": "kapooklynn-survive-day5",
+      "title": "Will KapookLynn survive until the end of Day 5?",
+      "short_title": "KapookLynn Survive D5?",
+      "description": "Note: KapookLynn requested this market personally.",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781915898,
+      "tags": ["Deaths", "Drama", "Bedrock Corp"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will KapookLynn survive until the end of Day 5? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will KapookLynn survive until the end of Day 5? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "leader-assassination-day5",
+      "title": "Will any major nation/guild leaders be assassinated by the end of Day 5?",
+      "short_title": "Leader Assassination D5?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781915899,
+      "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 5? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 5? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "nations-merge-day5",
+      "title": "Will there be a big nation merge on Day 5?",
+      "short_title": "Nation Merge D5?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781915900,
+      "tags": ["Nations", "Politics"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will there be a big nation merge on Day 5? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will there be a big nation merge on Day 5? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "lucrum-looters-strike-day5",
+      "title": "Where will the \"Lucrum Looters\" strike next?",
+      "short_title": "Lucrum Looters Strike?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781915901,
+      "tags": ["War", "Economy", "Lucrum", "Lucrum Looters"],
+      "outcomes": [
+        { "id": "bedrock_central_market", "title": "Bedrock Central Market", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Bedrock Central Market", "colour": "#16c784" },
+        { "id": "central_economic_office_helia", "title": "Central Economic Office of Helia", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Central Economic Office of Helia", "colour": "#3b82f6" },
+        { "id": "lucrum_federal_bank", "title": "Lucrum Federal Bank", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Lucrum Federal Bank", "colour": "#f59e0b" },
+        { "id": "central_bank_kohaku", "title": "Central Bank of Kohaku", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Central Bank of Kohaku", "colour": "#ea3943" },
+        { "id": "dreamscape", "title": "Dreamscape", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Dreamscape", "colour": "#8b5cf6" },
+        { "id": "hardwood_advanced", "title": "Hardwood Advanced", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Hardwood Advanced", "colour": "#06b6d4" },
+        { "id": "atlantis", "title": "Atlantis", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Atlantis", "colour": "#ec4899" },
+        { "id": "sevcorp", "title": "SevCorp", "item_summary": "Where will the \"Lucrum Looters\" strike next? | SevCorp", "colour": "#84cc16" }
+      ]
+    },
+    {
+      "id": "netherite-gear-first-day5",
+      "title": "Which nation's military will be equipped in netherite gear first?",
+      "short_title": "First Netherite Gear?",
+      "icon": "",
+      "ends": 1781992800,
+      "added_at": 1781915902,
+      "tags": ["War", "Economy", "Nations"],
+      "outcomes": [
+        { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation's military will be equipped in netherite gear first? | Lucrum Federation", "colour": "#16c784" },
+        { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's military will be equipped in netherite gear first? | Bedrock Corp", "colour": "#3b82f6" },
+        { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's military will be equipped in netherite gear first? | SevCorp", "colour": "#f59e0b" },
+        { "id": "dreamscape", "title": "Dreamscape", "item_summary": "Which nation's military will be equipped in netherite gear first? | Dreamscape", "colour": "#ea3943" },
+        { "id": "helia", "title": "Helia", "item_summary": "Which nation's military will be equipped in netherite gear first? | Helia", "colour": "#8b5cf6" },
+        { "id": "plinth", "title": "Plinth", "item_summary": "Which nation's military will be equipped in netherite gear first? | Plinth", "colour": "#06b6d4" },
+        { "id": "kohaku", "title": "Kohaku", "item_summary": "Which nation's military will be equipped in netherite gear first? | Kohaku", "colour": "#ec4899" },
+        { "id": "mountain_edge", "title": "Mountain Edge", "item_summary": "Which nation's military will be equipped in netherite gear first? | Mountain Edge", "colour": "#84cc16" }
       ]
     }
   ]
