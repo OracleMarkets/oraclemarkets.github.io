@@ -321,6 +321,8 @@
       "icon": "../assets/crestvision.png",
       "ends": 1781908860,
       "added_at": 1781461613,
+      "resolved": true,
+      "winning_outcome": "milkjia",
       "tags": ["Culture"],
       "sponsored": true,
       "outcomes": [
@@ -367,6 +369,8 @@
       "icon": "",
       "ends": 1782597600,
       "added_at": 1781461616,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Culture", "Triple T", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur appear before his believers by the end of Day 8? | Yes", "colour": "#16c784" },
