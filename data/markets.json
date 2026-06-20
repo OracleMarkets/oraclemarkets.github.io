@@ -435,6 +435,8 @@
       "icon": "",
       "ends": 1782597600,
       "added_at": 1781461620,
+      "resolved": true,
+      "winning_outcome": "central_economic_office_helia",
       "tags": ["War", "Economy", "Lucrum", "Drama"],
       "outcomes": [
         { "id": "bedrock_central_market", "title": "Bedrock Central Market", "item_summary": "Where will the \"Lucrum Bandits\" strike next? | Bedrock Central Market", "colour": "#16c784" },
