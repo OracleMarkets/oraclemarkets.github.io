@@ -662,6 +662,63 @@
         { "id": "yes", "title": "Yes", "item_summary": "Will Bedrock Corp Tower be completed by the end of Day 6? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will Bedrock Corp Tower be completed by the end of Day 6? | No", "colour": "#ea3943" }
       ]
+    },
+    {
+      "id": "tung-tung-sahur-burning-tung-day6",
+      "title": "Will Tung Tung Tung Sahur make another appearance at the Burning Tung Festival on Day 6?",
+      "short_title": "Burning Tung Appearance?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781915905,
+      "tags": ["Culture", "Triple T", "Drama"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur make another appearance at the Burning Tung Festival on Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Tung Tung Tung Sahur make another appearance at the Burning Tung Festival on Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "lucrum-looters-caught-day6",
+      "title": "Will the Lucrum Looters be caught by the end of Day 6?",
+      "short_title": "Lucrum Looters Caught?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781915906,
+      "tags": ["Lucrum", "Lucrum Looters", "Drama", "Politics"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Looters be caught by the end of Day 6? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Lucrum Looters be caught by the end of Day 6? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "arcsec-most-kills-day8",
+      "title": "Which ARCSEC member will have the most kills by the end of Day 8?",
+      "short_title": "ARCSEC Top Kills?",
+      "icon": "",
+      "ends": 1782597600,
+      "added_at": 1781915907,
+      "tags": ["ARCSEC", "Deaths", "War"],
+      "outcomes": [
+        { "id": "baanab", "title": "Baanab", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Baanab", "colour": "#16c784" },
+        { "id": "soccer777", "title": "Soccer777", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Soccer777", "colour": "#3b82f6" },
+        { "id": "redizlightning", "title": "RedIzLightning", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | RedIzLightning", "colour": "#f59e0b" },
+        { "id": "clutchinton", "title": "Clutchinton", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Clutchinton", "colour": "#ea3943" },
+        { "id": "shobbled", "title": "Shobbled", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Shobbled", "colour": "#8b5cf6" },
+        { "id": "vert", "title": "Vert", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Vert", "colour": "#06b6d4" },
+        { "id": "ruitsand", "title": "Ruitsand", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Ruitsand", "colour": "#ec4899" },
+        { "id": "blur", "title": "Blur", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Blur", "colour": "#84cc16" },
+        { "id": "htoon", "title": "Htoon", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Htoon", "colour": "#16c784" },
+        { "id": "devidur", "title": "Devidur", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Devidur", "colour": "#3b82f6" },
+        { "id": "asters", "title": "Asters", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Asters", "colour": "#f59e0b" },
+        { "id": "wedo", "title": "Wedo", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Wedo", "colour": "#ea3943" },
+        { "id": "isaacboy505", "title": "Isaacboy505", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Isaacboy505", "colour": "#8b5cf6" },
+        { "id": "maineral", "title": "Maineral", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Maineral", "colour": "#06b6d4" },
+        { "id": "jnlie", "title": "Jnlie", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Jnlie", "colour": "#ec4899" },
+        { "id": "eternity", "title": "Eternity", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Eternity", "colour": "#84cc16" },
+        { "id": "dogwoodwaffles", "title": "Dogwoodwaffles", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | Dogwoodwaffles", "colour": "#9ca3af" },
+        { "id": "gangstaant", "title": "GangstaAnt", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | GangstaAnt", "colour": "#16c784" },
+        { "id": "jennyprice", "title": "JennyPrice", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | JennyPrice", "colour": "#3b82f6" },
+        { "id": "chickenking", "title": "ChickenKing", "item_summary": "Which ARCSEC member will have the most kills by the end of Day 8? | ChickenKing", "colour": "#f59e0b" }
+      ]
     }
   ]
 }
