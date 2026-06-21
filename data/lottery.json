@@ -1,8 +1,13 @@
 {
   "pot": 0,
   "entryUrl": "https://crestconomy.com/guild/oracle/store",
-  "currentLottery": "Oracle Daily Lottery Ticket | Day 5",
+  "currentLottery": "Oracle Daily Lottery Ticket | Day 6",
   "history": [
+    {
+      "date": "Day 5",
+      "pot": 464,
+      "winner": "RomanRodri"
+    },
     {
       "date": "Day 4",
       "pot": 210,

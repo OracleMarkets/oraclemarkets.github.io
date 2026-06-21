@@ -575,6 +575,8 @@
       "icon": "../assets/kapook.webp",
       "ends": 1782081000,
       "added_at": 1781915898,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Deaths", "Drama", "Bedrock Corp"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will KapookLynn survive until the end of Day 5? | Yes", "colour": "#16c784" },
