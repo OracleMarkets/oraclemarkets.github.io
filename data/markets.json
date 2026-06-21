@@ -637,6 +637,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781915902,
+      "resolved": true,
+      "winning_outcome": "bedrock_corp",
       "tags": ["War", "Economy", "Nations"],
       "outcomes": [
         { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation's military will be equipped in netherite gear first? | Lucrum Federation", "colour": "#16c784" },
