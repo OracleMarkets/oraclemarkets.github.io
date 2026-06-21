@@ -662,6 +662,8 @@
       "icon": "",
       "ends": 1781991000,
       "added_at": 1781915903,
+      "resolved": true,
+      "winning_outcome": "wont_sell_out",
       "tags": ["Economy", "Bedrock Corp"],
       "outcomes": [
         { "id": "under_5_min", "title": "< 5 minutes", "item_summary": "How quickly will the BDRK IPO stock sell out? | < 5 minutes", "colour": "#16c784" },
