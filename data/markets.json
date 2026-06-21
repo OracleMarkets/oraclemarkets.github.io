@@ -191,7 +191,7 @@
       "short_title": "Lucrum vs Birch?",
       "description": "Resolves 'Lucrum' if Lucrum successfully removes all birch trees within and surrounding their territory.",
       "icon": "../assets/lucrum_vs_birch.png",
-      "ends": 1781992800,
+      "ends": 1782080100,
       "added_at": 1780920012,
       "tags": ["War", "Nations", "Politics", "Lucrum", "Birch"],
       "outcomes": [
