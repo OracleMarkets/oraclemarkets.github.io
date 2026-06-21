@@ -134,6 +134,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1780920008,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["War", "Nations", "Politics", "Drama","Plinth", "Helia"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Helia and Plinth go to war? | Yes", "colour": "#16c784" },
@@ -162,6 +164,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1780920010,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Global Crestconomy Market crash by the end of Day 5? | Yes", "colour": "#16c784" },
@@ -220,6 +224,8 @@
       "icon": "../assets/nothing_ever_happens.png",
       "ends": 1781993700,
       "added_at": 1780920014,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Drama", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will anything ever happen? | Yes", "colour": "#16c784" },
@@ -351,6 +357,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781461614,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["War", "Nations", "Politics", "Lucrum", "Bedrock Corp"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation and Bedrock Corp go to war? | Yes", "colour": "#16c784" },
@@ -489,6 +497,8 @@
       "icon": "",
       "ends": 1781994600,
       "added_at": 1781461624,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["War", "Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will a war start over the limited supply of netherite? | Yes", "colour": "#16c784" },
@@ -543,6 +553,8 @@
       "icon": "",
       "ends": 1781993700,
       "added_at": 1781915897,
+      "resolved": true,
+      "winning_outcome": "sevcorp",
       "tags": ["Economy", "Nations"],
       "outcomes": [
         { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's economy will be ranked first at the end of Day 5? | SevCorp", "colour": "#16c784" },
@@ -576,6 +588,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781915899,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 5? | Yes", "colour": "#16c784" },
@@ -589,6 +603,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781915900,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will there be a big nation merge on Day 5? | Yes", "colour": "#16c784" },
