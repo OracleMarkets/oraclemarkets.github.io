@@ -888,6 +888,22 @@
         { "id": "yes", "title": "Yes", "item_summary": "Will anything happen on Day 6? | Yes", "colour": "#16c784" },
         { "id": "no", "title": "No", "item_summary": "Will anything happen on Day 6? | No", "colour": "#ea3943" }
       ]
+    },
+    {
+      "id": "burning-tung-deaths-day6",
+      "title": "How many people will be burned alive at the Burning Tung Festival on Day 6?",
+      "short_title": "Burning Tung Deaths?",
+      "icon": "",
+      "ends": 1782081000,
+      "added_at": 1781915918,
+      "tags": ["Culture", "Triple T", "Deaths", "Drama"],
+      "outcomes": [
+        { "id": "zero", "title": "0", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 0", "colour": "#16c784" },
+        { "id": "one", "title": "1", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 1", "colour": "#3b82f6" },
+        { "id": "two", "title": "2", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 2", "colour": "#f59e0b" },
+        { "id": "three_five", "title": "3-5", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 3-5", "colour": "#ea3943" },
+        { "id": "six_plus", "title": "6+", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 6+", "colour": "#8b5cf6" }
+      ]
     }
   ]
 }
