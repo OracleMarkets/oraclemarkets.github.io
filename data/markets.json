@@ -197,6 +197,8 @@
       "icon": "../assets/lucrum_vs_birch.png",
       "ends": 1782080100,
       "added_at": 1780920012,
+      "resolved": true,
+      "winning_outcome": "birch",
       "tags": ["War", "Nations", "Politics", "Lucrum", "Birch"],
       "outcomes": [
         { "id": "lucrum", "title": "Lucrum", "item_summary": "Who will win the war between Lucrum and Birch? | Lucrum", "colour": "#16c784" },
