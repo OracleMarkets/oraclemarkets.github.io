@@ -932,6 +932,156 @@
         { "id": "three_five", "title": "3-5", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 3-5", "colour": "#ea3943" },
         { "id": "six_plus", "title": "6+", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 6+", "colour": "#8b5cf6" }
       ]
+    },
+    {
+      "id": "ballers-trial-verdict",
+      "title": "What verdict will the Ballers receive at the conclusion of the trial?",
+      "short_title": "Ballers Trial Verdict?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915919,
+      "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
+      "outcomes": [
+        { "id": "guilty", "title": "Guilty", "item_summary": "What verdict will the Ballers receive at the conclusion of the trial? | Guilty", "colour": "#ea3943" },
+        { "id": "not_guilty", "title": "Not Guilty", "item_summary": "What verdict will the Ballers receive at the conclusion of the trial? | Not Guilty", "colour": "#16c784" }
+      ]
+    },
+    {
+      "id": "ballers-death-sentence",
+      "title": "Will the Ballers be sentenced to death for their alleged crimes?",
+      "short_title": "Ballers Death Sentence?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915920,
+      "tags": ["Ballers", "Politics", "Deaths", "Drama", "Lucrum"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Ballers be sentenced to death for their alleged crimes? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Ballers be sentenced to death for their alleged crimes? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "baller-trials-completed",
+      "title": "Will the Baller Trials be completed as planned?",
+      "short_title": "Baller Trials Complete?",
+      "description": "Note: For this market to resolve as 'Yes' it requires the Ballers to show up for the trial, the trial to go uninterrupted, and for a verdict to be delivered.",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915921,
+      "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Baller Trials be completed as planned? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Baller Trials be completed as planned? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "abberline-attack-bedrock-corp",
+      "title": "Will the Abberline Crime Family launch an attack against Bedrock Corp?",
+      "short_title": "Abberline vs Bedrock?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915922,
+      "tags": ["War", "Bedrock Corp", "Drama", "Politics", "Abberline"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will the Abberline Crime Family launch an attack against Bedrock Corp? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will the Abberline Crime Family launch an attack against Bedrock Corp? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "crestia-ascentia-secede-day7",
+      "title": "Will Crestia Bay and Ascentia formally secede from the Lucrum Federation?",
+      "short_title": "Crestia & Ascentia Secede?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915923,
+      "tags": ["Nations", "Politics", "Lucrum", "Drama", "Crestia Bay", "Ascentia"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Crestia Bay and Ascentia formally secede from the Lucrum Federation? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Crestia Bay and Ascentia formally secede from the Lucrum Federation? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "bdrk-share-prices-day7",
+      "title": "Will BDRK share prices increase or decrease by the end of Day 7?",
+      "short_title": "BDRK Share Prices D7?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915924,
+      "tags": ["Economy", "Bedrock Corp"],
+      "outcomes": [
+        { "id": "increase", "title": "Increase", "item_summary": "Will BDRK share prices increase or decrease by the end of Day 7? | Increase", "colour": "#16c784" },
+        { "id": "decrease", "title": "Decrease", "item_summary": "Will BDRK share prices increase or decrease by the end of Day 7? | Decrease", "colour": "#ea3943" },
+        { "id": "same", "title": "Same", "item_summary": "Will BDRK share prices increase or decrease by the end of Day 7? | Same", "colour": "#3b82f6" }
+      ]
+    },
+    {
+      "id": "defnd-control-lucrum-day7",
+      "title": "Will Defnd retain control of the Lucrum Federation through the end of Day 7?",
+      "short_title": "Defnd Control D7?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915925,
+      "tags": ["Nations", "Politics", "Lucrum", "Drama", "Defnd"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Defnd retain control of the Lucrum Federation through the end of Day 7? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Defnd retain control of the Lucrum Federation through the end of Day 7? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "economy-ranked-first-day7",
+      "title": "Which nation's economy will be ranked first at the end of Day 7?",
+      "short_title": "Top Economy D7?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915926,
+      "tags": ["Economy", "Nations"],
+      "outcomes": [
+        { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | Bedrock Corp", "colour": "#16c784" },
+        { "id": "sevcorp", "title": "SevCorp", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | SevCorp", "colour": "#3b82f6" },
+        { "id": "dreamscape", "title": "Dreamscape", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | Dreamscape", "colour": "#f59e0b" },
+        { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | Lucrum Federation", "colour": "#ea3943" },
+        { "id": "helia", "title": "Helia", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | Helia", "colour": "#8b5cf6" }
+      ]
+    },
+    {
+      "id": "bedrock-corp-stakeholder-first",
+      "title": "Which individual or group will first become a major stakeholder in Bedrock Corp?",
+      "short_title": "First BDRK Stakeholder?",
+      "icon": "",
+      "ends": 1782599400,
+      "added_at": 1781915927,
+      "tags": ["Economy", "Bedrock Corp", "Politics"],
+      "outcomes": [
+        { "id": "scarab_holdings", "title": "Scarab Holdings", "item_summary": "Which individual or group will first become a major stakeholder in Bedrock Corp? | Scarab Holdings", "colour": "#16c784" },
+        { "id": "umbra_family", "title": "Umbra Family", "item_summary": "Which individual or group will first become a major stakeholder in Bedrock Corp? | Umbra Family", "colour": "#3b82f6" },
+        { "id": "advanced_investments", "title": "Advanced Investments", "item_summary": "Which individual or group will first become a major stakeholder in Bedrock Corp? | Advanced Investments", "colour": "#f59e0b" },
+        { "id": "mudklip", "title": "Mudklip", "item_summary": "Which individual or group will first become a major stakeholder in Bedrock Corp? | Mudklip", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "plinth-nuclear-bomb-day8",
+      "title": "Will Plinth finish building their nuclear bomb by the end of Day 8?",
+      "short_title": "Plinth Nuclear Bomb?",
+      "icon": "",
+      "ends": 1782599400,
+      "added_at": 1781915928,
+      "tags": ["Plinth", "War", "Politics", "Drama"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Plinth finish building their nuclear bomb by the end of Day 8? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Plinth finish building their nuclear bomb by the end of Day 8? | No", "colour": "#ea3943" }
+      ]
+    },
+    {
+      "id": "helia-third-table-stolen",
+      "title": "Will Helia have a third table stolen as well?",
+      "short_title": "Helia Third Table?",
+      "icon": "",
+      "ends": 1782513000,
+      "added_at": 1781915929,
+      "tags": ["Helia", "Drama", "Economy", "Ballers"],
+      "outcomes": [
+        { "id": "yes", "title": "Yes", "item_summary": "Will Helia have a third table stolen as well? | Yes", "colour": "#16c784" },
+        { "id": "no", "title": "No", "item_summary": "Will Helia have a third table stolen as well? | No", "colour": "#ea3943" }
+      ]
     }
   ]
 }
