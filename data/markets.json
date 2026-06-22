@@ -210,6 +210,8 @@
       "icon": "../assets/elanuelo_maid_dress.png",
       "ends": 1782080100,
       "added_at": 1780920013,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Culture", "Femboys"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Elanuelo wear a maid dress? | Yes", "colour": "#16c784" },
@@ -286,6 +288,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461608,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics", "Lucrum", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation break up by Day 6? | Yes", "colour": "#16c784" },
@@ -514,6 +518,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461625,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics", "Drama", "Plinth", "Eden"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Plinth and Eden break up by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -681,6 +687,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915904,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Bedrock Corp"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Bedrock Corp Tower be completed by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -694,6 +702,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915905,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Culture", "Triple T", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur make another appearance at the Burning Tung Festival on Day 6? | Yes", "colour": "#16c784" },
@@ -751,6 +761,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915908,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Atlantis", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Atlantis get a second citizen? | Yes", "colour": "#16c784" },
@@ -764,6 +776,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915909,
+      "resolved": true,
+      "winning_outcome": "same",
       "tags": ["Economy", "Bedrock Corp"],
       "outcomes": [
         { "id": "increase", "title": "Increase", "item_summary": "Will BDRK share prices increase or decrease by the end of Day 6? | Increase", "colour": "#16c784" },
@@ -778,6 +792,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915910,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Nations", "Politics", "Lucrum", "Drama", "Defnd"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Defnd retain control over the Lucrum Federation by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -791,6 +807,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915911,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["War", "Nations", "Politics", "Lucrum"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation's nations go to war against each other on Day 6? | Yes", "colour": "#16c784" },
@@ -804,6 +822,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915912,
+      "resolved": true,
+      "winning_outcome": "bedrock_corp",
       "tags": ["Nations", "Politics"],
       "outcomes": [
         { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation will have the most citizens by the end of Day 6? | Bedrock Corp", "colour": "#16c784" },
@@ -818,6 +838,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915913,
+      "resolved": true,
+      "winning_outcome": "bedrock_corp",
       "tags": ["Economy", "Nations"],
       "outcomes": [
         { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's economy will be ranked first at the end of Day 6? | Bedrock Corp", "colour": "#16c784" },
@@ -847,6 +869,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915915,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Politics", "Nations", "Deaths", "RDM", "Assassinations"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will any major nation/guild leaders be assassinated by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -883,6 +907,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915917,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will anything happen on Day 6? | Yes", "colour": "#16c784" },
