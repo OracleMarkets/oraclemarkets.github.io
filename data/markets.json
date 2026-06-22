@@ -378,6 +378,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461615,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Baunihian Baun make a comeback by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -723,6 +725,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915906,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Lucrum", "Ballers", "Drama", "Politics"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Looters be caught by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -930,6 +934,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915918,
+      "resolved": true,
+      "winning_outcome": "zero",
       "tags": ["Culture", "Triple T", "Deaths", "Drama"],
       "outcomes": [
         { "id": "zero", "title": "0", "item_summary": "How many people will be burned alive at the Burning Tung Festival on Day 6? | 0", "colour": "#16c784" },
