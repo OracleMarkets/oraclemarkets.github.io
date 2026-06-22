@@ -535,6 +535,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461626,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Economy"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will new islands be available by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -630,6 +632,8 @@
       "icon": "",
       "ends": 1781992800,
       "added_at": 1781915901,
+      "resolved": true,
+      "winning_outcome": "sevcorp",
       "tags": ["War", "Economy", "Lucrum", "Ballers"],
       "outcomes": [
         { "id": "bedrock_central_market", "title": "Bedrock Central Market", "item_summary": "Where will the \"Lucrum Looters\" strike next? | Bedrock Central Market", "colour": "#16c784" },
@@ -886,6 +890,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781915916,
+      "resolved": true,
+      "winning_outcome": "sevcorp",
       "tags": ["War", "Economy", "Ballers", "Drama"],
       "outcomes": [
         { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation will the Lucrum Looters/Ballers target next? | Bedrock Corp", "colour": "#16c784" },
