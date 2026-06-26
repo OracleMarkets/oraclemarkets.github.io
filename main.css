@@ -82,11 +82,11 @@ html {
 ::view-transition-new(root) {
     animation-duration: 0.2s;
     animation-timing-function: ease;
-    background: var(--bg);
+    background: #15191d;
 }
 
 ::view-transition-group(root) {
-    background: var(--bg);
+    background: #15191d;
 }
 
 body {
@@ -1171,6 +1171,156 @@ a.news-headline:hover {
     font-weight: 600;
     line-height: 1.35;
 }
+
+.event-card--hidden .glitch-text,
+.market-modal-detail--hidden .glitch-text {
+    position: relative;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    overflow: visible;
+}
+
+.event-card--hidden .event-card-header {
+    overflow: visible;
+}
+
+.event-card--hidden .event-card-title.glitch-text {
+    display: block;
+}
+
+.event-card--hidden .btn-yes.glitch-text,
+.event-card--hidden .btn-no.glitch-text,
+.market-modal-detail--hidden .btn-yes.glitch-text,
+.market-modal-detail--hidden .btn-no.glitch-text {
+    overflow: visible;
+}
+
+.event-card--hidden .glitch-text::before,
+.event-card--hidden .glitch-text::after,
+.market-modal-detail--hidden .glitch-text::before,
+.market-modal-detail--hidden .glitch-text::after {
+    content: attr(data-glitch-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    color: inherit;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+.event-card--hidden .event-card-title.glitch-text::before,
+.event-card--hidden .event-card-title.glitch-text::after {
+    background: var(--panel);
+}
+
+.event-card--hidden:hover .event-card-title.glitch-text::before,
+.event-card--hidden:hover .event-card-title.glitch-text::after {
+    background: var(--panel-hover);
+}
+
+.market-modal-detail--hidden .glitch-text::before,
+.market-modal-detail--hidden .glitch-text::after {
+    background: var(--panel);
+}
+
+.event-card--hidden .btn-yes.glitch-text::before,
+.event-card--hidden .btn-yes.glitch-text::after {
+    background: var(--green-btn);
+    border-radius: inherit;
+}
+
+.event-card--hidden .btn-no.glitch-text::before,
+.event-card--hidden .btn-no.glitch-text::after {
+    background: var(--red-btn);
+    border-radius: inherit;
+}
+
+.event-card--hidden .btn-yes.glitch-text:hover::before,
+.event-card--hidden .btn-yes.glitch-text:hover::after {
+    background: var(--green);
+}
+
+.event-card--hidden .btn-no.glitch-text:hover::before,
+.event-card--hidden .btn-no.glitch-text:hover::after {
+    background: var(--red);
+}
+
+.market-modal-detail--hidden .btn-yes.glitch-text::before,
+.market-modal-detail--hidden .btn-yes.glitch-text::after {
+    background: var(--green-btn);
+    border-radius: inherit;
+}
+
+.market-modal-detail--hidden .btn-no.glitch-text::before,
+.market-modal-detail--hidden .btn-no.glitch-text::after {
+    background: var(--red-btn);
+    border-radius: inherit;
+}
+
+.market-modal-detail--hidden .btn-yes.glitch-text:hover::before,
+.market-modal-detail--hidden .btn-yes.glitch-text:hover::after {
+    background: var(--green);
+}
+
+.market-modal-detail--hidden .btn-no.glitch-text:hover::before,
+.market-modal-detail--hidden .btn-no.glitch-text:hover::after {
+    background: var(--red);
+}
+
+.event-card--hidden .glitch-text::before,
+.market-modal-detail--hidden .glitch-text::before {
+    left: 1px;
+    z-index: 1;
+    text-shadow: -1px 0 rgba(255, 90, 90, 0.45);
+    animation: hidden-market-glitch-1 4.5s steps(1, end) infinite;
+}
+
+.event-card--hidden .glitch-text::after,
+.market-modal-detail--hidden .glitch-text::after {
+    left: -1px;
+    z-index: 2;
+    text-shadow: 1px 0 rgba(90, 130, 255, 0.4);
+    animation: hidden-market-glitch-2 4.5s steps(1, end) infinite;
+}
+
+@keyframes hidden-market-glitch-1 {
+    0%, 18%, 38%, 58%, 78%, 100% { clip-path: inset(100% 0 100% 0); }
+    20% { clip-path: inset(28% 0 66% 0); }
+    22% { clip-path: inset(62% 0 30% 0); }
+    40% { clip-path: inset(14% 0 78% 0); }
+    42% { clip-path: inset(48% 0 44% 0); }
+    60% { clip-path: inset(72% 0 20% 0); }
+    62% { clip-path: inset(36% 0 56% 0); }
+    80% { clip-path: inset(22% 0 70% 0); }
+    82% { clip-path: inset(54% 0 38% 0); }
+}
+
+@keyframes hidden-market-glitch-2 {
+    0%, 24%, 44%, 64%, 84%, 100% { clip-path: inset(100% 0 100% 0); }
+    26% { clip-path: inset(40% 0 52% 0); }
+    28% { clip-path: inset(68% 0 24% 0); }
+    46% { clip-path: inset(18% 0 74% 0); }
+    48% { clip-path: inset(58% 0 34% 0); }
+    66% { clip-path: inset(32% 0 60% 0); }
+    68% { clip-path: inset(76% 0 16% 0); }
+    86% { clip-path: inset(46% 0 46% 0); }
+    88% { clip-path: inset(12% 0 80% 0); }
+}
+
+/*@media (prefers-reduced-motion: reduce) {*/
+/*    .event-card--hidden .glitch-text::before,*/
+/*    .event-card--hidden .glitch-text::after,*/
+/*    .market-modal-detail--hidden .glitch-text::before,*/
+/*    .market-modal-detail--hidden .glitch-text::after {*/
+/*        animation-duration: 8s;*/
+/*        opacity: 0.35;*/
+/*    }*/
+/*}*/
 
 .chance-arc {
     position: relative;
@@ -2346,26 +2496,26 @@ a.news-headline:hover {
     animation: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .skeleton-line,
-    .skeleton-block,
-    .skeleton-pill,
-    .skeleton-dot {
-        animation: none;
-        background: #1e2428;
-    }
-}
+/*@media (prefers-reduced-motion: reduce) {*/
+/*    .skeleton-line,*/
+/*    .skeleton-block,*/
+/*    .skeleton-pill,*/
+/*    .skeleton-dot {*/
+/*        animation: none;*/
+/*        background: #1e2428;*/
+/*    }*/
+/*}*/
 
-@media (prefers-reduced-motion: reduce) {
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation: none;
-    }
+/*@media (prefers-reduced-motion: reduce) {*/
+/*    ::view-transition-old(root),*/
+/*    ::view-transition-new(root) {*/
+/*        animation: none;*/
+/*    }*/
 
-    .page-enter-fallback .page-enter {
-        animation: none;
-    }
-}
+/*    .page-enter-fallback .page-enter {*/
+/*        animation: none;*/
+/*    }*/
+/*}*/
 
 @media (max-width: 1200px) {
     .event-grid {

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#15191d">
+    <meta name="color-scheme" content="dark">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Internal Portal · Oracle</title>
+    <style>
+        html,body{background:#15191d;color-scheme:dark}
+        @view-transition{navigation:none}
+    </style>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="intranet.css">
+    <link rel="stylesheet" href="portal.css">
+    <script src="../page-transitions.js" defer></script>
+    <script src="overlay-toggle.js" defer></script>
+    <script src="attempts.js" defer></script>
+    <script src="portal.js" defer></script>
+    <script src="intranet.js" defer></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body class="intranet-page">
+<script>
+    (function () {
+        var url = new URL(window.location.href);
+        if (url.searchParams.has("username") || url.searchParams.has("password")) {
+            url.searchParams.delete("username");
+            url.searchParams.delete("password");
+            window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+        }
+        if (/\/index\.html$/i.test(location.pathname)) {
+            location.replace(location.pathname.replace(/\/index\.html$/i, "/") + location.search + location.hash);
+            return;
+        }
+        if (/[?&]reset=1(?:&|$)/.test(location.search)) return;
+        if (/(?:^|; )oracle_intranet_auth=/.test(document.cookie)) {
+            document.documentElement.classList.add("intranet-restoring");
+            document.body.classList.add("intranet-restoring");
+        }
+    }());
+</script>
+<div class="intranet-static" aria-hidden="true"></div>
+<div class="intranet-scan" aria-hidden="true"></div>
+
+<div id="auth-view">
+    <header class="intranet-header">
+        <div class="intranet-header-inner">
+            <a href="../" class="intranet-logo" aria-label="Return to Oracle Markets">
+                <img src="../assets/logo.svg" alt="" class="intranet-logo-icon" width="28" height="22">
+                <img class="intranet-logo-text" src="../assets/logo_text.svg" alt="Oracle" height="12">
+            </a>
+            <button
+                type="button"
+                class="intranet-overlay-toggle"
+                id="intranet-overlay-toggle"
+                aria-pressed="true"
+                aria-label="Toggle scan overlay"
+                title="Turn overlay off"
+            >
+                <svg class="intranet-overlay-toggle-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                    <path class="intranet-overlay-toggle-track" d="M7 18C5.33333 18 3.91667 17.4167 2.75 16.25C1.58333 15.0833 1 13.6667 1 12C1 10.3333 1.58333 8.91667 2.75 7.75C3.91667 6.58333 5.33333 6 7 6H17C18.6667 6 20.0833 6.58333 21.25 7.75C22.4167 8.91667 23 10.3333 23 12C23 13.6667 22.4167 15.0833 21.25 16.25C20.0833 17.4167 18.6667 18 17 18H7ZM7 16H17C18.1 16 19.0417 15.6083 19.825 14.825C20.6083 14.0417 21 13.1 21 12C21 10.9 20.6083 9.95833 19.825 9.175C19.0417 8.39167 18.1 8 17 8H7C5.9 8 4.95833 8.39167 4.175 9.175C3.39167 9.95833 3 10.9 3 12C3 13.1 3.39167 14.0417 4.175 14.825C4.95833 15.6083 5.9 16 7 16Z" fill="currentColor"/>
+                    <g class="intranet-overlay-toggle-knob">
+                        <circle cx="7" cy="12" r="3" fill="currentColor"/>
+                    </g>
+                </svg>
+                <span class="intranet-overlay-toggle-label">FX</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="intranet-main page-enter" id="main-content">
+        <section class="intranet-login" aria-labelledby="intranet-login-title">
+            <div class="intranet-login-card" id="login-card">
+                <p class="intranet-eyebrow">Oracle internal portal</p>
+                <h1 class="intranet-title" id="intranet-login-title">Restricted access</h1>
+                <div class="intranet-accent" aria-hidden="true"></div>
+                <p class="intranet-lead">
+                    Authorised personnel only. Sign in with your issued credentials to continue.
+                </p>
+
+                <form class="intranet-form" id="login-form" method="post" action="." novalidate>
+                    <div class="intranet-field">
+                        <label class="intranet-label" for="username">Username</label>
+                        <input
+                            class="intranet-input"
+                            id="username"
+                            name="username"
+                            type="text"
+                            autocomplete="username"
+                            spellcheck="false"
+                            autocapitalize="off"
+                            required
+                            aria-describedby="login-status"
+                        >
+                    </div>
+
+                    <div class="intranet-field">
+                        <label class="intranet-label" for="password">Password</label>
+                        <div class="intranet-password-wrap">
+                            <input
+                                class="intranet-input intranet-input--password"
+                                id="password"
+                                name="password"
+                                type="password"
+                                autocomplete="current-password"
+                                required
+                                aria-describedby="login-status"
+                            >
+                            <button
+                                type="button"
+                                class="intranet-password-toggle"
+                                id="password-toggle"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <svg class="intranet-eye intranet-eye--show" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                <svg class="intranet-eye intranet-eye--hide" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="intranet-status" id="login-status" role="status" aria-live="polite"></p>
+
+                    <button type="submit" class="intranet-submit" id="login-submit">
+                        <span class="intranet-submit-label">Sign in</span>
+                        <span class="intranet-submit-spinner" aria-hidden="true" hidden></span>
+                    </button>
+                </form>
+                <script>
+                    document.getElementById("login-form")?.addEventListener("submit", function (event) {
+                        event.preventDefault();
+                    });
+                </script>
+            </div>
+        </section>
+    </main>
+
+    <footer class="intranet-disclaimer">
+        <div class="intranet-disclaimer-inner">
+            <p class="intranet-disclaimer-title">Notice of restricted access</p>
+            <p class="intranet-disclaimer-text">
+                This system contains confidential Oracle information intended solely for
+                authorised users. Unrestricted access, disclosure, copying, or attempted intrusion is
+                strictly prohibited. All connection attempts are logged and monitored. Persons attempting
+                to break in or exceed their clearance will be identified and dealt with by
+                <strong>ARCSEC</strong> in accordance with internal security policy.
+            </p>
+        </div>
+    </footer>
+</div>
+
+<header class="portal-topbar">
+    <div class="portal-topbar-left">
+        <button
+            type="button"
+            class="portal-menu-toggle"
+            id="portal-sidebar-toggle"
+            data-portal-sidebar-toggle
+            aria-expanded="true"
+            aria-controls="portal-sidebar"
+            aria-label="Toggle navigation"
+            title="Toggle navigation"
+        >
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        </button>
+        <a href="../" class="intranet-logo" aria-label="Return to Oracle Markets">
+            <img src="../assets/logo.svg" alt="" class="intranet-logo-icon" width="26" height="20">
+            <img class="intranet-logo-text" src="../assets/logo_text.svg" alt="Oracle" height="11">
+        </a>
+        <span class="portal-topbar-divider" aria-hidden="true"></span>
+        <span class="portal-topbar-app">Internal Portal</span>
+        <span class="portal-env-badge" id="portal-env">PRODUCTION</span>
+    </div>
+
+    <div class="portal-search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="search" id="portal-search-input" placeholder="Search internal portal…" autocomplete="off" spellcheck="false" aria-label="Search internal portal">
+    </div>
+
+    <div class="portal-topbar-right">
+        <button
+            type="button"
+            class="intranet-overlay-toggle portal-fx-toggle"
+            id="portal-overlay-toggle"
+            aria-pressed="true"
+            aria-label="Toggle scan overlay"
+            title="Turn overlay off"
+        >
+            <svg class="intranet-overlay-toggle-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                <path class="intranet-overlay-toggle-track" d="M7 18C5.33333 18 3.91667 17.4167 2.75 16.25C1.58333 15.0833 1 13.6667 1 12C1 10.3333 1.58333 8.91667 2.75 7.75C3.91667 6.58333 5.33333 6 7 6H17C18.6667 6 20.0833 6.58333 21.25 7.75C22.4167 8.91667 23 10.3333 23 12C23 13.6667 22.4167 15.0833 21.25 16.25C20.0833 17.4167 18.6667 18 17 18H7ZM7 16H17C18.1 16 19.0417 15.6083 19.825 14.825C20.6083 14.0417 21 13.1 21 12C21 10.9 20.6083 9.95833 19.825 9.175C19.0417 8.39167 18.1 8 17 8H7C5.9 8 4.95833 8.39167 4.175 9.175C3.39167 9.95833 3 10.9 3 12C3 13.1 3.39167 14.0417 4.175 14.825C4.95833 15.6083 5.9 16 7 16Z" fill="currentColor"/>
+                <g class="intranet-overlay-toggle-knob">
+                    <circle cx="7" cy="12" r="3" fill="currentColor"/>
+                </g>
+            </svg>
+            <span class="intranet-overlay-toggle-label">FX</span>
+        </button>
+
+        <div class="portal-user" id="portal-user">
+            <div class="portal-user-avatar" id="portal-user-avatar" aria-hidden="true">
+                <span class="portal-restore-sk portal-restore-sk--avatar" aria-hidden="true"></span>
+            </div>
+            <div class="portal-user-meta">
+                <span class="portal-restore-sk portal-restore-sk--user-name" aria-hidden="true"></span>
+                <span class="portal-user-name" id="portal-user-name">...</span>
+                <span class="portal-restore-sk portal-restore-sk--user-role" aria-hidden="true"></span>
+                <span class="portal-user-role" id="portal-user-role">...</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="portal-shell">
+    <aside class="portal-sidebar" id="portal-sidebar" aria-label="Internal Portal">
+        <nav class="portal-nav" id="portal-nav">
+            <button type="button" class="portal-nav-item is-active" data-section="messages" aria-current="page" title="Messages">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor" aria-hidden="true"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280 320-200v-80L480-520 160-720v80l320 200Z"/></svg>
+                <span>Messages</span>
+                <span class="portal-nav-count" id="nav-msg-count" hidden>0</span>
+            </button>
+            <button type="button" class="portal-nav-item" data-section="files" title="Files">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor" aria-hidden="true"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Z"/></svg>
+                <span>Files</span>
+            </button>
+            <button type="button" class="portal-nav-item" data-section="analytics" title="Analytics">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor" aria-hidden="true"><path d="M640-160v-280h160v280H640Zm-240 0v-640h160v640H400Zm-240 0v-440h160v440H160Z"/></svg>
+                <span>Analytics</span>
+            </button>
+        </nav>
+
+        <div class="portal-sidebar-foot">
+            <p class="portal-sidebar-label">Signed in as</p>
+            <span class="portal-restore-sk portal-restore-sk--sidebar-user" aria-hidden="true"></span>
+            <p class="portal-sidebar-user" id="portal-sidebar-user">...</p>
+            <span class="portal-restore-sk portal-restore-sk--sidebar-clearance" aria-hidden="true"></span>
+            <p class="portal-sidebar-clearance" id="portal-sidebar-clearance">...</p>
+            <button type="button" class="portal-signout" id="portal-signout">Sign out</button>
+        </div>
+    </aside>
+
+    <main class="portal-content" id="portal-content">
+        <div class="portal-loading" id="portal-loading">
+            <span class="portal-spinner" aria-hidden="true"></span>
+            <span>Loading internal portal…</span>
+        </div>
+
+        <section class="portal-section" data-section="messages" hidden>
+            <header class="portal-section-head">
+                <div>
+                    <h1 class="portal-section-title">Messages</h1>
+                    <p class="portal-section-sub">Internal correspondence</p>
+                </div>
+            </header>
+            <div class="portal-messages">
+                <div class="portal-restore-skeleton" id="portal-restore-skeleton" aria-busy="false" aria-label="Loading messages">
+                    <div class="portal-restore-thread-list">
+                        <div class="portal-restore-thread">
+                            <div class="skeleton-block portal-restore-thread-avatar"></div>
+                            <div class="portal-restore-thread-copy">
+                                <div class="skeleton-line portal-restore-thread-from"></div>
+                                <div class="skeleton-line portal-restore-thread-subject"></div>
+                                <div class="skeleton-line portal-restore-thread-preview"></div>
+                            </div>
+                        </div>
+                        <div class="portal-restore-thread">
+                            <div class="skeleton-block portal-restore-thread-avatar"></div>
+                            <div class="portal-restore-thread-copy">
+                                <div class="skeleton-line portal-restore-thread-from"></div>
+                                <div class="skeleton-line portal-restore-thread-subject"></div>
+                                <div class="skeleton-line portal-restore-thread-preview"></div>
+                            </div>
+                        </div>
+                        <div class="portal-restore-thread">
+                            <div class="skeleton-block portal-restore-thread-avatar"></div>
+                            <div class="portal-restore-thread-copy">
+                                <div class="skeleton-line portal-restore-thread-from"></div>
+                                <div class="skeleton-line portal-restore-thread-subject"></div>
+                                <div class="skeleton-line portal-restore-thread-preview"></div>
+                            </div>
+                        </div>
+                        <div class="portal-restore-thread">
+                            <div class="skeleton-block portal-restore-thread-avatar"></div>
+                            <div class="portal-restore-thread-copy">
+                                <div class="skeleton-line portal-restore-thread-from"></div>
+                                <div class="skeleton-line portal-restore-thread-subject"></div>
+                                <div class="skeleton-line portal-restore-thread-preview"></div>
+                            </div>
+                        </div>
+                        <div class="portal-restore-thread">
+                            <div class="skeleton-block portal-restore-thread-avatar"></div>
+                            <div class="portal-restore-thread-copy">
+                                <div class="skeleton-line portal-restore-thread-from"></div>
+                                <div class="skeleton-line portal-restore-thread-subject"></div>
+                                <div class="skeleton-line portal-restore-thread-preview"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portal-restore-thread-view">
+                        <div class="skeleton-line portal-restore-msg-title"></div>
+                        <div class="portal-restore-msg-head">
+                            <div class="skeleton-block portal-restore-msg-avatar"></div>
+                            <div class="portal-restore-msg-meta">
+                                <div class="skeleton-line skeleton-line--md"></div>
+                                <div class="skeleton-line skeleton-line--sm"></div>
+                                <div class="skeleton-line skeleton-line--xs"></div>
+                            </div>
+                        </div>
+                        <div class="portal-restore-msg-body">
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line skeleton-line--short"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line skeleton-line--md"></div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="portal-thread-list" id="portal-thread-list" aria-label="Message threads"></ul>
+                <article class="portal-thread-view" id="portal-thread-view" aria-live="polite"></article>
+            </div>
+        </section>
+
+        <section class="portal-section" data-section="files" hidden>
+            <header class="portal-section-head">
+                <div>
+                    <h1 class="portal-section-title">Files</h1>
+                    <p class="portal-section-sub">Document repository · Access logged</p>
+                </div>
+                <nav class="portal-breadcrumb" id="portal-breadcrumb" aria-label="Folder path"></nav>
+            </header>
+            <div class="portal-files">
+                <aside class="portal-tree" id="portal-tree" aria-label="Folder tree"></aside>
+                <div class="portal-file-list" id="portal-file-list"></div>
+                <aside class="portal-file-meta" id="portal-file-meta">
+                    <p class="portal-file-meta-empty">Select a file to view its details.</p>
+                </aside>
+            </div>
+        </section>
+
+        <section class="portal-section" data-section="analytics" hidden>
+            <header class="portal-section-head">
+                <div>
+                    <h1 class="portal-section-title">Analytics</h1>
+                    <p class="portal-section-sub" id="portal-analytics-asof">Oracle markets overview</p>
+                </div>
+            </header>
+            <div class="portal-analytics" id="portal-analytics"></div>
+        </section>
+    </main>
+</div>
+
+<div class="portal-modal" id="resource-modal" hidden>
+    <div class="portal-modal-backdrop" data-resource-close></div>
+    <div class="portal-modal-card" role="dialog" aria-modal="true" aria-labelledby="resource-modal-title">
+        <button type="button" class="portal-modal-close" data-resource-close aria-label="Close">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <div class="portal-modal-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6zm3 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+        </div>
+        <h2 class="portal-modal-title" id="resource-modal-title">Protected file</h2>
+        <p class="portal-modal-sub">This document is encrypted. Enter the file password to download it.</p>
+        <p class="portal-modal-file" id="resource-modal-file">...</p>
+
+        <form class="portal-modal-form" id="resource-form" novalidate>
+            <label class="portal-modal-label" for="resource-password">File password</label>
+            <div class="portal-modal-password-wrap">
+                <input
+                    class="portal-modal-input portal-modal-input--password"
+                    id="resource-password"
+                    type="password"
+                    autocomplete="off"
+                    spellcheck="false"
+                    autocapitalize="off"
+                >
+                <button
+                    type="button"
+                    class="intranet-password-toggle"
+                    id="resource-password-toggle"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                >
+                    <svg class="intranet-eye intranet-eye--show" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    <svg class="intranet-eye intranet-eye--hide" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                </button>
+            </div>
+            <p class="portal-modal-status" id="resource-status" role="status" aria-live="polite"></p>
+
+            <div class="portal-modal-actions">
+                <button type="button" class="portal-modal-btn portal-modal-btn--ghost" data-resource-close>Cancel</button>
+                <button type="submit" class="portal-modal-btn portal-modal-btn--primary" id="resource-submit">
+                    <span class="portal-modal-btn-label">Unlock &amp; Download</span>
+                    <span class="portal-modal-btn-spinner" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

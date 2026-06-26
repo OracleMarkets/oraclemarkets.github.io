@@ -103,6 +103,7 @@ let liveDataUnavailable = false;
 let resolvedPoolsLoaded = false;
 let resolvedPoolsLoading = null;
 let openModalMarketId = null;
+let hiddenMarketInsertIndex = null;
 
 const dataPromise = loadAllData();
 loadChartJs();
@@ -135,6 +136,7 @@ async function init() {
     siteData = site;
     newsData = news;
     activeNavTag = "Trending";
+    OracleHiddenMarket?.init(site);
 
     renderNavTabs();
     renderFooterLinks();
@@ -401,9 +403,10 @@ function eventCardPresentation(market, delay) {
     const ended = !resolved && isMarketEnded(market.endsAt);
     const stateClass = resolved ? " event-card--resolved" : (ended ? " event-card--ended" : "");
     const sponsoredClass = (!resolved && market.sponsored) ? " event-card--sponsored" : "";
+    const hiddenClass = market.isHiddenMarket ? " event-card--hidden" : "";
 
     return {
-        className: `event-card${stateClass}${sponsoredClass} fade-in`,
+        className: `event-card${stateClass}${sponsoredClass}${hiddenClass} fade-in`,
         style: `animation-delay:${delay}s`,
         resolvedAttr: resolved ? ' data-resolved="true"' : ""
     };
@@ -711,6 +714,17 @@ function escapeHtml(str) {
     return escapeAttr(str);
 }
 
+function hiddenGlitchAttrs(market, text) {
+    if (!market.isHiddenMarket) {
+        return { classSuffix: "", attr: "" };
+    }
+
+    return {
+        classSuffix: " glitch-text",
+        attr: ` data-glitch-text="${escapeAttr(text)}"`
+    };
+}
+
 function articleMarketIds(article) {
     if (Array.isArray(article.market_ids)) return article.market_ids;
     if (article.market_id) return [article.market_id];
@@ -890,6 +904,36 @@ function sortResolved(list) {
     return [...list].sort(compareByVolume);
 }
 
+function getMarketById(marketId) {
+    if (OracleHiddenMarket?.isHiddenMarketId(marketId)) {
+        return OracleHiddenMarket.getMarket();
+    }
+    return markets.find((m) => m.id === marketId);
+}
+
+function injectHiddenMarket(list) {
+    const hidden = OracleHiddenMarket?.getMarket();
+    if (!hidden) return list;
+
+    if (!OracleHiddenMarket.matchesListFilters({
+        activeNavTag,
+        gridTag: currentGridTag(),
+        searchQuery,
+        matchesNavFilter
+    })) {
+        return list;
+    }
+
+    if (hiddenMarketInsertIndex === null) {
+        hiddenMarketInsertIndex = Math.floor(Math.random() * (list.length + 1));
+    }
+
+    const copy = [...list];
+    const index = Math.min(hiddenMarketInsertIndex, copy.length);
+    copy.splice(index, 0, hidden);
+    return copy;
+}
+
 function getSortedMarkets() {
     const filtered = getFilteredMarkets();
     let result;
@@ -900,7 +944,7 @@ function getSortedMarkets() {
     if (activeNavTag !== "Resolved" && currentGridTag() === "All") {
         result = prioritizeSponsoredMarkets(result);
     }
-    return result;
+    return injectHiddenMarket(result);
 }
 
 function getHighlightMarkets() {
@@ -1165,9 +1209,11 @@ function featuredChanceText(market) {
 function marketDescriptionHtml(market) {
     if (!market.description) return "";
 
+    const glitch = hiddenGlitchAttrs(market, market.description);
+
     return `<div class="market-description">
         <svg class="market-description-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-        <p class="market-description-text">${escapeHtml(market.description)}</p>
+        <p class="market-description-text${glitch.classSuffix}"${glitch.attr}>${escapeHtml(market.description)}</p>
     </div>`;
 }
 
@@ -1642,7 +1688,7 @@ function renderMarketCard(market, index) {
                         <div class="outcome-row">
                             <p class="outcome-name">${o.name}</p>
                             <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
-                            <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
+                            <button class="btn-bet" ${betButtonAttrs(o, market.title, market)} type="button"${disabledAttr}>Bet</button>
                         </div>
                     `).join("")}
                 </div>
@@ -1656,13 +1702,16 @@ function renderMarketCard(market, index) {
 
     const yesOutcome = market.outcomes.find((o) => o.id === "yes");
     const noOutcome = market.outcomes.find((o) => o.id === "no");
+    const titleGlitch = hiddenGlitchAttrs(market, market.title);
+    const yesGlitch = hiddenGlitchAttrs(market, yesOutcome.name);
+    const noGlitch = hiddenGlitchAttrs(market, noOutcome.name);
 
     return `
         <article class="${card.className}" style="${card.style}" data-market-id="${market.id}">
             <div class="event-card-top">
                 <div class="event-card-header">
                     ${marketIconHtml(market)}
-                    <h3 class="event-card-title">${market.title}</h3>
+                    <h3 class="event-card-title${titleGlitch.classSuffix}"${titleGlitch.attr}>${escapeHtml(market.title)}</h3>
                 </div>
                 <div class="chance-arc">
                     <svg viewBox="0 0 100 50" aria-hidden="true">
@@ -1676,8 +1725,8 @@ function renderMarketCard(market, index) {
                 </div>
             </div>
             <div class="btn-row btn-row--compact">
-                <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
-                <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
+                <button class="btn-yes${yesGlitch.classSuffix}"${yesGlitch.attr} ${betButtonAttrs(yesOutcome, market.title, market)} type="button"${disabledAttr}>${escapeHtml(yesOutcome.name)}</button>
+                <button class="btn-no${noGlitch.classSuffix}"${noGlitch.attr} ${betButtonAttrs(noOutcome, market.title, market)} type="button"${disabledAttr}>${escapeHtml(noOutcome.name)}</button>
             </div>
             <div class="card-meta">
                 <span>${formatVolume(market.totalPool)}</span>
@@ -1733,7 +1782,11 @@ function buildCarouselHtml(list, index) {
     `;
 }
 
-function betButtonAttrs(outcome, marketTitle) {
+function betButtonAttrs(outcome, marketTitle, market) {
+    if (market?.isHiddenMarket && OracleHiddenMarket) {
+        return OracleHiddenMarket.betButtonAttrs(outcome, marketTitle);
+    }
+
     const search = outcome.itemSummary || `${marketTitle} | ${outcome.name}`;
     return `data-bet-url="${escapeAttr(outcome.url)}" data-bet-search="${escapeAttr(search)}" data-outcome-name="${escapeAttr(outcome.name)}" data-market-title="${escapeAttr(marketTitle)}"`;
 }
@@ -1770,7 +1823,16 @@ function closeBetModal() {
 function bindBetModal() {
     document.addEventListener("click", (e) => {
         const btn = e.target.closest(".btn-yes, .btn-no, .btn-bet");
-        if (!btn?.dataset.betUrl || btn.disabled) return;
+        if (!btn || btn.disabled) return;
+
+        if (btn.dataset.hiddenMarketBet === "true") {
+            e.preventDefault();
+            e.stopPropagation();
+            OracleHiddenMarket?.onBetClick();
+            return;
+        }
+
+        if (!btn.dataset.betUrl) return;
 
         e.preventDefault();
         openBetModal(btn);
@@ -1823,10 +1885,12 @@ function marketDetailActionButtons(market, { featured = false } = {}) {
     if (market.type === "yes-no") {
         const yesOutcome = market.outcomes.find((o) => o.id === "yes");
         const noOutcome = market.outcomes.find((o) => o.id === "no");
+        const yesGlitch = hiddenGlitchAttrs(market, yesOutcome.name);
+        const noGlitch = hiddenGlitchAttrs(market, noOutcome.name);
         const rowClass = featured ? "btn-row" : "btn-row btn-row--compact";
         return `<div class="${rowClass}">
-            <button class="btn-yes" ${betButtonAttrs(yesOutcome, market.title)} type="button"${disabledAttr}>Yes</button>
-            <button class="btn-no" ${betButtonAttrs(noOutcome, market.title)} type="button"${disabledAttr}>No</button>
+            <button class="btn-yes${yesGlitch.classSuffix}"${yesGlitch.attr} ${betButtonAttrs(yesOutcome, market.title, market)} type="button"${disabledAttr}>${escapeHtml(yesOutcome.name)}</button>
+            <button class="btn-no${noGlitch.classSuffix}"${noGlitch.attr} ${betButtonAttrs(noOutcome, market.title, market)} type="button"${disabledAttr}>${escapeHtml(noOutcome.name)}</button>
         </div>`;
     }
 
@@ -1838,7 +1902,7 @@ function marketDetailActionButtons(market, { featured = false } = {}) {
             <div class="outcome-row">
                 <p class="outcome-name">${o.name}</p>
                 <span class="outcome-pct ${o.percent === maxPct ? "lead" : "trail"}">${o.percent}%</span>
-                <button class="btn-bet" ${betButtonAttrs(o, market.title)} type="button"${disabledAttr}>Bet</button>
+                <button class="btn-bet" ${betButtonAttrs(o, market.title, market)} type="button"${disabledAttr}>Bet</button>
             </div>
         `).join("")}
     </div>`;
@@ -1873,14 +1937,16 @@ function buildMarketDetailHtml(market) {
         </div>`
         : "";
 
+    const titleGlitch = hiddenGlitchAttrs(market, market.title);
+
     return `
-        <div class="market-modal-detail${stateClass}">
+        <div class="market-modal-detail${stateClass}${market.isHiddenMarket ? " market-modal-detail--hidden" : ""}">
             <header class="market-modal-header">
                 <div class="market-modal-header-main featured-header">
                     ${icon}
                     <div class="featured-title-block">
                         <div class="featured-subtitle">${market.subtitle}</div>
-                        <h2 id="market-modal-title">${market.title}</h2>
+                        <h2 id="market-modal-title" class="market-modal-title${titleGlitch.classSuffix}"${titleGlitch.attr}>${escapeHtml(market.title)}</h2>
                     </div>
                 </div>
                 <button type="button" class="market-modal-close" id="market-modal-close" data-market-modal-close aria-label="Close">
@@ -1908,7 +1974,7 @@ function buildMarketDetailHtml(market) {
 }
 
 function openMarketModal(marketId) {
-    const market = markets.find((m) => m.id === marketId);
+    const market = getMarketById(marketId);
     const modal = document.getElementById("market-modal");
     const content = document.getElementById("market-modal-content");
     if (!market || !modal || !content) return;

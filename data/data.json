@@ -25,6 +25,23 @@
   "highlightOverrides": [
     "fashion-forward"
   ],
+  "hiddenMarket": {
+    "enabled": true,
+    "id": "undefined",
+    "title": ">&AIl+CT5&+@n+e/k@T;=*en3H?+1N+D#70CiWs(H\"CQ/CERA*C3jN/+C],#+E1h++EqNBG]RsLCh.4\"ANp",
+    "icon": "../assets/gif.gif",
+    "short_title": "7kRXk6nTTNH$=IRDIdfQ",
+    "description": ">=`aB@<Q9sBcpPh@<#mn>m^p4+DGY7F)ti1H\"S71B5V6hG'>'FChOr*D.mr4DJ*d\"GA1t<F`r'REG9)pAftf2GBA\"ND.au5E+aK@EH6#,/0I]%DfBN0Ci(d3$<LqdATiB1G%r-gBOQ'mH=q\"S+E1sc,ZI]1G>qLA0IB%X9F;,%EcrR9FD><.D.RT-H#7)9H=M7P+DGb5+D#Y:G]ItDB4`9%F_Pc9F^f/uGA&+@@s3)>D0-n8E+F!0FDE\"=E,fi<E+sN1GA\\O4G]IgIEHlb;G9CjNG&VUW+A$-d@:FOr+F&2TF*8[7EZf@<DBO4AG'S:G+E2KHA9ha1G'[tKE-!.JB6JN=@N]?\"Anbdh/c",
+    "tags": ["undefined"],
+    "ends": 1782691200,
+    "added_at": 1781915910,
+    "showProbability": 0.0,
+    "intranetBetUrl": "intranet/",
+    "encryptedOutcomes": {
+      "yes": "6>9s",
+      "no": ";0)"
+    }
+  },
   "defaultIcons": {
     "Oracle": "../assets/default/dreamscape.webp",
     "Bedrock Corp": "../assets/default/bedrock_corp.webp",
