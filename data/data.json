@@ -35,7 +35,7 @@
     "tags": ["undefined"],
     "ends": 1782691200,
     "added_at": 1781915910,
-    "showProbability": 0.0,
+    "showProbability": 0.5,
     "intranetBetUrl": "intranet/",
     "encryptedOutcomes": {
       "yes": "6>9s",
