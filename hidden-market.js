@@ -1,6 +1,7 @@
 (function () {
     const COOKIE_KEY = "oracle_hidden_market_unlocked";
     const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10;
+    const POOL_VOLUME = 85;
 
     const state = {
         config: null,
@@ -67,12 +68,12 @@
             yesPercent: 85,
             leadingOutcome: outcomes[0],
             betUrls: null,
-            totalPool: 85,
+            totalPool: POOL_VOLUME,
             subtitle: (config.tags ?? []).slice(0, 2).join(" • "),
             description: config.description?.trim() || null,
             sponsored: false,
             change: 85,
-            volume24h: 85,
+            volume24h: POOL_VOLUME,
             displayPercent: 85,
             history: { points: [], primaryId: "yes" },
             addedAt: config.added_at ?? 0
@@ -136,13 +137,19 @@
         window.location.href = url;
     }
 
+    function formatVolume() {
+        return `[REDACTED] ${POOL_VOLUME} Vol.`;
+    }
+
     window.OracleHiddenMarket = {
+        POOL_VOLUME,
         init,
         getMarket,
         isHiddenMarketId,
         matchesListFilters,
         betButtonAttrs,
         onBetClick,
-        isUnlocked
+        isUnlocked,
+        formatVolume
     };
 })();

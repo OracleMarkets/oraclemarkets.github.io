@@ -593,6 +593,13 @@ function formatVolume(amount) {
         ?? legacyFormatVolume(amount);
 }
 
+function formatMarketVolume(market) {
+    if (market?.isHiddenMarket) {
+        return OracleHiddenMarket?.formatVolume() ?? "[REDACTED] 85 Vol.";
+    }
+    return formatVolume(market.totalPool);
+}
+
 function formatVolumeToday(amount) {
     return window.OracleCurrency?.formatVolumeToday(amount)
         ?? legacyFormatVolumeToday(amount);
@@ -1305,7 +1312,7 @@ function renderFeatured() {
 
         <div class="featured-footer">
             <span class="featured-footer-left">
-                <span>${formatVolume(market.totalPool)}</span>
+                <span>${formatMarketVolume(market)}</span>
                 ${marketEndsHtml(market)}
             </span>
             ${carouselHtml}
@@ -1665,7 +1672,7 @@ function renderMarketCard(market, index) {
                 </div>
                 ${resolvedOutcomesHtml(market)}
                 <div class="card-meta">
-                    <span>${formatVolume(market.totalPool)}</span>
+                    <span>${formatMarketVolume(market)}</span>
                     ${marketEndsHtml(market)}
                 </div>
             </article>
@@ -1693,7 +1700,7 @@ function renderMarketCard(market, index) {
                     `).join("")}
                 </div>
                 <div class="card-meta">
-                    <span>${formatVolume(market.totalPool)}</span>
+                    <span>${formatMarketVolume(market)}</span>
                     ${marketEndsHtml(market)}
                 </div>
             </article>
@@ -1729,7 +1736,7 @@ function renderMarketCard(market, index) {
                 <button class="btn-no${noGlitch.classSuffix}"${noGlitch.attr} ${betButtonAttrs(noOutcome, market.title, market)} type="button"${disabledAttr}>${escapeHtml(noOutcome.name)}</button>
             </div>
             <div class="card-meta">
-                <span>${formatVolume(market.totalPool)}</span>
+                <span>${formatMarketVolume(market)}</span>
                 ${marketEndsHtml(market)}
             </div>
         </article>
@@ -1965,7 +1972,7 @@ function buildMarketDetailHtml(market) {
             </div>
             <div class="featured-footer market-modal-footer">
                 <span class="featured-footer-left">
-                    <span>${formatVolume(market.totalPool)}</span>
+                    <span>${formatMarketVolume(market)}</span>
                     ${marketEndsHtml(market)}
                 </span>
             </div>
