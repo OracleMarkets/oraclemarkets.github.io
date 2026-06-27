@@ -992,6 +992,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915922,
+      "resolved": true,
+      "winning_outcome": "false",
       "tags": ["War", "Bedrock Corp", "Drama", "Politics", "Abberline"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Abberline Crime Family launch an attack against Bedrock Corp? | Yes", "colour": "#16c784" },
@@ -1005,6 +1007,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915923,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["Nations", "Politics", "Lucrum", "Drama", "Crestia Bay", "Ascentia"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Crestia Bay and Ascentia formally secede from the Lucrum Federation? | Yes", "colour": "#16c784" },
@@ -1018,6 +1022,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915924,
+      "resolved": true,
+      "winning_outcome": "same",
       "tags": ["Economy", "Bedrock Corp"],
       "outcomes": [
         { "id": "increase", "title": "Increase", "item_summary": "Will BDRK share prices increase or decrease by the end of Day 7? | Increase", "colour": "#16c784" },
@@ -1032,6 +1038,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915925,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Nations", "Politics", "Lucrum", "Drama", "Defnd"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Defnd retain control of the Lucrum Federation through the end of Day 7? | Yes", "colour": "#16c784" },
@@ -1045,6 +1053,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915926,
+      "resolved": true,
+      "winning_outcome": "bedrock_corp",
       "tags": ["Economy", "Nations"],
       "outcomes": [
         { "id": "bedrock_corp", "title": "Bedrock Corp", "item_summary": "Which nation's economy will be ranked first at the end of Day 7? | Bedrock Corp", "colour": "#16c784" },
@@ -1061,6 +1071,8 @@
       "icon": "",
       "ends": 1782599400,
       "added_at": 1781915927,
+      "resolved": true,
+      "winning_outcome": "scarab_holdings",
       "tags": ["Economy", "Bedrock Corp", "Politics"],
       "outcomes": [
         { "id": "scarab_holdings", "title": "Scarab Holdings", "item_summary": "Which individual or group will first become a major stakeholder in Bedrock Corp? | Scarab Holdings", "colour": "#16c784" },
@@ -1089,6 +1101,8 @@
       "icon": "",
       "ends": 1782513000,
       "added_at": 1781915929,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Helia", "Drama", "Economy", "Ballers"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Helia have a third table stolen as well? | Yes", "colour": "#16c784" },
@@ -1102,6 +1116,8 @@
       "icon": "../assets/fashion_forward.png",
       "ends": 1782516600,
       "added_at": 1782438451,
+      "resolved": true,
+      "winning_outcome": "bibi_bibi",
       "tags": ["Culture", "Fashion", "Eden"],
       "sponsored": true,
       "outcomes": [
