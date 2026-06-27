@@ -950,7 +950,7 @@
       "title": "What verdict will the Ballers receive at the conclusion of the trial?",
       "short_title": "Ballers Trial Verdict?",
       "icon": "",
-      "ends": 1782513000,
+      "ends": 1782601200,
       "added_at": 1781915919,
       "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
       "outcomes": [
@@ -963,7 +963,7 @@
       "title": "Will the Ballers be sentenced to death for their alleged crimes?",
       "short_title": "Ballers Death Sentence?",
       "icon": "",
-      "ends": 1782513000,
+      "ends": 1782601200,
       "added_at": 1781915920,
       "tags": ["Ballers", "Politics", "Deaths", "Drama", "Lucrum"],
       "outcomes": [
@@ -977,7 +977,7 @@
       "short_title": "Baller Trials Complete?",
       "description": "Note: For this market to resolve as 'Yes' it requires the Ballers to show up for the trial, the trial to go uninterrupted, and for a verdict to be delivered.",
       "icon": "",
-      "ends": 1782513000,
+      "ends": 1782601200,
       "added_at": 1781915921,
       "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
       "outcomes": [
