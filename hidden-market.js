@@ -35,7 +35,7 @@
                 id: "yes",
                 name: yesLabel,
                 colour: "#16c784",
-                pool_size: 0,
+                pool_size: 85,
                 percent: 85,
                 url: "",
                 itemSummary: `${config.title} | ${yesLabel}`
