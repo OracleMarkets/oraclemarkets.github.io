@@ -960,6 +960,8 @@
       "icon": "",
       "ends": 1782601200,
       "added_at": 1781915919,
+      "resolved": true,
+      "winning_outcome": "none",
       "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
       "outcomes": [
         { "id": "guilty", "title": "Guilty", "item_summary": "What verdict will the Ballers receive at the conclusion of the trial? | Guilty", "colour": "#ea3943" },
