@@ -408,6 +408,8 @@
       "icon": "",
       "ends": 1782599400,
       "added_at": 1781461617,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Culture", "Triple T", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Tung Tung Tung Sahur perform a miracle for its followers by the end of Day 8? | Yes", "colour": "#16c784" },
@@ -475,6 +477,8 @@
       "icon": "",
       "ends": 1782599400,
       "added_at": 1781461621,
+      "resolved": true,
+      "winning_outcome": "none",
       "tags": ["War", "Nations", "Politics"],
       "outcomes": [
         { "id": "lucrum_federation", "title": "Lucrum Federation", "item_summary": "Which nation will declare war first? | Lucrum Federation", "colour": "#16c784" },
@@ -494,6 +498,8 @@
       "icon": "",
       "ends": 1782081000,
       "added_at": 1781461622,
+      "resolved": true,
+      "winning_outcome": "yes",
       "tags": ["War", "Nations", "Politics", "ARCSEC"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will ARCSEC invade another nation by the end of Day 6? | Yes", "colour": "#16c784" },
@@ -866,6 +872,8 @@
       "icon": "",
       "ends": 1782599400,
       "added_at": 1781915914,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["War", "Nations", "Politics", "Lucrum", "Bedrock Corp"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Lucrum Federation and Bedrock Corp go to war by the end of Day 8? | Yes", "colour": "#16c784" },
@@ -965,6 +973,8 @@
       "icon": "",
       "ends": 1782601200,
       "added_at": 1781915920,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Ballers", "Politics", "Deaths", "Drama", "Lucrum"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Ballers be sentenced to death for their alleged crimes? | Yes", "colour": "#16c784" },
@@ -979,6 +989,8 @@
       "icon": "",
       "ends": 1782601200,
       "added_at": 1781915921,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Ballers", "Politics", "Drama", "Lucrum"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Baller Trials be completed as planned? | Yes", "colour": "#16c784" },
@@ -993,7 +1005,7 @@
       "ends": 1782513000,
       "added_at": 1781915922,
       "resolved": true,
-      "winning_outcome": "false",
+      "winning_outcome": "no",
       "tags": ["War", "Bedrock Corp", "Drama", "Politics", "Abberline"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will the Abberline Crime Family launch an attack against Bedrock Corp? | Yes", "colour": "#16c784" },
@@ -1088,6 +1100,8 @@
       "icon": "",
       "ends": 1782599400,
       "added_at": 1781915928,
+      "resolved": true,
+      "winning_outcome": "no",
       "tags": ["Plinth", "War", "Politics", "Drama"],
       "outcomes": [
         { "id": "yes", "title": "Yes", "item_summary": "Will Plinth finish building their nuclear bomb by the end of Day 8? | Yes", "colour": "#16c784" },
